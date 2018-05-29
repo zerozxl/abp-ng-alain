@@ -1,0 +1,156 @@
+
+
+<div class="modal-header">
+    <div class="modal-title">
+        <span>{{l("CreateNewTenant")}}</span>
+    </div>
+</div>
+
+<form nz-form #tenantCreateForm="ngForm" role="form" novalidate class="form-validation" (submit)="save()">
+
+    <div nz-form-item nz-row>
+        <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+            <label for="tenancyName">{{l("TenancyName")}}</label>
+        </div>
+        <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
+            <input nz-input name="tenancyName" [(ngModel)]="tenant.tenancyName" [nzSize]="'large'" required maxlength="64" pattern="^[a-zA-Z][a-zA-Z0-9_-]{1,}$">
+        </div>
+    </div>
+
+    <div nz-form-item nz-row>
+        <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+            <label for="Name">{{l("Name")}}</label>
+        </div>
+        <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
+            <input nz-input name="Name" [(ngModel)]="tenant.name" [nzSize]="'large'">
+        </div>
+    </div>
+
+    <div nz-form-item nz-row>
+        <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+        </div>
+        <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
+            <label name="UseHostDb" nz-checkbox [(ngModel)]="useHostDb">
+                <span>{{l("UseHostDatabase")}}</span>
+            </label>
+        </div>
+    </div>
+
+    <div nz-form-item nz-row *ngIf="!useHostDb">
+        <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+            <label for="ConnectionString">{{l("DatabaseConnectionString")}}</label>
+        </div>
+        <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
+            <input nz-input name="ConnectionString" [(ngModel)]="tenant.connectionString" [nzSize]="'large'" required maxlength="1024">
+        </div>
+    </div>
+
+    <div nz-form-item nz-row>
+        <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+            <label for="AdminEmailAddress">{{l("AdminEmailAddress")}}</label>
+        </div>
+        <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
+            <input nz-input type="email" name="AdminEmailAddress" [(ngModel)]="tenant.adminEmailAddress" [nzSize]="'large'" required pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,})+$"
+                maxlength="256">
+        </div>
+    </div>
+
+    <div nz-form-item nz-row>
+        <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+        </div>
+        <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
+            <label name="SetRandomPassword" nz-checkbox [(ngModel)]="setRandomPassword">
+                <span>{{l("SetRandomPassword")}}</span>
+            </label>
+        </div>
+    </div>
+
+    <div nz-form-item nz-row *ngIf="!setRandomPassword">
+        <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+            <label>{{l("AdminPassword")}}</label>
+        </div>
+        <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
+            <input nz-input name="adminPassword" [(ngModel)]="tenant.adminPassword" [nzSize]="'large'" [required]="!setRandomPassword" maxlength="32">
+        </div>
+    </div>
+    <div nz-form-item nz-row>
+        <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+            <label for="edition">Edition</label>
+        </div>
+        <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
+            <nz-select name="edition" [nzSize]="'large'" [(ngModel)]="tenant.editionId" (ngModelChange)="onEditionChange()">
+                <nz-option *ngFor="let edition of editions" [nzLabel]="edition.displayText" [nzValue]="edition.value * 1"></nz-option>
+            </nz-select>
+        </div>
+    </div>
+
+    <div nz-form-item nz-row *ngIf="isSubscriptionFieldsVisible">
+        <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+
+        </div>
+        <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
+            <label name="IsUnlimited" nz-checkbox [(ngModel)]="isUnlimited">
+                <span>{{l("UnlimitedTimeSubscription")}}</span>
+            </label>
+        </div>
+    </div>
+
+    <div nz-form-item nz-row *ngIf="!(isUnlimited || !isSubscriptionFieldsVisible)">
+        <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+            <label>{{l("SubscriptionEndDate")}}</label>
+        </div>
+        <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
+            <nz-date-picker name="subscriptionEndDateUtc" 
+            [(ngModel)]="subscriptionEndDateUtc" 
+            [nzPlaceholder]="'Select date'"></nz-date-picker>
+        </div>
+    </div>
+
+    <div nz-form-item nz-row *ngIf="isSubscriptionFieldsVisible">
+        <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+
+        </div>
+        <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
+            <label name="IsInTrialPeriod" nz-checkbox [(ngModel)]="tenant.isInTrialPeriod">
+                <span>{{l("IsInTrialPeriod")}}</span>
+            </label>
+        </div>
+    </div>
+
+    <div nz-form-item nz-row>
+        <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+
+        </div>
+        <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
+            <label name="ShouldChangePasswordOnNextLogin" nz-checkbox [(ngModel)]="tenant.shouldChangePasswordOnNextLogin">
+                <span>{{l("ShouldChangePasswordOnNextLogin")}}</span>
+            </label>
+        </div>
+
+        <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+
+        </div>
+        <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
+            <label name="SendActivationEmail" nz-checkbox [(ngModel)]="tenant.sendActivationEmail">
+                <span>{{l("SendActivationEmail")}}</span>
+            </label>
+        </div>
+        <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+
+        </div>
+        <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
+            <label name="IsActive" nz-checkbox [(ngModel)]="tenant.isActive">
+                <span>{{l("Active")}}</span>
+            </label>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button  nz-button type="button" [nzType]="'default'" [nzSize]="'large'" (click)="close()">
+            {{l("Cancel")}}
+        </button>
+        <button nz-button [nzType]="'primary'" [nzSize]="'large'" >
+            <span>{{l("Save")}}</span>
+        </button>
+    </div>
+</form>
