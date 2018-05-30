@@ -31,7 +31,7 @@ export class LanguagesComponent extends AppComponentBase implements OnInit {
           text: this.l('Edit'),
           type: 'modal',
           paramName: 'languagePara',
-          acl:'Pages.Administration.Languages.Edit',
+          acl: 'Pages.Administration.Languages.Edit',
           component: CreateOrEditLanguageComponent,
           click: (record: any, modal: any) => this.getLanguages()
         },
