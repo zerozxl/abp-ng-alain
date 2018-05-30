@@ -21,7 +21,7 @@ export abstract class AppComponentBase {
     msg: NzMessageService;
     setting: SettingService;
     modalHelper: ModalHelper;
-    modal:NzModalService;
+    modal: NzModalService;
     multiTenancy: AbpMultiTenancyService;
     appSession: AppSessionService;
 

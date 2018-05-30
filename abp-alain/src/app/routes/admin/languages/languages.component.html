@@ -10,7 +10,7 @@
 
 </page-header>
 <nz-card>
-  <simple-table #st [data]="data" [columns]="columns" [extraParams]="params" frontPagination="false" showPagination="true"  isPageIndexReset="true">
+  <simple-table #st [data]="data" [columns]="columns" [ps]="100" [extraParams]="params" frontPagination="false" showPagination="true"  isPageIndexReset="true">
     <ng-template st-row="displayName" type="title" let-c>
       {{ c.title }}
     </ng-template>

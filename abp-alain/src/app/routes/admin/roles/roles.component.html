@@ -1,0 +1,23 @@
+﻿<page-header>
+    <ng-template #action>
+        <div class="action">
+            <button nz-button [nzType]="'primary'" [nzSize]="'middle'" (click)="createRole()">
+                <i class="anticon anticon-plus"></i>
+                <span>{{l("CreateNewRole")}}</span>
+            </button>
+        </div>
+    </ng-template>
+</page-header>
+<nz-card>
+    <simple-table #st [data]="data" [columns]="columns" 
+    [extraParams]="params"  frontPagination="false" showPagination="true">
+        <ng-template st-row="displayName" type="title" let-c>
+            {{ c.title }}
+        </ng-template>
+        <ng-template st-row="displayName" let-item let-index="index">
+            <span>{{item.displayName}}</span>
+            <nz-tag *ngIf="item.isStatic" [nzColor]="'magenta'">{{l('Static')}}</nz-tag>
+            <nz-tag *ngIf="item.isDefault" [nzColor]="'gray'">{{l('Default')}}</nz-tag>
+        </ng-template>
+    </simple-table>
+</nz-card>

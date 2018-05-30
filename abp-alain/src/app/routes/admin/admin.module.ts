@@ -17,6 +17,8 @@ import { LanguagesComponent } from './languages/languages.component';
 import { CreateOrEditLanguageComponent } from './languages/create-or-edit-language.component';
 import { LanguageTextsComponent } from './languages/language-texts.component';
 import { EditLanguateTextModalComponent } from './languages/edit-languate-text-modal.component';
+// import { CreateOrEditRoleModalComponent } from './roles/create-or-edit-role-modal.component';
+import { RolesComponent } from './roles/roles.component';
 
 @NgModule({
     imports: [
@@ -28,7 +30,7 @@ import { EditLanguateTextModalComponent } from './languages/edit-languate-text-m
         // ImpersonationService
     ],
     declarations: [
-        // RoleComponent,
+        RolesComponent,
         // PermissionTreeComponent,
         // CreateOrEditRoleModalComponent,
         // UsersComponent,

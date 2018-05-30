@@ -55,7 +55,6 @@ export class LanguagesComponent extends AppComponentBase implements OnInit {
       ]
     }
   ];
-
   constructor(
     injector: Injector,
     private router: Router,

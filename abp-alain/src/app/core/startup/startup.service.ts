@@ -48,16 +48,16 @@ export class StartupService {
 
 
   // tslint:disable-next-line:one-line
-  checkMenuPerssion(menus) {
-    _.forEach(menus, (item) => {
+  // checkMenuPerssion(menus) {
+  //   _.forEach(menus, (item) => {
 
-      item.hide = item.permission && !Abp.auth.isGranted(item.permission);
+  //     item.hide = item.permission && !Abp.auth.isGranted(item.permission);
 
-      if (item.children !== undefined && item.children.length > 0) {
-        this.checkMenuPerssion(item.children);
-      }
-    });
-  }
+  //     if (item.children !== undefined && item.children.length > 0) {
+  //       this.checkMenuPerssion(item.children);
+  //     }
+  //   });
+  // }
 
 
   private viaHttp(resolve: any, reject: any) {
@@ -82,7 +82,7 @@ export class StartupService {
       // 设置页面标题的后缀
       this.titleService.suffix = res.app.name;
       // ACL：设置权限为全量
-      this.aclService.setFull(true);
+      // this.aclService.setFull(true);
 
       // var i=1;
       AppConsts.remoteServiceBaseUrl = res.url.remoteServiceBaseUrl;
@@ -90,39 +90,46 @@ export class StartupService {
       const tokenData = this.tokenService.get();
       const cookieLangValue = Abp.utils.getCookieValue('Abp.Localization.CultureName');
       this.httpClient.get<any>(AppConsts.remoteServiceBaseUrl + '/AbpUserConfiguration/GetAll')
-      .subscribe(allres => {
-      console.log(allres);
-      const all: any = allres;
-      const allSetting = all.result;
-      Abp.multiTenancy.setGlobal(allSetting.multiTenancy);
-      Abp.session.setGlobal(allSetting.session);
-      Abp.localization.setGlobal(allSetting.localization);
-      Abp.features.setGlobal(allSetting.features);
-      Abp.auth.setGlobal(allSetting.auth);
-      Abp.nav.setGlobal(allSetting.nav);
-      Abp.setting.setGlobal(allSetting.setting);
-      Abp.clock.setGloabl(allSetting.clock);
-      Abp.timing.setGloabl(allSetting.timing);
-      Abp.clock.provider = StartupService.getCurrentClockProvider(allSetting.clock.provider);
-      moment.locale(Abp.localization.currentLanguage.name);
-      // (window as any).moment.locale(Abp.localization.currentLanguage.name);
-      if (Abp.clock.provider.supportsMultipleTimezone) {
-        moment.tz.setDefault(Abp.timing.timeZoneInfo.iana.timeZoneId);
-        (window as any).moment.tz.setDefault(Abp.timing.timeZoneInfo.iana.timeZoneId);
-      }
-      AppConsts.recaptchaSiteKey = Abp.setting.get('Recaptcha.SiteKey');
-      // tslint:disable-next-line:max-line-length
-      AppConsts.subscriptionExpireNootifyDayCount = parseInt(Abp.setting.get('App.TenantManagement.SubscriptionExpireNotifyDayCount'), null);
+        .subscribe(allres => {
+          console.log(allres);
+          const all: any = allres;
+          const allSetting = all.result;
+          Abp.multiTenancy.setGlobal(allSetting.multiTenancy);
+          Abp.session.setGlobal(allSetting.session);
+          Abp.localization.setGlobal(allSetting.localization);
+          Abp.features.setGlobal(allSetting.features);
+          Abp.auth.setGlobal(allSetting.auth);
+          const grantedPermissions: string[] = [];
+          // 返回的是权限粒度，直接使用
+          // tslint:disable-next-line:forin
+          for (const k in allSetting.auth.grantedPermissions) {
+            grantedPermissions.push(k);
+          }
+          this.aclService.setRole(grantedPermissions);
+          Abp.nav.setGlobal(allSetting.nav);
+          Abp.setting.setGlobal(allSetting.setting);
+          Abp.clock.setGloabl(allSetting.clock);
+          Abp.timing.setGloabl(allSetting.timing);
+          Abp.clock.provider = StartupService.getCurrentClockProvider(allSetting.clock.provider);
+          moment.locale(Abp.localization.currentLanguage.name);
+          // (window as any).moment.locale(Abp.localization.currentLanguage.name);
+          if (Abp.clock.provider.supportsMultipleTimezone) {
+            moment.tz.setDefault(Abp.timing.timeZoneInfo.iana.timeZoneId);
+            (window as any).moment.tz.setDefault(Abp.timing.timeZoneInfo.iana.timeZoneId);
+          }
+          AppConsts.recaptchaSiteKey = Abp.setting.get('Recaptcha.SiteKey');
+          // tslint:disable-next-line:max-line-length
+          AppConsts.subscriptionExpireNootifyDayCount = parseInt(Abp.setting.get('App.TenantManagement.SubscriptionExpireNotifyDayCount'), null);
 
-      const appSession = this.injector.get(AppSessionService);
-      this.checkMenuPerssion(res.menu);
-      // 初始化菜单
-      this.menuService.add(res.menu);
-      appSession.init().then(() => {
-        resolve(res);
-      });
-      }
-      );
+          const appSession = this.injector.get(AppSessionService);
+          // this.checkMenuPerssion(res.menu);
+          // 初始化菜单
+          this.menuService.add(res.menu);
+          appSession.init().then(() => {
+            resolve(res);
+          });
+        }
+        );
 
       if (!tokenData.token) {
         this.injector.get(Router).navigateByUrl('/passport/login');

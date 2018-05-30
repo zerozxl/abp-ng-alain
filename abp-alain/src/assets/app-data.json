@@ -9,7 +9,7 @@
         "email": "cipchk@qq.com"
     },
     "url":{
-        "remoteServiceBaseUrl": "http://localhost:22742",
+        "remoteServiceBaseUrl": "http://192.168.125.21:22742",
         "appBaseUrl": "http://localhost:4200"
     },
     "menu": [{
@@ -21,7 +21,7 @@
             "translate": "page-tenant",
             "link": "/admin/tenants",
             "icon": "icon-rocket",
-            "permission":"Pages.Tenants",
+            "acl":"Pages.Tenants",
             "children": []
         }]
     }, {
@@ -29,28 +29,22 @@
             "translate": "admin",
             "link": "/admin",
             "icon": "icon-map",
-            "acl": "role-b",
-            "permission":"Pages.Administration",
+            "acl":"Pages.Administration",
             "children": [{
                 "text": "角色管理",
                 "link": "/admin/roles",
                 "translate": "admin-role",
-                "permission":"Pages.Administration.Roles"
+                "acl":"Pages.Administration.Roles"
             },{
                 "text": "用户管理",
                 "link": "/admin/users",
                 "translate": "admin-users",
-                "permission":"Pages.Administration.Users"
+                "acl":"Pages.Administration.Users"
             },{
                 "text": "语言管理",
                 "link": "/admin/languages",
                 "translate": "languages",
-                "permission":"Pages.Administration.Languages"
-            },{
-                "text": "语言管理d",
-                "link": "/admin/languagetexts",
-                "translate": "languages",
-                "permission":"Pages.Administration.Languages"
+                "acl":"Pages.Administration.Languages"
             }
         ]
     }]
