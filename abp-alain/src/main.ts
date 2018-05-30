@@ -7,10 +7,12 @@ import { environment } from './environments/environment';
 import { preloaderFinished } from '@delon/theme';
 preloaderFinished();
 
+
+// s
 if (environment.production) {
   enableProdMode();
 }
-
+ 
 const bootstrap = () => {
   return platformBrowserDynamic().bootstrapModule(AppModule, {
     defaultEncapsulation: ViewEncapsulation.Emulated,
