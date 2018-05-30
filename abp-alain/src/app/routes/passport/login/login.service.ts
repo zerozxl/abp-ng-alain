@@ -174,7 +174,7 @@ export class LoginService {
             });
 
             // 跳转到租户主界面
-            location.href = AppConsts.appBaseUrl + '/#/tenant/list';
+            location.href = AppConsts.appBaseUrl + '/#/admin/languages';
             location.reload();
 
             // 和 location.href 相比，router不会触发启动程序，导致 session user 里的用户名为空

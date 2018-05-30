@@ -12,7 +12,7 @@ preloaderFinished();
 if (environment.production) {
   enableProdMode();
 }
- 
+
 const bootstrap = () => {
   return platformBrowserDynamic().bootstrapModule(AppModule, {
     defaultEncapsulation: ViewEncapsulation.Emulated,

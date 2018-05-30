@@ -1,0 +1,40 @@
+﻿<page-header></page-header>
+<nz-card>
+    <nz-tabset [nzTabBarExtraContent]="extraTemplate" [nzSelectedIndex]="selectedIndex">
+        <nz-tab nzTitle="{{l('Caches')}}">
+            <nz-list [nzDataSource]="caches" nzBordered nzSize="small" [nzRenderItem]="item">
+                <ng-template #item let-item>
+                    <nz-list-item [nzContent]="item.name" [nzActions]="[editAction]">
+                        <ng-template #editAction>
+                            <button nz-button (click)="clearCache(item.name);">
+                                {{l("Clear")}}
+                            </button>
+                        </ng-template>
+                    </nz-list-item>
+
+                </ng-template>
+            </nz-list>
+        </nz-tab>
+        <nz-tab nzTitle="{{l('WebSiteLogs')}}">
+            <nz-card>
+                <div class="web-log-view full-height">
+                    <span class="log-line" *ngFor="let log of logs">
+                        <span [class]="getLogClass(log)">{{getLogType(log)}}</span>
+                        {{getRawLogContent(log)}}
+                    </span>
+                </div>
+            </nz-card>
+        </nz-tab>
+    </nz-tabset>
+    <ng-template #extraTemplate>
+        <button *ngIf="selectedIndex==0" nz-button [nzType]="'primary'" (click)="clearAllCaches()">
+            <i class="anticon anticon-close-circle-o"></i>{{l("ClearAll")}}
+        </button>
+        <button  *ngIf="selectedIndex==1" nz-button [nzType]="'primary'"(click)="downloadWebLogs()">
+            <i class="anticon anticon-download"></i> {{l("DownloadAll")}}
+        </button>
+        <button *ngIf="selectedIndex==1" nz-button [nzType]="'primary'" (click)="getWebLogs()">
+            <i class="anticon anticon-sync"></i> {{l("Refresh")}}
+        </button>
+    </ng-template>
+</nz-card>
