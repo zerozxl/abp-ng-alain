@@ -19,6 +19,7 @@ import { LanguageTextsComponent } from './languages/language-texts.component';
 import { EditLanguateTextModalComponent } from './languages/edit-languate-text-modal.component';
 // import { CreateOrEditRoleModalComponent } from './roles/create-or-edit-role-modal.component';
 import { RolesComponent } from './roles/roles.component';
+import { PermissionSelectComponent } from './shared/permission-select.component';
 
 @NgModule({
     imports: [
@@ -42,7 +43,10 @@ import { RolesComponent } from './roles/roles.component';
         LanguagesComponent,
         CreateOrEditLanguageComponent,
         LanguageTextsComponent,
-        EditLanguateTextModalComponent
+        EditLanguateTextModalComponent,
+
+        // shared
+        PermissionSelectComponent
     ],
     entryComponents: [
         // CreateOrEditRoleModalComponent,

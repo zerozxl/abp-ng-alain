@@ -9,8 +9,17 @@
     </ng-template>
 </page-header>
 <nz-card>
-    <simple-table #st [data]="data" [columns]="columns" 
-    [extraParams]="params"  frontPagination="false" showPagination="true">
+    <form nz-form (ngSubmit)="getRoles()">
+        <nz-row [nzGutter]="{ md: 12, lg: 24, xl: 48 }">
+            <nz-col nzMd="12" nzSm="24">
+                <permission-select [(selectedPermission)]="selectedPermission"></permission-select>
+            </nz-col>
+            <nz-col nzMd="12" nzSm="24" [class.text-left]="true">
+                <button nz-button nzType="primary" type="submit" [nzLoading]="loading" [nzSize]="'middle'">{{l('Refresh')}}</button>
+            </nz-col>
+        </nz-row>
+    </form>
+    <simple-table #st [data]="data" [columns]="columns" [extraParams]="params" frontPagination="false" showPagination="true">
         <ng-template st-row="displayName" type="title" let-c>
             {{ c.title }}
         </ng-template>

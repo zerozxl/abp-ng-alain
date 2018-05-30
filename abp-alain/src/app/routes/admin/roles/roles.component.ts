@@ -53,7 +53,7 @@ export class RolesComponent extends AppComponentBase implements OnInit {
         this.getRoles();
     }
     getRoles(): void {
-        this.roleService.getRoles(this.selectedPermission).subscribe(result => {
+        this.roleService.getRoles(this.selectedPermission || undefined).subscribe(result => {
             this.data = result.items;
         });
     }
