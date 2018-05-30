@@ -25,7 +25,7 @@
         </ng-template>
         <ng-template st-row="displayName" let-item let-index="index">
             <span>{{item.displayName}}</span>
-            <nz-tag *ngIf="item.isStatic" [nzColor]="'magenta'">{{l('Static')}}</nz-tag>
+            <nz-tag *ngIf="item.isStatic" style="margin-left:5px">{{l('Static')}}</nz-tag>
             <nz-tag *ngIf="item.isDefault" [nzColor]="'gray'">{{l('Default')}}</nz-tag>
         </ng-template>
     </simple-table>
