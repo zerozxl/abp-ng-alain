@@ -35,7 +35,7 @@
                 "link": "/admin/roles",
                 "translate": "admin-role",
                 "acl":"Pages.Administration.Roles"
-            },{
+            },{ 
                 "text": "用户管理",
                 "link": "/admin/users",
                 "translate": "admin-users",
