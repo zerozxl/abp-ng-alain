@@ -16,11 +16,17 @@ export class AuditLogsComponent extends AppComponentBase implements OnInit {
     defaultLanguageName: any;
     columns: SimpleTableColumn[] = [
         { title: 'Success', i18n: 'Success', render: 'exception' },
-        { title: 'Time', i18n: 'Time', type: 'date', index: 'executionTime' },
+        {
+            title: 'Time', i18n: 'Time', type: 'date',
+            index: 'executionTime', sorter: (a, b) => { return true; }
+        },
         { title: 'UserName', i18n: 'UserName', index: 'userName' },
         { title: 'Service', i18n: 'Service', index: 'serviceName' },
         { title: 'Action', i18n: 'Action', index: 'methodName' },
-        { title: 'Duration', i18n: 'Duration', render: 'executionDuration' },
+        {
+            title: 'Duration', i18n: 'Duration', render: 'executionDuration',
+            index: 'executionDuration', sorter: (a, b) => { return true; }
+        },
         { title: 'IpAddress', i18n: 'IpAddress', index: 'clientIpAddress' },
         { title: 'Client', i18n: 'Client', index: 'clientName' },
         { title: 'Browser', i18n: 'Browser', render: 'browserInfo' },
@@ -43,7 +49,7 @@ export class AuditLogsComponent extends AppComponentBase implements OnInit {
     // Filters
     q: any = {
         dateRange: [moment().startOf('day'), moment().endOf('day')],
-        username: '',
+        userName: '',
         serviceName: '',
         methodName: '',
         browserInfo: '',
@@ -67,21 +73,33 @@ export class AuditLogsComponent extends AppComponentBase implements OnInit {
     showDetails(record: AuditLogListDto): void {
         // this.auditLogDetailModal.show(record);
     }
-
-    getAuditLogs() {
+    sortChange(ret: any) {
+        var sort = undefined;
+        if (ret.value) {
+            if (ret.value == 'descend') {
+                sort = ret.column.index + ' desc';
+            }
+            else {
+                sort = ret.column.index + ' asc';
+            }
+        }
+        console.log(sort)
+        this.getAuditLogs(sort);
+    }
+    getAuditLogs(sort: string = undefined) {
         this.loading = true;
         this.auditLogService.getAuditLogs(
-            this.q.startDate,
-            this.q.endDate,
-            this.q.username,
+            this.q.dateRange[0],
+            this.q.dateRange[1],
+            this.q.userName,
             this.q.serviceName,
             this.q.methodName,
             this.q.browserInfo,
             this.q.hasException,
-            this.q.minExecutionDuration,
-            this.q.maxExecutionDuration,
+            this.q.minExecutionDuration == 0 ? undefined : this.q.minExecutionDuration,
+            this.q.maxExecutionDuration == 0 ? undefined : this.q.maxExecutionDuration,
             // sort
-            '',
+            sort,
             this.st.ps,
             (this.st.pi - 1) * this.st.ps
         )
