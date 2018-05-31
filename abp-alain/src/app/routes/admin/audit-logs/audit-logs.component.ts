@@ -4,8 +4,6 @@ import { AppComponentBase } from '@shared/app-component-base';
 import { AuditLogListDto, AuditLogServiceProxy } from '@shared/service-proxies/service-proxies';
 import { FileDownloadService } from '@shared/utils/file-download.service';
 import * as moment from 'moment';
-
-
 @Component({
     templateUrl: './audit-logs.component.html',
     styleUrls: ['./audit-logs.component.less'],
@@ -17,20 +15,22 @@ export class AuditLogsComponent extends AppComponentBase implements OnInit {
     data: any;
     defaultLanguageName: any;
     columns: SimpleTableColumn[] = [
-        { title: this.l('Success'), render: 'exception' },
-        { title: this.l('Time'), type: 'date', index: 'executionTime' },
-        { title: this.l('UserName'), index: 'userName' },
-        { title: this.l('Service'), index: 'serviceName' },
-        { title: this.l('Action'), index: 'methodName' },
-        { title: this.l('Duration'), render: 'executionDuration' },
-        { title: this.l('IpAddress'), index: 'clientIpAddress' },
-        { title: this.l('Client'), index: 'clientName' },
-        { title: this.l('Browser'), render: 'browserInfo' },
+        { title: 'Success', i18n: 'Success', render: 'exception' },
+        { title: 'Time', i18n: 'Time', type: 'date', index: 'executionTime' },
+        { title: 'UserName', i18n: 'UserName', index: 'userName' },
+        { title: 'Service', i18n: 'Service', index: 'serviceName' },
+        { title: 'Action', i18n: 'Action', index: 'methodName' },
+        { title: 'Duration', i18n: 'Duration', render: 'executionDuration' },
+        { title: 'IpAddress', i18n: 'IpAddress', index: 'clientIpAddress' },
+        { title: 'Client', i18n: 'Client', index: 'clientName' },
+        { title: 'Browser', i18n: 'Browser', render: 'browserInfo' },
         {
-            title: this.l('Actions'),
+            title: 'Actions',
+            i18n: 'Actions',
             buttons: [
                 {
-                    text: this.l('Edit'),
+                    text: 'Edit',
+                    i18n: 'Edit',
                     type: 'modal',
                     paramName: 'languagePara',
                     //   acl: 'Pages.Administration.Languages.Edit',
@@ -85,15 +85,15 @@ export class AuditLogsComponent extends AppComponentBase implements OnInit {
             this.st.ps,
             (this.st.pi - 1) * this.st.ps
         )
-        .finally(() => { this.loading = false; })
-        .subscribe((result) => {
-            this.st.total = result.totalCount;
-            this.data = result.items;
-            const pi = this.st.pi;
-            setTimeout(() => {
-                this.st.pi = pi;
-            }, 50);
-        });
+            .finally(() => { this.loading = false; })
+            .subscribe((result) => {
+                this.st.total = result.totalCount;
+                this.data = result.items;
+                const pi = this.st.pi;
+                setTimeout(() => {
+                    this.st.pi = pi;
+                }, 50);
+            });
     }
 
     exportToExcel(): void {

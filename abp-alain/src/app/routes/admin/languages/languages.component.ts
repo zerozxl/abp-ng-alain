@@ -14,21 +14,17 @@ export class LanguagesComponent extends AppComponentBase implements OnInit {
   data: any;
   defaultLanguageName: any;
   columns: SimpleTableColumn[] = [
+    { title: 'Name', i18n: 'Name', render: 'displayName' },
+    { title: 'Code', i18n: 'Code', index: 'name' },
+    { title: 'CreationTime', i18n: 'CreationTime', type: 'date', index: 'creationTime' },
+    { title: 'IsEnabled', i18n: 'IsEnabled', render: 'isEnabled' },
     {
-      title: this.l('Name'),
-      render: 'displayName'
-    },
-    { title: this.l('Code'), index: 'name' },
-    { title: this.l('CreationTime'), type: 'date', index: 'creationTime' },
-    {
-      title: this.l('IsEnabled'),
-      render: 'isEnabled'
-    },
-    {
-      title: this.l('Actions'),
+      title: 'Actions',
+      i18n: 'Actions',
       buttons: [
         {
-          text: this.l('Edit'),
+          text: 'Edit',
+          i18n: 'Edit',
           type: 'modal',
           paramName: 'languagePara',
           acl: 'Pages.Administration.Languages.Edit',
@@ -36,19 +32,23 @@ export class LanguagesComponent extends AppComponentBase implements OnInit {
           click: (record: any, modal: any) => this.getLanguages()
         },
         {
-          text: this.l('ChangeTexts'),
+          text: 'ChangeTexts',
+          i18n: 'ChangeTexts',
           type: 'none',
           click: (record: any) => this.editLanguageText(record)
         },
         {
-          text: this.l('More'),
+          text: 'More',
+          i18n: 'More',
           children: [
             {
-              text: this.l('SetAsDefaultLanguage'),
+              text: 'SetAsDefaultLanguage',
+              i18n: 'SetAsDefaultLanguage',
               click: (record: any) => this.setAsDefaultLanguage(record)
             },
             {
-              text: this.l('Delete'),
+              text: 'Delete',
+              i18n: 'Delete',
               click: (record: any) => this.deleteLanguage(record)
             }
           ]
@@ -73,11 +73,11 @@ export class LanguagesComponent extends AppComponentBase implements OnInit {
   getLanguages() {
     this.loading = true;
     this.languageService.getLanguages()
-    .finally(() => { this.loading = false; })
-    .subscribe(result => {
-      this.data = result.items;
-      this.defaultLanguageName = result.defaultLanguageName;
-    });
+      .finally(() => { this.loading = false; })
+      .subscribe(result => {
+        this.data = result.items;
+        this.defaultLanguageName = result.defaultLanguageName;
+      });
   }
   /**
      * 改变语言文本
@@ -110,7 +110,7 @@ export class LanguagesComponent extends AppComponentBase implements OnInit {
         nzOnOk: () => {
           this.languageService.deleteLanguage(language.id).subscribe(() => {
             this.getLanguages();
-            this.msg.success(this.l('SuccessfullyDeleted'));
+            this.msg.success('SuccessfullyDeleted');
           });
 
         }

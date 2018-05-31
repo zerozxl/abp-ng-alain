@@ -24,7 +24,7 @@ export class StartupService {
   constructor(
     private menuService: MenuService,
     private settingService: SettingsService,
-    // private translate: TranslateService,
+    private translate: TranslateService,
     private aclService: ACLService,
     private titleService: TitleService,
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
@@ -96,6 +96,9 @@ export class StartupService {
           const allSetting = all.result;
           Abp.multiTenancy.setGlobal(allSetting.multiTenancy);
           Abp.session.setGlobal(allSetting.session);
+          console.log(allSetting.localization.values.AbpZeroTemplate);
+          this.translate.setTranslation('zh-CN', allSetting.localization.values.AbpZeroTemplate);
+          this.translate.setDefaultLang('zh-CN');
           Abp.localization.setGlobal(allSetting.localization);
           Abp.features.setGlobal(allSetting.features);
           Abp.auth.setGlobal(allSetting.auth);

@@ -4,7 +4,7 @@
     <nz-row [nzGutter]="4">
       <nz-col nzLg="6" nzMd="6" nzSm="24">
         <nz-form-item>
-          <nz-form-label nzFor="baseLanguageName">{{l("BaseLanguage")}}</nz-form-label>
+          <nz-form-label nzFor="baseLanguageName">{{"BaseLanguage" | translate}}</nz-form-label>
           <nz-form-control>
             <nz-select name="baseLanguageName" nzShowSearch nzAllowClear [(ngModel)]="baseLanguageName">
               <nz-option nzCustomContent [nzLabel]="language.displayName" *ngFor="let language of languages" [nzValue]="language.name">
@@ -16,7 +16,7 @@
       </nz-col>
       <nz-col nzMd="6" nzSm="24">
         <nz-form-item>
-          <nz-form-label nzFor="targetLanguageName">{{l("TargetLanguage")}}</nz-form-label>
+          <nz-form-label nzFor="targetLanguageName">{{"TargetLanguage" | translate}}</nz-form-label>
           <nz-form-control>
             <nz-select name="targetLanguageName" nzShowSearch nzAllowClear [(ngModel)]="targetLanguageName">
               <nz-option nzCustomContent [nzLabel]="language.displayName" *ngFor="let language of languages" [nzValue]="language.name">
@@ -28,7 +28,7 @@
       </nz-col>
       <nz-col nzMd="6" nzSm="24">
         <nz-form-item>
-          <nz-form-label nzFor="TextSourceSelectionCombobox">{{l("Source")}}</nz-form-label>
+          <nz-form-label nzFor="TextSourceSelectionCombobox">{{"Source" | translate}}</nz-form-label>
           <nz-form-control>
             <nz-select name="TextSourceSelectionCombobox" nzShowSearch nzAllowClear [(ngModel)]="sourceName">
               <nz-option nzCustomContent [nzLabel]="sourceName" *ngFor="let sourceName of sourceNames" [nzValue]="sourceName">
@@ -40,11 +40,11 @@
       </nz-col>
       <nz-col nzMd="6" nzSm="24">
         <nz-form-item>
-          <nz-form-label nzFor="TargetValueFilterSelectionCombobox">{{l("TargetValue")}}</nz-form-label>
+          <nz-form-label nzFor="TargetValueFilterSelectionCombobox">{{"TargetValue" | translate}}</nz-form-label>
           <nz-form-control>
             <nz-select name="TargetValueFilterSelectionCombobox" nzShowSearch nzAllowClear [(ngModel)]="targetValueFilter">
-              <nz-option nzCustomContent nzLabel='{{l("All")}}' nzValue="All"> {{l("All")}}</nz-option>
-              <nz-option nzCustomContent nzLabel='{{l("EmptyOnes")}}' nzValue="EMPTY"> {{l("EmptyOnes")}}</nz-option>
+              <nz-option nzCustomContent nzLabel='{{l("All")}}' nzValue="All"> {{"All" | translate}}</nz-option>
+              <nz-option nzCustomContent nzLabel='{{l("EmptyOnes")}}' nzValue="EMPTY"> {{"EmptyOnes" | translate}}</nz-option>
             </nz-select>
 
           </nz-form-control>
@@ -56,7 +56,7 @@
         <nz-input-group nzSearch [nzSuffix]="suffixButton">
           <input type="text" nz-input placeholder="{{l('SearchWithThreeDot')}}" [(ngModel)]="filterText" name="filterText">
           <ng-template #suffixButton>
-            <button nz-button nzType="primary" nzSearch>{{l("Refresh")}}</button>
+            <button nz-button nzType="primary" nzSearch>{{"Refresh" | translate}}</button>
           </ng-template>
         </nz-input-group>
       </nz-col>

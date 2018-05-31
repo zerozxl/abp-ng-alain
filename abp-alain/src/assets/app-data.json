@@ -9,7 +9,7 @@
         "email": "cipchk@qq.com"
     },
     "url":{
-        "remoteServiceBaseUrl": "http://localhost:22742",
+        "remoteServiceBaseUrl": "http://192.168.125.21:22742",
         "appBaseUrl": "http://localhost:4200"
     },
     "menu": [{

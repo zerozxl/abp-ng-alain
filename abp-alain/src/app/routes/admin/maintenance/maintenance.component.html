@@ -1,13 +1,13 @@
 ﻿<page-header></page-header>
 <nz-card>
     <nz-tabset [nzTabBarExtraContent]="extraTemplate" [nzSelectedIndex]="selectedIndex" (nzSelectChange)="changeSelectIndex($event)">
-        <nz-tab nzTitle="{{l('Caches')}}"  (click)="selectedIndexChange()">
+        <nz-tab nzTitle="{{'Caches' | translate}}"  (click)="selectedIndexChange()">
             <nz-list [nzDataSource]="caches" nzBordered nzSize="small" [nzRenderItem]="item">
                 <ng-template #item let-item>
                     <nz-list-item [nzContent]="item.name" [nzActions]="[editAction]">
                         <ng-template #editAction>
                             <button nz-button [nzType]="'primary'" (click)="clearCache(item.name);">
-                                {{l("Clear")}}
+                                {{"Clear" | translate}}
                             </button>
                         </ng-template>
                     </nz-list-item>
@@ -25,13 +25,13 @@
     </nz-tabset>
     <ng-template #extraTemplate>
         <button *ngIf="selectedIndex==0" nz-button [nzType]="'primary'" (click)="clearAllCaches()">
-            <i class="anticon anticon-close-circle-o"></i>{{l("ClearAll")}}
+            <i class="anticon anticon-close-circle-o"></i>{{"ClearAll" | translate}}
         </button>
         <button  *ngIf="selectedIndex==1" nz-button [nzType]="'primary'" (click)="downloadWebLogs()">
-            <i class="anticon anticon-download"></i> {{l("DownloadAll")}}
+            <i class="anticon anticon-download"></i> {{"DownloadAll" | translate}}
         </button>
         <button *ngIf="selectedIndex==1" nz-button [nzType]="'primary'" (click)="getWebLogs()">
-            <i class="anticon anticon-sync"></i> {{l("Refresh")}}
+            <i class="anticon anticon-sync"></i> {{"Refresh" | translate}}
         </button>
     </ng-template>
 </nz-card>

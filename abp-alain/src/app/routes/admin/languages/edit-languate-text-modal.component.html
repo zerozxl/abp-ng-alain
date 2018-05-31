@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <div class="modal-title">{{l("EditText")}}</div>
+  <div class="modal-title">{{"EditText" | translate}}</div>
 </div>
 <nz-spin *ngIf="!model" class="modal-spin"></nz-spin>
 <sf *ngIf="model" #sf mode="edit" [schema]="schema" [formData]="model" button="none">

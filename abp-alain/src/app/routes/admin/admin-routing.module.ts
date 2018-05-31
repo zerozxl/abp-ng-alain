@@ -10,7 +10,7 @@ import { MaintenanceComponent } from './maintenance/maintenance.component';
 
 
 const routes: Routes = [
-    { path: 'languages', component: LanguagesComponent, data: { reuse: true, title: 'languages', i18N: 'languages' } },
+    { path: 'languages', component: LanguagesComponent, data: { reuse: true, title: 'language', titleI18n: 'language' } },
     { path: 'languages/:name/texts', component: LanguageTextsComponent },
     { path: 'tenants', component: TenantListComponent, data: { reuse: true, title: 'tenants' } },
     { path: 'roles', component: RolesComponent, data: { reuse: true, title: 'roles' } },
