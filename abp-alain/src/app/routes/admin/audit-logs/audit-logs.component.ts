@@ -41,16 +41,16 @@ export class AuditLogsComponent extends AppComponentBase implements OnInit {
         }
     ];
     // Filters
-    public startDate: moment.Moment = moment().startOf('day');
-    public endDate: moment.Moment = moment().endOf('day');
-    public username: string;
-    public serviceName: string;
-    public methodName: string;
-    public browserInfo: string;
-    public hasException: boolean = undefined;
-    public minExecutionDuration: number;
-    public maxExecutionDuration: number;
-
+    q: any = {
+        dateRange: [moment().startOf('day'), moment().endOf('day')],
+        username: '',
+        serviceName: '',
+        methodName: '',
+        browserInfo: '',
+        hasException: undefined,
+        minExecutionDuration: 0,
+        maxExecutionDuration: 0,
+    };
     advancedFiltersAreShown = false;
 
     constructor(
@@ -71,15 +71,15 @@ export class AuditLogsComponent extends AppComponentBase implements OnInit {
     getAuditLogs() {
         this.loading = true;
         this.auditLogService.getAuditLogs(
-            this.startDate,
-            this.endDate,
-            this.username,
-            this.serviceName,
-            this.methodName,
-            this.browserInfo,
-            this.hasException,
-            this.minExecutionDuration,
-            this.maxExecutionDuration,
+            this.q.startDate,
+            this.q.endDate,
+            this.q.username,
+            this.q.serviceName,
+            this.q.methodName,
+            this.q.browserInfo,
+            this.q.hasException,
+            this.q.minExecutionDuration,
+            this.q.maxExecutionDuration,
             // sort
             '',
             this.st.ps,
@@ -98,15 +98,15 @@ export class AuditLogsComponent extends AppComponentBase implements OnInit {
 
     exportToExcel(): void {
         this.auditLogService.getAuditLogsToExcel(
-            this.startDate,
-            this.endDate,
-            this.username,
-            this.serviceName,
-            this.methodName,
-            this.browserInfo,
-            this.hasException,
-            this.minExecutionDuration,
-            this.maxExecutionDuration,
+            this.q.startDate,
+            this.q.endDate,
+            this.q.username,
+            this.q.serviceName,
+            this.q.methodName,
+            this.q.browserInfo,
+            this.q.hasException,
+            this.q.minExecutionDuration,
+            this.q.maxExecutionDuration,
             undefined,
             undefined,
             undefined)

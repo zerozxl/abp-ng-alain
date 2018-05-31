@@ -91,12 +91,10 @@ export class StartupService {
       const cookieLangValue = Abp.utils.getCookieValue('Abp.Localization.CultureName');
       this.httpClient.get<any>(AppConsts.remoteServiceBaseUrl + '/AbpUserConfiguration/GetAll')
         .subscribe(allres => {
-          console.log(allres);
           const all: any = allres;
           const allSetting = all.result;
           Abp.multiTenancy.setGlobal(allSetting.multiTenancy);
           Abp.session.setGlobal(allSetting.session);
-          console.log(allSetting.localization.values.AbpZeroTemplate);
           this.translate.setTranslation('zh-CN', allSetting.localization.values.AbpZeroTemplate);
           this.translate.setDefaultLang('zh-CN');
           Abp.localization.setGlobal(allSetting.localization);

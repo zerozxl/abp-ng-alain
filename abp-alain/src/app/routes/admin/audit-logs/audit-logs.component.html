@@ -1,8 +1,86 @@
 <page-header></page-header>
 <nz-card>
+  <form nz-form (ngSubmit)="getData()">
+    <nz-row [nzGutter]="4">
+      <nz-col nzMd="12" nzSm="24">
+        <nz-form-item>
+          <nz-form-label nzFor="q.dateRange">{{"DateRange" | translate}}</nz-form-label>
+          <nz-form-control>
+            <nz-range-picker name="q.dateRange" [nzStyle]="{width: '100%'}" [(ngModel)]="q.dateRange">
+            </nz-range-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col nzMd="12" nzSm="24">
+        <nz-form-item>
+          <nz-form-label nzFor="q.UserName">{{"UserName" | translate}}</nz-form-label>
+          <nz-form-control>
+            <input nz-input [(ngModel)]="q.UserName" name="q.UserName" id="q.UserName">
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+
+      <nz-col nzMd="12" nzSm="24" *ngIf="expandForm">
+        <nz-form-item>
+          <nz-form-label nzFor="q.Service">{{"Service"| translate}}</nz-form-label>
+          <nz-form-control>
+            <input nz-input [(ngModel)]="q.Service" name="q.Service" id="q.Service">
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col nzMd="12" nzSm="24" *ngIf="expandForm">
+        <nz-form-item>
+          <nz-form-label nzFor="q.minExecutionDuration">{{"Duration"| translate}}</nz-form-label>
+          <nz-form-control>
+            <nz-input-number style="width:30%" [(ngModel)]="q.minExecutionDuration" [nzMin]="0" [nzMax]="100000" [nzStep]="1"></nz-input-number>~
+            <nz-input-number style="width:30%" [(ngModel)]="q.MinExecutionDuration" [nzMin]="0" [nzMax]="100000" [nzStep]="1"></nz-input-number>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col nzMd="12" nzSm="24" *ngIf="expandForm">
+        <nz-form-item>
+          <nz-form-label nzFor="q.methodName">{{"Action"| translate}}</nz-form-label>
+          <nz-form-control>
+            <input nz-input [(ngModel)]="q.methodName" name="q.methodName" id="q.methodName">
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col nzMd="12" nzSm="24" *ngIf="expandForm">
+        <nz-form-item>
+          <nz-form-label nzFor="q.hasException">{{"ErrorState"| translate}}</nz-form-label>
+          <nz-form-control>
+            <input nz-input [(ngModel)]="q.hasException" name="q.hasException" id="q.hasException">
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col nzMd="12" nzSm="24" *ngIf="expandForm">
+        <nz-form-item>
+          <nz-form-label nzFor="q.browserInfo">{{"Browser"| translate}}</nz-form-label>
+          <nz-form-control>
+            <input nz-input [(ngModel)]="q.browserInfo" name="q.browserInfo" id="q.browserInfo">
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+    </nz-row>
+    <nz-row>
+      <nz-col nzMd="12" nzSm="24" [class.text-left]="true">
+        <nz-form-item>
+          <a (click)="expandForm=!expandForm">
+            {{expandForm ? '收起' : '展开'}}
+            <i class="anticon" [class.anticon-down]="!expandForm" [class.anticon-up]="expandForm"></i>
+          </a>
+        </nz-form-item>
+      </nz-col>
+      <nz-col [nzSpan]="12" [class.text-right]="true">
+        <nz-form-item>
+          <button nz-button type="submit" [nzType]="'primary'" [nzLoading]="loading">查询</button>
+          <button nz-button type="reset" (click)="getData()" class="mx-sm">重置</button>
+        </nz-form-item>
+      </nz-col>
+    </nz-row>
+  </form>
   <simple-table #st [columns]="columns" [data]="data" [showSizeChanger]="true" isPageIndexReset="true" frontPagination="false"
-    [loading]="loading" (change)="getAuditLogs()" toTopInChange showSizeChanger showQuickJumper showTotal
-    isPageIndexReset>
+    [loading]="loading" (change)="getAuditLogs()" toTopInChange showSizeChanger showQuickJumper showTotal isPageIndexReset>
     <ng-template st-row="exception" type="title" let-c>
       {{ c.title }}
     </ng-template>
