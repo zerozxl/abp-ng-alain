@@ -84,6 +84,7 @@ export class LanguageTextsComponent extends AppComponentBase implements OnInit {
     });
   }
   getLanguageTexts() {
+    this.loading = true;
     this.languageService.getLanguageTexts(
       this.st.ps,
       (this.st.pi - 1) * this.st.ps,
@@ -93,13 +94,14 @@ export class LanguageTextsComponent extends AppComponentBase implements OnInit {
       this.targetLanguageName,
       this.targetValueFilter,
       this.filterText
-    ).subscribe(result => {
-      this.st.total = result.totalCount;
-      this.data = result.items;
-      const pi = this.st.pi;
-      setTimeout(() => {
-        this.st.pi = pi;
-      }, 50);
-    });
+    ).finally(() => { this.loading = false; })
+      .subscribe(result => {
+        this.st.total = result.totalCount;
+        this.data = result.items;
+        const pi = this.st.pi;
+        setTimeout(() => {
+          this.st.pi = pi;
+        }, 50);
+      });
   }
 }

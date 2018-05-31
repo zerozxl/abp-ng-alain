@@ -1,3 +1,4 @@
+import { AuditLogsComponent } from './audit-logs/audit-logs.component';
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared/shared.module';
 import { NzTreeModule } from 'ng-zorro-antd';
@@ -29,7 +30,6 @@ import { MaintenanceComponent } from './maintenance/maintenance.component';
         AdminRoutingModule,
         NzTreeModule],
     providers: [
-        
         // ImpersonationService
     ],
     declarations: [
@@ -38,6 +38,7 @@ import { MaintenanceComponent } from './maintenance/maintenance.component';
         // CreateOrEditRoleModalComponent,
         // UsersComponent,
         // CreateOrEditUserModalComponent,
+        AuditLogsComponent,
         TenantListComponent,
         CreateTenantModalComponent,
         EditTenantModalComponent,

@@ -68,7 +68,7 @@ export class TenantListComponent extends AppComponentBase implements OnInit {
     }
 
     getTenants() {
-
+        this.loading = true;
         this._tenantService.getTenants(
             this.filters.filterText,
             this.filters.subscriptionEndDateRange ? this.filters.subscriptionEndDateRange[0] : undefined,
@@ -80,6 +80,7 @@ export class TenantListComponent extends AppComponentBase implements OnInit {
             '',
             this.st.ps,
             (this.st.pi - 1) * this.st.ps)
+            .finally(() => { this.loading = false; })
             .subscribe(result => {
                 this.data = result.items;
                 this.st.total = result.totalCount;

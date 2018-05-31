@@ -14,11 +14,12 @@ import { ServiceProxyModule } from '@shared/service-proxies/service-proxy.module
 // region: third libs
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { CountdownModule } from 'ngx-countdown';
-
+import { TruncateModule } from '@yellowspot/ng-truncate';
 const THIRDMODULES = [
   NgZorroAntdModule,
   CountdownModule,
-  ServiceProxyModule
+  ServiceProxyModule,
+  TruncateModule
 ];
 // endregion
 

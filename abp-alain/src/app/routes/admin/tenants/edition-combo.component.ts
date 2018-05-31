@@ -29,7 +29,7 @@ import { AppComponentBase } from '@shared/app-component-base';
     // tslint:disable-next-line:component-selector
     selector: 'edition-combo',
     template:
-    `
+        `
     <nz-select name="EditionCombobox" 
         [nzSize]="'middle'"
         [nzShowSearch]="true" 
@@ -60,7 +60,7 @@ export class EditionComboComponent extends AppComponentBase implements OnInit, A
             this.editions = editions;
             setTimeout(() => {
                 this.selectedEdition = '-1';
-               // $(self.editionComboboxElement.nativeElement).selectpicker('refresh');
+                // $(self.editionComboboxElement.nativeElement).selectpicker('refresh');
             }, 0);
         });
     }

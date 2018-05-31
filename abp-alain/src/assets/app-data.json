@@ -44,12 +44,19 @@
                 "text": "语言管理",
                 "link": "/admin/languages",
                 "translate": "languages",
+                "icon":"icon-book-open",
                 "acl":"Pages.Administration.Languages"
+            }
+            ,{
+                "text": "审计日志",
+                "link": "/admin/auditlogs",
+                "translate": "AuditLogs"
             }
             ,{
                 "text": "维护",
                 "link": "/admin/maintenance",
                 "translate": "Maintenance",
+                "icon":"anticon anticon-tool",
                 "acl":"Pages.Administration.Host.Maintenance"
             }
         ]

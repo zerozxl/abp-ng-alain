@@ -71,7 +71,10 @@ export class LanguagesComponent extends AppComponentBase implements OnInit {
    * 获取支持的语言列表
    */
   getLanguages() {
-    this.languageService.getLanguages().subscribe(result => {
+    this.loading = true;
+    this.languageService.getLanguages()
+    .finally(() => { this.loading = false; })
+    .subscribe(result => {
       this.data = result.items;
       this.defaultLanguageName = result.defaultLanguageName;
     });

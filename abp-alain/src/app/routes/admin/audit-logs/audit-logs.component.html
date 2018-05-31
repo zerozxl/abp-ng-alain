@@ -1,0 +1,26 @@
+<page-header></page-header>
+<nz-card>
+  <simple-table #st [columns]="columns" [data]="data" [showSizeChanger]="true" isPageIndexReset="true" frontPagination="false"
+    [loading]="loading" (change)="getAuditLogs()" toTopInChange showSizeChanger showQuickJumper showTotal
+    isPageIndexReset>
+    <ng-template st-row="exception" type="title" let-c>
+      {{ c.title }}
+    </ng-template>
+    <ng-template st-row="exception" let-item let-index="index">
+      <i *ngIf="item.exception" class="anticon anticon-close"></i>
+      <i *ngIf="!item.exception" class="anticon anticon-check"></i>
+    </ng-template>
+    <ng-template st-row="executionDuration" type="title" let-c>
+      {{ c.title }}
+    </ng-template>
+    <ng-template st-row="executionDuration" let-item let-index="index">
+      {{l('Xms',item.executionDuration)}}
+    </ng-template>
+    <ng-template st-row="browserInfo" type="title" let-c>
+      {{ c.title }}
+    </ng-template>
+    <ng-template st-row="browserInfo" let-item let-index="index">
+      {{item.browserInfo | truncate : 20}}
+    </ng-template>
+  </simple-table>
+</nz-card>

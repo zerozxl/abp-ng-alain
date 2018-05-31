@@ -1,3 +1,4 @@
+import { AuditLogsComponent } from './audit-logs/audit-logs.component';
 import { LanguagesComponent } from './languages/languages.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -9,10 +10,11 @@ import { MaintenanceComponent } from './maintenance/maintenance.component';
 
 
 const routes: Routes = [
-    { path: 'languages', component: LanguagesComponent, data: { reuse: true , title: 'languages'} },
+    { path: 'languages', component: LanguagesComponent, data: { reuse: true, title: 'languages', i18N: 'languages' } },
     { path: 'languages/:name/texts', component: LanguageTextsComponent },
     { path: 'tenants', component: TenantListComponent, data: { reuse: true, title: 'tenants' } },
     { path: 'roles', component: RolesComponent, data: { reuse: true, title: 'roles' } },
+    { path: 'auditlogs', component: AuditLogsComponent, data: { reuse: true, title: 'auditlogs' } },
     { path: 'maintenance', component: MaintenanceComponent, data: { reuse: true, title: 'maintenance' } },
 
 ];

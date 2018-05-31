@@ -128,23 +128,13 @@ export class StartupService {
           appSession.init().then(() => {
             resolve(res);
           });
+          if (!tokenData.token) {
+            this.injector.get(Router).navigateByUrl('/passport/login');
+            resolve({});
+            return;
+          }
         }
         );
-
-      if (!tokenData.token) {
-        this.injector.get(Router).navigateByUrl('/passport/login');
-        resolve({});
-        return;
-      } else {
-
-      }
-
-
-
-      // ACL：设置权限为全量
-      // this.aclService.setFull(true);
-      // 初始化菜单
-      this.menuService.add(res.menu);
 
     },
       () => { },
