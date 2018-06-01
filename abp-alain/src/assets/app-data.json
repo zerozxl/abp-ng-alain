@@ -8,57 +8,75 @@
         "avatar": "./assets/tmp/img/zorro.svg",
         "email": "cipchk@qq.com"
     },
-    "url":{
+    "url": {
         "remoteServiceBaseUrl": "http://localhost:22742",
         "appBaseUrl": "http://localhost:4200"
     },
-    "menu": [{
-        "text": "主导航",
-        "translate": "main_navigation",
-        "group": true,
-        "children": [ {
-            "text": "租户",
-            "translate": "page-tenant",
-            "link": "/admin/tenants",
-            "icon": "icon-rocket",
-            "acl":"Pages.Tenants",
-            "children": []
-        }]
-    }, {
-        "text": "系统管理",
-            "translate": "admin",
-            "link": "/admin",
-            "icon": "icon-map",
-            "acl":"Pages.Administration",
-            "children": [{
-                "text": "角色管理",
-                "link": "/admin/roles",
-                "translate": "admin-role",
-                "acl":"Pages.Administration.Roles"
-            },{ 
-                "text": "用户管理",
-                "link": "/admin/users",
-                "translate": "admin-users",
-                "acl":"Pages.Administration.Users"
-            },{
-                "text": "语言管理",
-                "link": "/admin/languages",
-                "translate": "languages",
-                "icon":"icon-book-open",
-                "acl":"Pages.Administration.Languages"
-            }
-            ,{
-                "text": "审计日志",
-                "link": "/admin/auditlogs",
-                "translate": "AuditLogs"
-            }
-            ,{
-                "text": "维护",
-                "link": "/admin/maintenance",
-                "translate": "Maintenance",
-                "icon":"anticon anticon-tool",
-                "acl":"Pages.Administration.Host.Maintenance"
-            }
-        ]
-    }]
+    "menu": [
+        {
+            "text": "主导航",
+            "i18n": "MainMenu",
+            "icon": "anticon anticon-home",
+            "group": true,
+            "hideInBreadcrumb": true,
+            "children": [
+                {
+                    "text": "仪表盘",
+                    "i18n": "Dashboard",
+                    "link": "/dashboard",
+                    "icon": "anticon anticon-home"
+                },
+                {
+                    "text": "租户",
+                    "i18n": "Tenants",
+                    "link": "/admin/tenants",
+                    "icon": "anticon anticon-customer-service",
+                    "acl": "Pages.Tenants"
+                },
+                {
+                    "text": "管理",
+                    "i18n": "Administration",
+                    "icon": "anticon anticon-tool",
+                    "acl": "Pages.Administration",
+                    "group": true,                    
+                    "children": [
+                        {
+                            "text": "角色管理",
+                            "link": "/admin/roles",
+                            "icon": "anticon anticon-team",
+                            "i18n": "Roles",
+                            "acl": "Pages.Administration.Roles"
+                        },
+                        {
+                            "text": "用户管理",
+                            "link": "/admin/users",
+                            "i18n": "Users",
+                            "icon": "anticon anticon-user",
+                            "acl": "Pages.Administration.Users"
+                        },
+                        {
+                            "text": "语言管理",
+                            "link": "/admin/languages",
+                            "i18n": "Languages",
+                            "icon": "anticon anticon-flag",
+                            "acl": "Pages.Administration.Languages"
+                        },
+                        {
+                            "text": "审计日志",
+                            "link": "/admin/auditlogs",
+                            "icon": "anticon anticon-lock",
+                            "i18n": "AuditLogs"
+                        },
+                        {
+                            "text": "维护",
+                            "link": "/admin/maintenance",
+                            "i18n": "Maintenance",
+                            "icon": "anticon anticon-tool",
+                            "acl": "Pages.Administration.Host.Maintenance"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

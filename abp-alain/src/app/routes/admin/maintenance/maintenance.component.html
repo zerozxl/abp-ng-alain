@@ -1,7 +1,15 @@
-﻿<page-header></page-header>
+﻿<page-header>
+    <ng-template #action>
+        <div class="action">
+            <button *ngIf="selectedIndex==1" nz-button [nzType]="'primary'" (click)="downloadWebLogs()">
+                <i class="anticon anticon-download"></i> {{"DownloadAll" | translate}}
+            </button>
+        </div>
+    </ng-template>
+</page-header>
 <nz-card>
     <nz-tabset [nzTabBarExtraContent]="extraTemplate" [nzSelectedIndex]="selectedIndex" (nzSelectChange)="changeSelectIndex($event)">
-        <nz-tab nzTitle="{{'Caches' | translate}}"  (click)="selectedIndexChange()">
+        <nz-tab nzTitle="{{'Caches' | translate}}" (click)="selectedIndexChange()">
             <nz-list [nzDataSource]="caches" nzBordered nzSize="small" [nzRenderItem]="item">
                 <ng-template #item let-item>
                     <nz-list-item [nzContent]="item.name" [nzActions]="[editAction]">
@@ -15,21 +23,19 @@
             </nz-list>
         </nz-tab>
         <nz-tab nzTitle="{{l('WebSiteLogs')}}" (click)="selectedIndexChange()">
-                <div class="web-log-view full-height" id="web-log-view">
-                    <span class="log-line" *ngFor="let log of logs">
-                        <nz-tag *ngIf="getLogType(log)" [nzColor]="getLogClass(log)">{{getLogType(log)}}</nz-tag>
-                        {{getRawLogContent(log)}}
-                    </span>
-                </div>
+            <div class="web-log-view full-height" id="web-log-view">
+                <span class="log-line" *ngFor="let log of logs">
+                    <nz-tag *ngIf="getLogType(log)" [nzColor]="getLogClass(log)">{{getLogType(log)}}</nz-tag>
+                    {{getRawLogContent(log)}}
+                </span>
+            </div>
         </nz-tab>
     </nz-tabset>
     <ng-template #extraTemplate>
         <button *ngIf="selectedIndex==0" nz-button [nzType]="'primary'" (click)="clearAllCaches()">
             <i class="anticon anticon-close-circle-o"></i>{{"ClearAll" | translate}}
         </button>
-        <button  *ngIf="selectedIndex==1" nz-button [nzType]="'primary'" (click)="downloadWebLogs()">
-            <i class="anticon anticon-download"></i> {{"DownloadAll" | translate}}
-        </button>
+
         <button *ngIf="selectedIndex==1" nz-button [nzType]="'primary'" (click)="getWebLogs()">
             <i class="anticon anticon-sync"></i> {{"Refresh" | translate}}
         </button>

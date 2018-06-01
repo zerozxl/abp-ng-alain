@@ -1,4 +1,12 @@
-<page-header></page-header>
+<page-header >
+  <ng-template #action>
+    <div class="action">
+      <button nz-button [nzType]="'primary'" (click)="exportToExcel()">
+        <i class="anticon anticon-file-excel"></i> {{"ExportToExcel" | translate}}
+      </button>
+    </div>
+  </ng-template>
+</page-header>
 <nz-card>
   <form nz-form (ngSubmit)="getAuditLogs()">
     <nz-row [nzGutter]="4">
@@ -32,8 +40,10 @@
         <nz-form-item>
           <nz-form-label nzFor="q.minExecutionDuration">{{"Duration"| translate}}</nz-form-label>
           <nz-form-control>
-            <nz-input-number style="width:30%" name="q.minExecutionDuration" [(ngModel)]="q.minExecutionDuration" [nzMin]="0" [nzMax]="100000" [nzStep]="1"></nz-input-number>~
-            <nz-input-number style="width:30%" name="q.maxExecutionDuration" [(ngModel)]="q.maxExecutionDuration" [nzMin]="0" [nzMax]="100000" [nzStep]="1"></nz-input-number>
+            <nz-input-number style="width:30%" name="q.minExecutionDuration" [(ngModel)]="q.minExecutionDuration" [nzMin]="0" [nzMax]="100000"
+              [nzStep]="1"></nz-input-number>~
+            <nz-input-number style="width:30%" name="q.maxExecutionDuration" [(ngModel)]="q.maxExecutionDuration" [nzMin]="0" [nzMax]="100000"
+              [nzStep]="1"></nz-input-number>
           </nz-form-control>
         </nz-form-item>
       </nz-col>
@@ -73,15 +83,16 @@
       </nz-col>
       <nz-col [nzSpan]="12" [class.text-right]="true">
         <nz-form-item>
-          <button nz-button type="submit" [nzType]="'primary'" [nzLoading]="loading">查询</button>
+
+          <button nz-button type="submit" [nzType]="'primary'" [nzLoading]="loading">{{'Refresh'|translate}}</button>
           <button nz-button type="reset" (click)="getData()" class="mx-sm">重置</button>
         </nz-form-item>
       </nz-col>
     </nz-row>
   </form>
   <simple-table #st [columns]="columns" [data]="data" [showSizeChanger]="true" isPageIndexReset="true" frontPagination="false"
-    [loading]="loading" (change)="getAuditLogs()" (sortChange)="sortChange($event)"
-    toTopInChange showSizeChanger showQuickJumper showTotal isPageIndexReset>
+    [loading]="loading" (change)="getAuditLogs()" (sortChange)="sortChange($event)" toTopInChange showSizeChanger showQuickJumper
+    showTotal isPageIndexReset>
     <ng-template st-row="exception" type="title" let-c>
       {{ c.title }}
     </ng-template>

@@ -25,7 +25,7 @@ const routes: Routes = [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       // tslint:disable-next-line:max-line-length
       { path: 'dashboard', component: DashboardComponent, canActivate: [ACLGuard], data: { guard: 'user', title: '仪表盘', titleI18n: 'dashboard' } },
-      { path: 'admin', loadChildren: './admin/admin.module#AdminModule', data: { reuse: true } },
+      { path: 'admin', loadChildren: './admin/admin.module#AdminModule', canActivate: [ACLGuard], data: { reuse: true } },
       // 业务子模块
       // { path: 'widgets', loadChildren: './widgets/widgets.module#WidgetsModule' }
     ],

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Abp } from '@core/abp/abp';
 import { LogService } from '@core/abp/log/log.service';
@@ -10,6 +10,7 @@ import * as _ from 'lodash';
 import { NzMessageService } from 'ng-zorro-antd';
 import { AppConsts } from '@core/abp/AppConsts';
 import { TokenService } from '@delon/auth';
+import { ReuseTabService } from '@delon/abc';
 
 
 export class ExternalLoginProvider extends ExternalLoginProviderInfoModel {
@@ -42,18 +43,16 @@ export class LoginService {
 
     authenticateModel: AuthenticateModel;
     authenticateResult: AuthenticateResultModel;
-
     externalLoginProviders: ExternalLoginProvider[] = [];
-
     rememberMe: boolean;
-
     constructor(
-        private _tokenAuthService: TokenAuthServiceProxy,
-        private _router: Router,
-        private _utilsService: UtilsService,
-        private _messageService: NzMessageService,
-        private _tokenService: TokenService,
-        private _logService: LogService
+        private tokenAuthService: TokenAuthServiceProxy,
+        private router: Router,
+        private utilsService: UtilsService,
+        private tokenService: TokenService,
+        private logService: LogService,
+        @Inject(ReuseTabService)
+        private reuseTabService: ReuseTabService,
     ) {
         this.clear();
     }
@@ -63,11 +62,11 @@ export class LoginService {
 
         // We may switch to localStorage instead of cookies
         // tslint:disable-next-line:max-line-length
-        this.authenticateModel.twoFactorRememberClientToken = this._utilsService.getCookieValue(LoginService.twoFactorRememberClientTokenName);
+        this.authenticateModel.twoFactorRememberClientToken = this.utilsService.getCookieValue(LoginService.twoFactorRememberClientTokenName);
         this.authenticateModel.singleSignIn = UrlHelper.getSingleSignIn();
         this.authenticateModel.returnUrl = UrlHelper.getReturnUrl();
 
-        this._tokenAuthService
+        this.tokenAuthService
             .authenticate(this.authenticateModel)
             .finally(finallyCallback)
             .subscribe((result: AuthenticateResultModel) => {
@@ -90,7 +89,7 @@ export class LoginService {
 
         if (authenticateResult.shouldResetPassword) {
             // Password reset
-            this._router.navigate(['passport/reset-password'], {
+            this.router.navigate(['passport/reset-password'], {
                 queryParams: {
                     userId: authenticateResult.userId,
                     tenantId: Abp.session.tenantId,
@@ -102,7 +101,7 @@ export class LoginService {
 
         } else if (authenticateResult.requiresTwoFactorVerification) {
             // Two factor authentication
-            this._router.navigate(['account/send-code']);
+            this.router.navigate(['account/send-code']);
 
         } else if (authenticateResult.accessToken) {
             // Successfully logged in
@@ -121,11 +120,8 @@ export class LoginService {
 
         } else {
             // Unexpected result!
-
-            this._logService.warn('Unexpected authenticateResult!');
-            this._router.navigate(['passport/login']);
-
-
+            this.logService.warn('Unexpected authenticateResult!');
+            this.router.navigate(['passport/login']);
         }
     }
 
@@ -134,13 +130,13 @@ export class LoginService {
 
         const tokenExpireDate = rememberMe ? (new Date(new Date().getTime() + 1000 * expireInSeconds)) : undefined;
 
-        this._tokenService.set({
+        this.tokenService.set({
             token: accessToken,
             tokenExpireDate
         }
         );
 
-        this._utilsService.setCookieValue(
+        this.utilsService.setCookieValue(
             AppConsts.authorization.encrptedAuthTokenName,
             encryptedAccessToken,
             tokenExpireDate,
@@ -148,37 +144,32 @@ export class LoginService {
         );
 
         if (twoFactorRememberClientToken) {
-            this._utilsService.setCookieValue(
+            this.utilsService.setCookieValue(
                 LoginService.twoFactorRememberClientTokenName,
                 twoFactorRememberClientToken,
                 new Date(new Date().getTime() + 365 * 86400000), // 1 year
                 Abp.appPath
             );
         }
-
         console.log(redirectUrl);
-
-
         if (redirectUrl) {
             location.href = redirectUrl;
         } else {
             let initialUrl = UrlHelper.initialUrl;
-
             if (initialUrl.indexOf('/passport') > 0) {
                 initialUrl = AppConsts.appBaseUrl;
             }
 
-
-            Abp.log.debug({
-                'redirectUrl': initialUrl
-            });
-
+            // Abp.log.debug({
+            //     'redirectUrl': initialUrl
+            // });
             // 跳转到租户主界面
-            location.href = AppConsts.appBaseUrl + '/#/admin/languages';
-            location.reload();
-
+            // location.href = AppConsts.appBaseUrl + '/#/admin/languages';
+            // location.reload();
             // 和 location.href 相比，router不会触发启动程序，导致 session user 里的用户名为空
-            // this._router.navigate(['reception/index']);
+            // 清空路由复用信息
+            this.reuseTabService.clear();
+            this.router.navigate(['admin/languages']);
             // location.href =  AppConsts.appBaseUrl + '/#/reception/index';
         }
 
@@ -192,7 +183,7 @@ export class LoginService {
     }
 
     private initExternalLoginProviders() {
-        this._tokenAuthService
+        this.tokenAuthService
             .getExternalAuthenticationProviders()
             .subscribe((providers: ExternalLoginProviderInfoModel[]) => {
                 this.externalLoginProviders = _.map(providers, p => new ExternalLoginProvider(p));

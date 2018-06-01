@@ -10,12 +10,12 @@ import { MaintenanceComponent } from './maintenance/maintenance.component';
 
 
 const routes: Routes = [
-    { path: 'languages', component: LanguagesComponent, data: { reuse: true, title: 'language', titleI18n: 'language' } },
+    { path: 'languages', component: LanguagesComponent, data: { reuse: true, title: 'language', titleI18n: 'Languages' } },
     { path: 'languages/:name/texts', component: LanguageTextsComponent },
-    { path: 'tenants', component: TenantListComponent, data: { reuse: true, title: 'tenants' } },
-    { path: 'roles', component: RolesComponent, data: { reuse: true, title: 'roles' } },
-    { path: 'auditlogs', component: AuditLogsComponent, data: { reuse: true, title: 'auditlogs' } },
-    { path: 'maintenance', component: MaintenanceComponent, data: { reuse: true, title: 'maintenance' } },
+    { path: 'tenants', component: TenantListComponent, data: { reuse: true, title: 'tenants', titleI18n: 'Tenants' } },
+    { path: 'roles', component: RolesComponent, data: { reuse: true, title: 'roles', titleI18n: 'Roles' } },
+    { path: 'auditlogs', component: AuditLogsComponent, data: { reuse: true, title: 'auditlogs', titleI18n: 'AuditLogs' } },
+    { path: 'maintenance', component: MaintenanceComponent, data: { reuse: true, title: 'maintenance', titleI18n: 'Maintenance' } },
 
 ];
 

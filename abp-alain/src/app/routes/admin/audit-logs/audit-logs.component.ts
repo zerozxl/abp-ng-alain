@@ -4,6 +4,7 @@ import { AppComponentBase } from '@shared/app-component-base';
 import { AuditLogListDto, AuditLogServiceProxy } from '@shared/service-proxies/service-proxies';
 import { FileDownloadService } from '@shared/utils/file-download.service';
 import * as moment from 'moment';
+import { AuditLogDetailModalComponent } from './audit-log-detail-modal.component';
 @Component({
     templateUrl: './audit-logs.component.html',
     styleUrls: ['./audit-logs.component.less'],
@@ -18,14 +19,16 @@ export class AuditLogsComponent extends AppComponentBase implements OnInit {
         { title: 'Success', i18n: 'Success', render: 'exception' },
         {
             title: 'Time', i18n: 'Time', type: 'date',
-            index: 'executionTime', sorter: (a, b) => { return true; }
+            index: 'executionTime',
+            sorter: (a, b) => true
         },
         { title: 'UserName', i18n: 'UserName', index: 'userName' },
         { title: 'Service', i18n: 'Service', index: 'serviceName' },
         { title: 'Action', i18n: 'Action', index: 'methodName' },
         {
             title: 'Duration', i18n: 'Duration', render: 'executionDuration',
-            index: 'executionDuration', sorter: (a, b) => { return true; }
+            index: 'executionDuration',
+            sorter: (a, b) => true
         },
         { title: 'IpAddress', i18n: 'IpAddress', index: 'clientIpAddress' },
         { title: 'Client', i18n: 'Client', index: 'clientName' },
@@ -35,12 +38,12 @@ export class AuditLogsComponent extends AppComponentBase implements OnInit {
             i18n: 'Actions',
             buttons: [
                 {
-                    text: 'Edit',
-                    i18n: 'Edit',
+                    text: 'Detail',
+                    i18n: 'Detail',
                     type: 'modal',
-                    paramName: 'languagePara',
+                    paramName: 'auditLogPara',
                     //   acl: 'Pages.Administration.Languages.Edit',
-                    //   component: CreateOrEditLanguageComponent,
+                    component: AuditLogDetailModalComponent,
                     click: (record: any, modal: any) => this.getAuditLogs()
                 }
             ]
@@ -74,18 +77,19 @@ export class AuditLogsComponent extends AppComponentBase implements OnInit {
         // this.auditLogDetailModal.show(record);
     }
     sortChange(ret: any) {
-        var sort = undefined;
+        // tslint:disable-next-line:no-unnecessary-initializer
+        let sort = undefined;
         if (ret.value) {
-            if (ret.value == 'descend') {
+            if (ret.value === 'descend') {
                 sort = ret.column.index + ' desc';
-            }
-            else {
+            } else {
                 sort = ret.column.index + ' asc';
             }
         }
-        console.log(sort)
+        console.log(sort);
         this.getAuditLogs(sort);
     }
+    // tslint:disable-next-line:no-unnecessary-initializer
     getAuditLogs(sort: string = undefined) {
         this.loading = true;
         this.auditLogService.getAuditLogs(
@@ -96,8 +100,8 @@ export class AuditLogsComponent extends AppComponentBase implements OnInit {
             this.q.methodName,
             this.q.browserInfo,
             this.q.hasException,
-            this.q.minExecutionDuration == 0 ? undefined : this.q.minExecutionDuration,
-            this.q.maxExecutionDuration == 0 ? undefined : this.q.maxExecutionDuration,
+            this.q.minExecutionDuration === 0 ? undefined : this.q.minExecutionDuration,
+            this.q.maxExecutionDuration === 0 ? undefined : this.q.maxExecutionDuration,
             // sort
             sort,
             this.st.ps,
