@@ -20,7 +20,7 @@
             "text": "租户",
             "translate": "page-tenant",
             "link": "/admin/tenants",
-            "icon": "icon-rocket",
+            "icon": "anticon anticon-customer-service",
             "acl":"Pages.Tenants",
             "children": []
         }]
@@ -39,17 +39,19 @@
                 "text": "用户管理",
                 "link": "/admin/users",
                 "translate": "admin-users",
+                "icon":"anticon anticon-user",
                 "acl":"Pages.Administration.Users"
             },{
                 "text": "语言管理",
                 "link": "/admin/languages",
                 "translate": "languages",
-                "icon":"icon-book-open",
+                "icon":"anticon anticon-flag",
                 "acl":"Pages.Administration.Languages"
             }
             ,{
                 "text": "审计日志",
                 "link": "/admin/auditlogs",
+                "icon":"anticon anticon-lock",
                 "translate": "AuditLogs"
             }
             ,{

@@ -1,0 +1,35 @@
+<nz-card [nzBordered]="false" nzTitle="{{l('auditLogParaDetail')}}" class="mb-lg">
+
+    <nz-card nzType="inner" nzTitle="{{l('UserInformations')}}">
+        <desc-list class="mb-md">
+            <desc-list-item term="{{l('UserName')}}">{{auditLogPara.userName}}</desc-list-item>
+            <desc-list-item term="{{l('IpAddress')}}">{{auditLogPara.clientIpAddress}}</desc-list-item>
+            <desc-list-item term="{{l('Client')}}">{{auditLogPara.clientName}}</desc-list-item>
+        </desc-list>
+        <desc-list class="mb-md" col="1">
+            <desc-list-item term="{{l('Browser')}}" nzMd="12">{{auditLogPara.browserInfo}}</desc-list-item>
+            <desc-list-item *ngIf="auditLogPara.impersonatorUserId">{{l("auditLogParaImpersonatedOperationInfo")}}</desc-list-item>
+        </desc-list>
+    </nz-card>
+    <nz-card nzType="inner" nzTitle="{{l('ActionInformations')}}">
+        <desc-list class="mb-md">
+            <desc-list-item term="{{l('Service')}}">{{auditLogPara.serviceName}}</desc-list-item>
+            <desc-list-item term="{{l('Action')}}">{{auditLogPara.methodName}}</desc-list-item>
+            <desc-list-item term="{{l('Time')}}">{{getExecutionTime()}}</desc-list-item>
+            <desc-list-item term="{{l('Duration')}}">{{getDurationAsMs()}}</desc-list-item>
+        </desc-list>
+        <desc-list class="mb-md" col="1">
+            <desc-list-item term="{{l('Parameters')}}">{{getFormattedParameters()}}</desc-list-item>
+        </desc-list>
+    </nz-card>
+    <nz-card nzType="inner" nzTitle="{{l('customData')}}">
+        <desc-list class="mb-md">
+            <desc-list-item term="{{l('None')}}">{{auditLogPara.customData}}</desc-list-item>
+        </desc-list>
+    </nz-card>
+    <nz-card nzType="inner" nzTitle="{{l('ErrorState')}}">
+        <desc-list class="mb-md">
+            <desc-list-item term="{{l('Success')}}">{{auditLogPara.customData}}</desc-list-item>
+        </desc-list>
+    </nz-card>
+</nz-card>

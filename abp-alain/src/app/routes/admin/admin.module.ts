@@ -22,6 +22,7 @@ import { EditLanguateTextModalComponent } from './languages/edit-languate-text-m
 import { RolesComponent } from './roles/roles.component';
 import { PermissionSelectComponent } from './shared/permission-select.component';
 import { MaintenanceComponent } from './maintenance/maintenance.component';
+import { AuditLogDetailModalComponent } from './audit-logs/audit-log-detail-modal.component';
 
 @NgModule({
     imports: [
@@ -38,6 +39,7 @@ import { MaintenanceComponent } from './maintenance/maintenance.component';
         // CreateOrEditRoleModalComponent,
         // UsersComponent,
         // CreateOrEditUserModalComponent,
+        AuditLogDetailModalComponent,
         AuditLogsComponent,
         TenantListComponent,
         CreateTenantModalComponent,
@@ -54,6 +56,7 @@ import { MaintenanceComponent } from './maintenance/maintenance.component';
     entryComponents: [
         // CreateOrEditRoleModalComponent,
         // CreateOrEditUserModalComponent,
+        AuditLogDetailModalComponent,
         CreateTenantModalComponent,
         EditTenantModalComponent,
         CreateOrEditLanguageComponent,
