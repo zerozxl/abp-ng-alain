@@ -5,6 +5,7 @@ import { FileDownloadService } from '@shared/utils/file-download.service';
 // import { CreateOrEditRoleModalComponent } from './create-or-edit-role-modal.component';
 import { AppComponentBase } from '@shared/app-component-base';
 import { SimpleTableComponent, SimpleTableColumn } from '@delon/abc';
+import { CreateOrEditRoleModalComponent } from './create-or-edit-role-modal.component';
 
 @Component({
     selector: 'app-roles',
@@ -31,7 +32,7 @@ export class RolesComponent extends AppComponentBase implements OnInit {
                     text: this.l('Edit'),
                     type: 'modal',
                     paramName: 'rolePara',
-                    // component: CreateOrEditRoleModalComponent,
+                    component: CreateOrEditRoleModalComponent,
                     click: (record: any, modal: any) => this.getRoles()
                 },
                 {

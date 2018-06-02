@@ -1,0 +1,35 @@
+﻿<nz-card [nzBordered]="false" nzTitle="{{l('EditRole')}}: {{role.displayName}}" class="mb-lg">
+    <nz-tabset>
+        <nz-tab nzTitle="{{l('RoleProperties')}}">
+            <nz-card>
+                <form nz-form (ngSubmit)="save()">
+                    <nz-row [nzGutter]="4">
+                        <nz-col>
+                            <nz-form-item>
+                                <nz-form-label nzFor="role.displayName">{{l("RoleName")}}</nz-form-label>
+                                <nz-form-control>
+                                    <input type="text" nz-input [(ngModel)]="role.displayName" name="role.displayName">
+                                </nz-form-control>
+                            </nz-form-item>
+                        </nz-col>
+                        <nz-col>
+                            <nz-form-item>
+                                <label nz-checkbox [(ngModel)]="role.isDefault" name="role.isDefault">{{l("Default")}}</label>
+                                <span>{{l("DefaultRole_Description")}}</span>
+                            </nz-form-item>
+                        </nz-col>
+
+                    </nz-row>
+                </form>
+            </nz-card>
+        </nz-tab>
+        <nz-tab nzTitle="{{l('Permissions')}}">
+            <permission-tree #permissionTree></permission-tree>
+        </nz-tab>
+    </nz-tabset>
+
+</nz-card>
+<div class="modal-footer">
+    <button nz-button type="button" (click)="close()">关闭</button>
+    <button nz-button type="submit" [nzType]="'primary'" (click)="save()"  [nzLoading]="loading">保存</button>
+</div>

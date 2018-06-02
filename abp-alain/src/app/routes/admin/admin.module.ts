@@ -23,6 +23,8 @@ import { RolesComponent } from './roles/roles.component';
 import { PermissionSelectComponent } from './shared/permission-select.component';
 import { MaintenanceComponent } from './maintenance/maintenance.component';
 import { AuditLogDetailModalComponent } from './audit-logs/audit-log-detail-modal.component';
+import { PermissionTreeComponent } from './shared/permission-tree.component';
+import { CreateOrEditRoleModalComponent } from './roles/create-or-edit-role-modal.component';
 
 @NgModule({
     imports: [
@@ -35,8 +37,8 @@ import { AuditLogDetailModalComponent } from './audit-logs/audit-log-detail-moda
     ],
     declarations: [
         RolesComponent,
-        // PermissionTreeComponent,
-        // CreateOrEditRoleModalComponent,
+        PermissionTreeComponent,
+        CreateOrEditRoleModalComponent,
         // UsersComponent,
         // CreateOrEditUserModalComponent,
         AuditLogDetailModalComponent,
@@ -54,7 +56,7 @@ import { AuditLogDetailModalComponent } from './audit-logs/audit-log-detail-moda
         PermissionSelectComponent
     ],
     entryComponents: [
-        // CreateOrEditRoleModalComponent,
+        CreateOrEditRoleModalComponent,
         // CreateOrEditUserModalComponent,
         AuditLogDetailModalComponent,
         CreateTenantModalComponent,
