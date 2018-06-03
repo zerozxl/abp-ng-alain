@@ -1,0 +1,40 @@
+﻿<page-header>
+  <ng-template #action>
+    <div class="action">
+      <button nz-button [nzType]="'primary'" [nzSize]="'middle'" (click)="createLanguage()">
+        <i class="anticon anticon-plus"></i>
+        <span>{{l("CreateNewLanguage")}}</span>
+      </button>
+    </div>
+  </ng-template>
+</page-header>
+<nz-card>
+  <form nz-form (ngSubmit)="getUsers()">
+    <nz-row [nzGutter]="4">
+      <nz-col nzMd="6" nzSm="24">
+        <permission-select [(selectedPermission)]="selectedPermission"></permission-select>
+      </nz-col>
+      <nz-col nzMd="6" nzSm="24">
+        <role-select [(selectedRole)]="selectedRole"></role-select>
+      </nz-col>
+      <nz-col nzMd="6" nzSm="24">
+        <input type="text" nz-input placeholder="{{l('SearchWithThreeDot')}}" [(ngModel)]="filterText" name="filterText">
+      </nz-col>
+      <nz-col nzMd="6" nzSm="24" [class.text-left]="true">
+        <button nz-button nzType="primary" type="submit" [nzLoading]="loading" [nzSize]="'middle'">{{l('Refresh')}}</button>
+      </nz-col>
+    </nz-row>
+  </form>
+  <simple-table #st [data]="data" [columns]="columns" [ps]="100" [extraParams]="params" frontPagination="false" showPagination="true"
+    isPageIndexReset="true" [loading]="loading" (sortChange)="sortChange($event)">
+    <ng-template st-row="roles" let-item let-index="index">
+      {{getRolesAsString(item.roles)}}
+    </ng-template>
+    <ng-template st-row="isEmailConfirmed" let-item let-index="index">
+      <nz-switch [(ngModel)]="item.isEmailConfirmed" [nzDisabled]="true"></nz-switch>
+    </ng-template>
+    <ng-template st-row="isActive" let-item let-index="index">
+      <nz-switch [(ngModel)]="item.isActive" [nzDisabled]="true"></nz-switch>
+    </ng-template>
+  </simple-table>
+</nz-card>

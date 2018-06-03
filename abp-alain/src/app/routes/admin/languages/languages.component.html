@@ -11,17 +11,11 @@
 <nz-card>
   <simple-table #st [data]="data" [columns]="columns" [ps]="100" [extraParams]="params" frontPagination="false" showPagination="true"
     isPageIndexReset="true" [loading]="loading">
-    <ng-template st-row="displayName" type="title" let-c>
-      {{ c.title }}
-    </ng-template>
     <ng-template st-row="displayName" let-item let-index="index">
       <i class="{{item.icon}}"></i>
       <span style="margin-left:5px">{{item.displayName}}</span>
       <span *ngIf="defaultLanguageName === item.name" title>({{l('Default')}})</span>
-    </ng-template>
-    <ng-template st-row="isEnabled" type="title" let-c>
-      {{ c.title }}
-    </ng-template>
+    </ng-template>    
     <ng-template st-row="isEnabled" let-item let-index="index">
       <nz-switch [(ngModel)]="!item.isDisabled" [nzDisabled]="true"></nz-switch>
     </ng-template>

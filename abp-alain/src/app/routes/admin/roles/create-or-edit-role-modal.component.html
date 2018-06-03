@@ -1,4 +1,4 @@
-﻿<nz-card [nzBordered]="false" nzTitle="{{l('EditRole')}}: {{role.displayName}}" class="mb-lg">
+﻿<nz-card [nzBordered]="false" nzTitle="{{role.id?(l('EditRole')+':'+role.displayName):l('CreateRole')}}" class="mb-lg">
     <nz-tabset>
         <nz-tab nzTitle="{{l('RoleProperties')}}">
             <nz-card>
@@ -27,9 +27,8 @@
             <permission-tree #permissionTree></permission-tree>
         </nz-tab>
     </nz-tabset>
-
 </nz-card>
 <div class="modal-footer">
     <button nz-button type="button" (click)="close()">关闭</button>
-    <button nz-button type="submit" [nzType]="'primary'" (click)="save()"  [nzLoading]="loading">保存</button>
+    <button nz-button type="submit" [nzType]="'primary'" (click)="save()"  [nzLoading]="saving">保存</button>
 </div>

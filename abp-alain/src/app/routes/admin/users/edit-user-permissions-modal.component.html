@@ -1,0 +1,8 @@
+
+<nz-card [nzBordered]="false" nzTitle="{{l('Permissions')+ '-'+userPara.userName}}" class="mb-lg">
+    <permission-tree #permissionTree></permission-tree>
+</nz-card>
+<div class="modal-footer">
+  <button nz-button type="button" (click)="close()">关闭</button>
+  <button nz-button type="submit" [nzType]="'primary'" (click)="save()" [nzLoading]="saving">保存</button>
+</div>

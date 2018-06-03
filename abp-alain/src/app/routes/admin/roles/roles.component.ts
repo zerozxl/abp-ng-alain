@@ -60,13 +60,13 @@ export class RolesComponent extends AppComponentBase implements OnInit {
     }
 
     createRole(): void {
-        // this.modalHelper.open(
-        //     CreateOrEditRoleModalComponent,
-        //     {
-        //         rolePara: null
-        //     }).subscribe(() => {
-        //         this.getRoles();
-        //     });
+        this.modalHelper.open(
+            CreateOrEditRoleModalComponent,
+            {
+                rolePara: null
+            }).subscribe(() => {
+                this.getRoles();
+            });
     }
     /**
      * 删除角色

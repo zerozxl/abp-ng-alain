@@ -1,4 +1,4 @@
-import { AfterViewChecked, AfterViewInit, Component, ElementRef, Injector, OnInit, ViewChild } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, Component, ElementRef, Injector, ViewChild } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
 import { FlatPermissionDto } from '@shared/service-proxies/service-proxies';
 import * as _ from 'lodash';
@@ -19,14 +19,12 @@ import { PermissionTreeEditModel } from './permission-tree-edit.model';
            >
         </nz-tree>`
 })
-export class PermissionTreeComponent extends AppComponentBase implements OnInit {
+export class PermissionTreeComponent extends AppComponentBase {
     @ViewChild('tree') tree: NzTreeComponent;
     nodes: NzTreeNode[] = [];
     expandDefault = true;
     editPermission: PermissionTreeEditModel;
     checkedKeys: any;
-    ngOnInit(): void {
-    }
     constructor(
         injector: Injector
     ) {
@@ -35,10 +33,9 @@ export class PermissionTreeComponent extends AppComponentBase implements OnInit 
 
     getGrantedPermissionNames(): string[] {
         var nodes = this.tree.nzTreeService.getCheckedNodeList();
-        console.log(nodes);
         return _.map(nodes, node => {
             return node.key;
-        })
+        });
     }
     /**
      * 设置权限值

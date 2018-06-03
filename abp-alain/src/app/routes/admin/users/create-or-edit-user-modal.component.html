@@ -1,0 +1,12 @@
+<nz-card [nzBordered]="false" nzTitle="{{user.id?(l('EditUser')+':'+user.userName):l('CreateNewUser')}}" class="mb-lg">
+  <nz-tabset>
+      
+      <nz-tab nzTitle=" {{l('OrganizationUnits')}}">
+        <organization-unit-tree #organizationUnitTree></organization-unit-tree>
+      </nz-tab>
+  </nz-tabset>
+</nz-card>
+<div class="modal-footer">
+  <button nz-button type="button" (click)="close()">关闭</button>
+  <button nz-button type="submit" [nzType]="'primary'" (click)="save()"  [nzLoading]="saving">保存</button>
+</div>
