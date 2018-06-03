@@ -43,7 +43,8 @@ export class UsersComponent extends AppComponentBase implements OnInit {
                     i18n: 'Edit',
                     type: 'modal',
                     paramName: 'userPara',
-                    component: CreateOrEditUserModalComponent
+                    component: CreateOrEditUserModalComponent,                    
+                    click: (record: any, modal: any) => this.getUsers()
                 },
                 {
                     text: 'More',
@@ -53,7 +54,7 @@ export class UsersComponent extends AppComponentBase implements OnInit {
                             text: 'Permissions',
                             i18n: 'Permissions',
                             paramName:'userPara', type: 'modal',
-                            component:EditUserPermissionsModalComponent
+                            component:EditUserPermissionsModalComponent,
                         },
                         {
                             text: 'Unlock',
@@ -104,7 +105,7 @@ export class UsersComponent extends AppComponentBase implements OnInit {
      * 检索用户
      * @param sort 排序
      */
-    getUsers(sort) {
+    getUsers(sort:string=undefined) {
         this.loading = true;
         this._userServiceProxy.getUsers(
             this.filterText,

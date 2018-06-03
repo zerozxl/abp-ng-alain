@@ -5,6 +5,7 @@ import { AppComponentBase } from '@shared/app-component-base';
 import { OrganizationUnitsTreeComponent, IOrganizationUnitsTreeComponentData } from '../shared/organization-unit-tree.component';
 import { AppConsts } from '@core/abp/AppConsts';
 import { NzModalRef } from 'ng-zorro-antd';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
     selector: 'createOrEditUserModal',
@@ -20,7 +21,7 @@ export class CreateOrEditUserModalComponent extends AppComponentBase implements 
     @ViewChild('organizationUnitTree') organizationUnitTree: OrganizationUnitsTreeComponent;
 
     @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
-
+    f: FormGroup;
     active = false;
     saving = false;
     canChangeUserName = true; // 是否允许修改用户名
@@ -37,12 +38,19 @@ export class CreateOrEditUserModalComponent extends AppComponentBase implements 
     allOrganizationUnits: OrganizationUnitDto[];
     memberedOrganizationUnits: string[];
 
-    constructor(private modalRef: NzModalRef,
+    constructor(fb: FormBuilder, private modalRef: NzModalRef,
         injector: Injector,
         private userService: UserServiceProxy,
         private profileService: ProfileServiceProxy
     ) {
         super(injector);
+        this.f = fb.group({
+            name: [null, [Validators.minLength(3)]],
+            userName: [null, [Validators.required, Validators.minLength(5)]],
+            surname: [null],
+            emailAddress: [null, Validators.required],
+            phoneNumber: [null, [Validators.maxLength(24)]],
+        });
     }
     ngOnInit(): void {
         this.getUser();
@@ -66,7 +74,7 @@ export class CreateOrEditUserModalComponent extends AppComponentBase implements 
             this.getProfilePicture(userResult.profilePictureId);
             // 设置组织架构
             this.organizationUnitTree.editData = <IOrganizationUnitsTreeComponentData>{
-                allOrganizationUnits : this.allOrganizationUnits,
+                allOrganizationUnits: this.allOrganizationUnits,
                 selectedOrganizationUnits: this.memberedOrganizationUnits
             };
             if (this.userPara.id) {
@@ -133,7 +141,6 @@ export class CreateOrEditUserModalComponent extends AppComponentBase implements 
             .finally(() => { this.saving = false; })
             .subscribe(() => {
                 this.msg.success(this.l('SavedSuccessfully'));
-                this.close();
                 this.modalRef.close(true);
             });
     }

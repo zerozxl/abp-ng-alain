@@ -1,5 +1,55 @@
 <nz-card [nzBordered]="false" nzTitle="{{user.id?(l('EditUser')+':'+user.userName):l('CreateNewUser')}}" class="mb-lg">
+
   <nz-tabset>
+    <nz-tab nzTitle="{{'UserInformations'|translate}}">
+      <nz-card [nzBordered]="false">
+        <form nz-form [formGroup]="f" (ngSubmit)="save()" [nzLayout]="'vertical'">
+          <nz-row [nzGutter]="4">
+            <nz-col>
+              <nz-row>
+                <nz-col [nzSpan]="6">
+                  <img src="{{profilePicture}}" style="width:120px;">
+                </nz-col>
+                <nz-col [nzSpan]="18">
+                  <nz-form-item>
+                    <nz-form-label nzFor="name">{{"Name"|translate}}</nz-form-label>
+                    <nz-form-control>
+                      <input nz-input formControlName="name" id="name" [(ngModel)]="user.name">
+                    </nz-form-control>
+                  </nz-form-item>
+                  <nz-form-item>
+                    <nz-form-label nzFor="surname">{{"Surname"|translate}}</nz-form-label>
+                    <nz-form-control>
+                      <input nz-input formControlName="surname" id="surname" [(ngModel)]="user.surname">
+                    </nz-form-control>
+                  </nz-form-item>
+                </nz-col>
+              </nz-row>
+            </nz-col>
+            <nz-col>
+              <nz-form-item>
+                <nz-form-label nzFor="emailAddress" nzRequired>{{"EmailAddress"|translate}}</nz-form-label>
+                <nz-form-control>
+                  <input nz-input formControlName="emailAddress" id="emailAddress" [(ngModel)]="user.emailAddress">
+                </nz-form-control>
+              </nz-form-item>
+              <nz-form-item>
+                <nz-form-label nzFor="phoneNumber" nzRequired>{{"PhoneNumber"|translate}}</nz-form-label>
+                <nz-form-control>
+                  <input nz-input formControlName="phoneNumber" id="phoneNumber" [(ngModel)]="user.phoneNumber">
+                </nz-form-control>
+              </nz-form-item>
+              <nz-form-item>
+                <nz-form-label nzFor="userName" nzRequired>{{"UserName"|translate}}</nz-form-label>
+                <nz-form-control>
+                  <input nz-input disabled="!canChangeUserName" formControlName="userName" id="userName" [(ngModel)]="user.userName">
+                </nz-form-control>
+              </nz-form-item>
+            </nz-col>
+          </nz-row>
+        </form>
+      </nz-card>
+    </nz-tab>
     <nz-tab [nzTitle]="titleTemplate">
       <ng-template #titleTemplate>
         {{'Roles'|translate}}
