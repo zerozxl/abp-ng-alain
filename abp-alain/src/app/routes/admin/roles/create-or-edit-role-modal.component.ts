@@ -30,7 +30,7 @@ export class CreateOrEditRoleModalComponent extends AppComponentBase implements 
         this.getRole();
     }
     getRole(): void {
-        this.roleService.getRoleForEdit(this.rolePara.id).subscribe(result => {
+        this.roleService.getRoleForEdit(this.rolePara?this.rolePara.id:undefined).subscribe(result => {
             this.role = result.role;
             this.permissionTree.editData = result;
         });

@@ -10,6 +10,7 @@ import { AppComponentBase } from '@shared/app-component-base';
 import { SimpleTableComponent, SimpleTableColumn } from '@delon/abc';
 import { EditUserPermissionsModalComponent } from './edit-user-permissions-modal.component';
 import { CreateOrEditUserModalComponent } from './create-or-edit-user-modal.component';
+import { AppConsts } from '@core/abp/AppConsts';
 
 @Component({
     templateUrl: './users.component.html'
@@ -17,7 +18,7 @@ import { CreateOrEditUserModalComponent } from './create-or-edit-user-modal.comp
 export class UsersComponent extends AppComponentBase implements OnInit {
 
     // @ViewChild('createOrEditUserModal') createOrEditUserModal: CreateOrEditUserModalComponent;
-   @ViewChild('st') st: SimpleTableComponent;
+    @ViewChild('st') st: SimpleTableComponent;
     data: any;
     //Filters
     advancedFiltersAreShown = false;
@@ -25,14 +26,14 @@ export class UsersComponent extends AppComponentBase implements OnInit {
     selectedPermission = '';
     selectedRole: number = undefined;
     columns: SimpleTableColumn[] = [
-        { title: 'UserName', i18n: 'UserName', index: 'userName'  ,sorter: (a, b) => true},
-        { title: 'Name', i18n: 'Name', index: 'name' ,sorter: (a, b) => true},
-        { title: 'Surname', i18n: 'Surname', index: 'surname' ,sorter: (a, b) => true},
+        { title: 'UserName', i18n: 'UserName', index: 'userName', sorter: (a, b) => true },
+        { title: 'Name', i18n: 'Name', index: 'name', sorter: (a, b) => true },
+        { title: 'Surname', i18n: 'Surname', index: 'surname', sorter: (a, b) => true },
         { title: 'Roles', i18n: 'Roles', render: 'roles' },
-        { title: 'EmailAddress', i18n: 'EmailAddress', index: 'emailAddress' ,sorter: (a, b) => true},
-        { title: 'EmailConfirm', i18n: 'EmailConfirm', render: 'isEmailConfirmed' ,sorter: (a, b) => true},
-        { title: 'Active', i18n: 'Active', render: 'isActive' ,sorter: (a, b) => true},
-        { title: 'LastLoginTime', i18n: 'LastLoginTime', type: 'date', index: 'lastLoginTime',sorter: (a, b) => true },
+        { title: 'EmailAddress', i18n: 'EmailAddress', index: 'emailAddress', sorter: (a, b) => true },
+        { title: 'EmailConfirm', i18n: 'EmailConfirm', render: 'isEmailConfirmed', sorter: (a, b) => true },
+        { title: 'Active', i18n: 'Active', render: 'isActive', sorter: (a, b) => true },
+        { title: 'LastLoginTime', i18n: 'LastLoginTime', type: 'date', index: 'lastLoginTime', sorter: (a, b) => true },
         { title: 'CreationTime', i18n: 'CreationTime', type: 'date', index: 'creationTime' },
         {
             title: 'Actions',
@@ -43,7 +44,7 @@ export class UsersComponent extends AppComponentBase implements OnInit {
                     i18n: 'Edit',
                     type: 'modal',
                     paramName: 'userPara',
-                    component: CreateOrEditUserModalComponent,                    
+                    component: CreateOrEditUserModalComponent,
                     click: (record: any, modal: any) => this.getUsers()
                 },
                 {
@@ -53,8 +54,8 @@ export class UsersComponent extends AppComponentBase implements OnInit {
                         {
                             text: 'Permissions',
                             i18n: 'Permissions',
-                            paramName:'userPara', type: 'modal',
-                            component:EditUserPermissionsModalComponent,
+                            paramName: 'userPara', type: 'modal',
+                            component: EditUserPermissionsModalComponent,
                         },
                         {
                             text: 'Unlock',
@@ -105,7 +106,7 @@ export class UsersComponent extends AppComponentBase implements OnInit {
      * 检索用户
      * @param sort 排序
      */
-    getUsers(sort:string=undefined) {
+    getUsers(sort: string = undefined) {
         this.loading = true;
         this._userServiceProxy.getUsers(
             this.filterText,
@@ -115,14 +116,14 @@ export class UsersComponent extends AppComponentBase implements OnInit {
             this.st.ps,
             (this.st.pi - 1) * this.st.ps
         ).finally(() => { this.loading = false; })
-        .subscribe(result => {
-            this.st.total = result.totalCount;
-            this.data = result.items;
-            const pi = this.st.pi;
-            setTimeout(() => {
-                this.st.pi = pi;
-            }, 50);
-        });
+            .subscribe(result => {
+                this.st.total = result.totalCount;
+                this.data = result.items;
+                const pi = this.st.pi;
+                setTimeout(() => {
+                    this.st.pi = pi;
+                }, 50);
+            });
     }
     /**
      * 解锁用户
@@ -155,26 +156,33 @@ export class UsersComponent extends AppComponentBase implements OnInit {
     }
 
     createUser(): void {
-        // this.createOrEditUserModal.show();
+        this.modalHelper.open(
+            CreateOrEditUserModalComponent,
+            {
+                userPara: null
+            }).subscribe(() => {
+                this.getUsers();
+            });
     }
-
+    /**
+     * 删除用户
+     * @param user 
+     */
     deleteUser(user: UserListDto): void {
-        // if (user.userName === AppConsts.userManagement.defaultAdminUserName) {
-        //     this.message.warn(this.l('{0}UserCannotBeDeleted', AppConsts.userManagement.defaultAdminUserName));
-        //     return;
-        // }
-
-        // this.message.confirm(
-        //     this.l('UserDeleteWarningMessage', user.userName),
-        //     (isConfirmed) => {
-        //         if (isConfirmed) {
-        //             this._userServiceProxy.deleteUser(user.id)
-        //                 .subscribe(() => {
-        //                     this.reloadPage();
-        //                     this.notify.success(this.l('SuccessfullyDeleted'));
-        //                 });
-        //         }
-        //     }
-        // );
+        if (user.userName === AppConsts.userManagement.defaultAdminUserName) {
+            this.msg.info(this.l('{0}UserCannotBeDeleted', AppConsts.userManagement.defaultAdminUserName));
+            return;
+        }
+        this.modal.confirm(
+            {
+                nzTitle: this.l('UserDeleteWarningMessage', user.userName),
+                nzOnOk: () => {
+                    this._userServiceProxy.deleteUser(user.id).subscribe(() => {
+                        this.getUsers();
+                        this.msg.success(this.l('SuccessfullyDeleted'));
+                    });
+                }
+            }
+        );
     }
 }
