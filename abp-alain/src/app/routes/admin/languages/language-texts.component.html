@@ -43,8 +43,8 @@
           <nz-form-label nzFor="TargetValueFilterSelectionCombobox">{{"TargetValue" | translate}}</nz-form-label>
           <nz-form-control>
             <nz-select name="TargetValueFilterSelectionCombobox" nzShowSearch nzAllowClear [(ngModel)]="targetValueFilter">
-              <nz-option nzCustomContent nzLabel='{{l("All")}}' nzValue="All"> {{"All" | translate}}</nz-option>
-              <nz-option nzCustomContent nzLabel='{{l("EmptyOnes")}}' nzValue="EMPTY"> {{"EmptyOnes" | translate}}</nz-option>
+              <nz-option nzCustomContent nzLabel='{{"All" | translate}}' nzValue="All"> {{"All" | translate}}</nz-option>
+              <nz-option nzCustomContent nzLabel='{{"EmptyOnes" | translate}}' nzValue="EMPTY"> {{"EmptyOnes" | translate}}</nz-option>
             </nz-select>
 
           </nz-form-control>
@@ -54,7 +54,7 @@
     <nz-row >
       <nz-col>
         <nz-input-group nzSearch [nzSuffix]="suffixButton">
-          <input type="text" nz-input placeholder="{{l('SearchWithThreeDot')}}" [(ngModel)]="filterText" name="filterText">
+          <input type="text" nz-input placeholder="{{'SearchWithThreeDot' | translate}}" [(ngModel)]="filterText" name="filterText">
           <ng-template #suffixButton>
             <button nz-button nzType="primary" nzSearch>{{"Refresh" | translate}}</button>
           </ng-template>

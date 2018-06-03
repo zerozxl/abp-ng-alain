@@ -53,7 +53,7 @@
 
     <div nz-form-item nz-row *ngIf="!(isUnlimited || !isSubscriptionFieldsVisible)">
             <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
-                <label>{{l("SubscriptionEndDate")}}</label>
+                <label>{{"SubscriptionEndDate" | translate}}</label>
             </div>
             <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
                 <nz-date-picker name="subscriptionEndDateUtc" 
@@ -90,10 +90,10 @@
     <div class="modal-footer">
         <button type="button" 
         nz-button [nzType]="'default'" [nzSize]="'large'" (click)="close()">
-        {{l("Cancel")}}
+        {{"Cancel" | translate}}
         </button>
         <button nz-button [nzType]="'primary'" [nzSize]="'large'">
-                <span>{{l("Save")}}</span>
+                <span>{{"Save" | translate}}</span>
         </button>
     </div>
 </form>

@@ -3,7 +3,7 @@
         <div class="action">
             <button nz-button [nzType]="'primary'" [nzSize]="'middle'" (click)="createTenant()">
                 <i class="anticon anticon-plus"></i>
-                <span>{{l("CreateNewTenant")}}</span>
+                <span>{{"CreateNewTenant" | translate}}</span>
             </button>
         </div>
     </ng-template>
@@ -13,7 +13,7 @@
         <nz-row [nzGutter]="{ md: 12, lg: 24, xl: 48 }">
             <nz-col nzMd="12" nzSm="24">
                 <nz-form-item>
-                    <nz-form-label nzFor="ffilterText">{{l('TenantNameOrTenancyCode')}}</nz-form-label>
+                    <nz-form-label nzFor="ffilterText">{{'TenantNameOrTenancyCode' | translate}}</nz-form-label>
                     <nz-form-control>
                         <input nz-input name="filters.filterText" placeholder="" [(ngModel)]="filters.filterText">
                     </nz-form-control>
@@ -21,7 +21,7 @@
             </nz-col>
             <nz-col nzMd="12" nzSm="24">
                 <nz-form-item>
-                    <nz-form-label>{{l('Edition')}}</nz-form-label>
+                    <nz-form-label>{{'Edition' | translate}}</nz-form-label>
                     <nz-form-control>
                         <edition-combo [(selectedEdition)]="filters.selectedEditionId"></edition-combo>
                     </nz-form-control>
@@ -29,7 +29,7 @@
             </nz-col>
             <nz-col nzMd="12" nzSm="24" *ngIf="expandForm">
                 <nz-form-item>
-                    <label nz-checkbox name="filters.subscriptionEndDateRangeActive" [(ngModel)]="filters.subscriptionEndDateRangeActive">{{l('SubscriptionEndDate')}}</label>
+                    <label nz-checkbox name="filters.subscriptionEndDateRangeActive" [(ngModel)]="filters.subscriptionEndDateRangeActive">{{'SubscriptionEndDate' | translate}}</label>
                     <nz-range-picker name="filters.subscriptionEndDateRange" [nzStyle]="{width: '100%'}" [(ngModel)]="filters.subscriptionEndDateRange"
                         [nzDisabled]="!filters.subscriptionEndDateRangeActive">
                     </nz-range-picker>
@@ -37,7 +37,7 @@
             </nz-col>
             <nz-col nzMd="12" nzSm="24" *ngIf="expandForm">
                 <nz-form-item>
-                    <label nz-checkbox name="filters.creationDateRangeActive" [(ngModel)]="filters.creationDateRangeActive">{{l('CreationTime')}}</label>
+                    <label nz-checkbox name="filters.creationDateRangeActive" [(ngModel)]="filters.creationDateRangeActive">{{'CreationTime' | translate}}</label>
                     <nz-range-picker name="filters.creationDateRangeActive" [nzStyle]="{width: '100%'}" [(ngModel)]="filters.creationDateRangeActive"
                         [nzDisabled]="!filters.creationDateRangeActive">
                     </nz-range-picker>
@@ -51,7 +51,7 @@
                     {{expandForm ? l("隐藏高级过滤") : '显示高级过滤'}}
                     <i class="anticon" [class.anticon-down]="!expandForm" [class.anticon-up]="expandForm"></i>
                 </a>
-                <button nz-button nzType="primary" type="submit" [nzLoading]="loading" [nzSize]="'middle'">{{l('Refresh')}}</button>
+                <button nz-button nzType="primary" type="submit" [nzLoading]="loading" [nzSize]="'middle'">{{'Refresh' | translate}}</button>
             </nz-col>
         </nz-row>
     </form>

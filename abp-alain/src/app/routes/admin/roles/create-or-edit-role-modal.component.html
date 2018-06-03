@@ -1,12 +1,12 @@
 ﻿<nz-card [nzBordered]="false" nzTitle="{{role.id?(l('EditRole')+':'+role.displayName):l('CreateRole')}}" class="mb-lg">
     <nz-tabset>
-        <nz-tab nzTitle="{{l('RoleProperties')}}">
+        <nz-tab nzTitle="{{'RoleProperties' | translate}}">
             <nz-card>
                 <form nz-form (ngSubmit)="save()">
                     <nz-row [nzGutter]="4">
                         <nz-col>
                             <nz-form-item>
-                                <nz-form-label nzFor="role.displayName">{{l("RoleName")}}</nz-form-label>
+                                <nz-form-label nzFor="role.displayName">{{"RoleName" | translate}}</nz-form-label>
                                 <nz-form-control>
                                     <input type="text" nz-input [(ngModel)]="role.displayName" name="role.displayName">
                                 </nz-form-control>
@@ -14,8 +14,8 @@
                         </nz-col>
                         <nz-col>
                             <nz-form-item>
-                                <label nz-checkbox [(ngModel)]="role.isDefault" name="role.isDefault">{{l("Default")}}</label>
-                                <span>{{l("DefaultRole_Description")}}</span>
+                                <label nz-checkbox [(ngModel)]="role.isDefault" name="role.isDefault">{{"Default" | translate}}</label>
+                                <span>{{"DefaultRole_Description" | translate}}</span>
                             </nz-form-item>
                         </nz-col>
 
@@ -23,7 +23,7 @@
                 </form>
             </nz-card>
         </nz-tab>
-        <nz-tab nzTitle="{{l('Permissions')}}">
+        <nz-tab nzTitle="{{'Permissions' | translate}}">
             <permission-tree #permissionTree></permission-tree>
         </nz-tab>
     </nz-tabset>

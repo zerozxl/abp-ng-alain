@@ -22,7 +22,7 @@
                 </ng-template>
             </nz-list>
         </nz-tab>
-        <nz-tab nzTitle="{{l('WebSiteLogs')}}" (click)="selectedIndexChange()">
+        <nz-tab nzTitle="{{'WebSiteLogs' | translate}}" (click)="selectedIndexChange()">
             <div class="web-log-view full-height" id="web-log-view">
                 <span class="log-line" *ngFor="let log of logs">
                     <nz-tag *ngIf="getLogType(log)" [nzColor]="getLogClass(log)">{{getLogType(log)}}</nz-tag>

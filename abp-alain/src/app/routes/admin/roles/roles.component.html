@@ -3,7 +3,7 @@
         <div class="action">
             <button nz-button [nzType]="'primary'" [nzSize]="'middle'" (click)="createRole()">
                 <i class="anticon anticon-plus"></i>
-                <span>{{l("CreateNewRole")}}</span>
+                <span>{{"CreateNewRole" | translate}}</span>
             </button>
         </div>
     </ng-template>
@@ -15,7 +15,7 @@
                 <permission-select [(selectedPermission)]="selectedPermission"></permission-select>
             </nz-col>
             <nz-col nzMd="12" nzSm="24" [class.text-left]="true">
-                <button nz-button nzType="primary" type="submit" [nzLoading]="loading" [nzSize]="'middle'">{{l('Refresh')}}</button>
+                <button nz-button nzType="primary" type="submit" [nzLoading]="loading" [nzSize]="'middle'">{{'Refresh' | translate}}</button>
             </nz-col>
         </nz-row>
     </form>
@@ -26,8 +26,8 @@
         </ng-template>
         <ng-template st-row="displayName" let-item let-index="index">
             <span>{{item.displayName}}</span>
-            <nz-tag *ngIf="item.isStatic" style="margin-left:5px">{{l('Static')}}</nz-tag>
-            <nz-tag *ngIf="item.isDefault" [nzColor]="'gray'">{{l('Default')}}</nz-tag>
+            <nz-tag *ngIf="item.isStatic" style="margin-left:5px">{{'Static' | translate}}</nz-tag>
+            <nz-tag *ngIf="item.isDefault" [nzColor]="'gray'">{{'Default' | translate}}</nz-tag>
         </ng-template>
     </simple-table>
 </nz-card>

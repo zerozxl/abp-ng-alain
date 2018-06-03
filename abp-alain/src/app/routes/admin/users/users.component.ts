@@ -154,7 +154,9 @@ export class UsersComponent extends AppComponentBase implements OnInit {
                 this._fileDownloadService.downloadTempFile(result);
             });
     }
-
+    /**
+     * 弹出框创建用户
+     */
     createUser(): void {
         this.modalHelper.open(
             CreateOrEditUserModalComponent,

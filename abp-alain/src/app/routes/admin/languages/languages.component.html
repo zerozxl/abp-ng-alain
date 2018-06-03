@@ -3,7 +3,7 @@
     <div class="action">
       <button nz-button [nzType]="'primary'" [nzSize]="'middle'" (click)="createLanguage()">
         <i class="anticon anticon-plus"></i>
-        <span>{{l("CreateNewLanguage")}}</span>
+        <span>{{"CreateNewLanguage" | translate}}</span>
       </button>
     </div>
   </ng-template>
@@ -14,7 +14,7 @@
     <ng-template st-row="displayName" let-item let-index="index">
       <i class="{{item.icon}}"></i>
       <span style="margin-left:5px">{{item.displayName}}</span>
-      <span *ngIf="defaultLanguageName === item.name" title>({{l('Default')}})</span>
+      <span *ngIf="defaultLanguageName === item.name" title>({{'Default' | translate}})</span>
     </ng-template>    
     <ng-template st-row="isEnabled" let-item let-index="index">
       <nz-switch [(ngModel)]="!item.isDisabled" [nzDisabled]="true"></nz-switch>

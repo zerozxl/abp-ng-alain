@@ -1,9 +1,12 @@
 ﻿<page-header>
   <ng-template #action>
     <div class="action">
+      <button nz-button [nzType]="'primary'" (click)="exportToExcel()">
+        <i class="anticon anticon-file-excel"></i> {{"ExportToExcel" | translate}}
+      </button>
       <button nz-button [nzType]="'primary'" [nzSize]="'middle'" (click)="createUser()">
         <i class="anticon anticon-plus"></i>
-        <span>{{l("CreateNewUser")}}</span>
+        <span>{{"CreateNewUser"| translate}}</span>
       </button>
     </div>
   </ng-template>
@@ -18,10 +21,10 @@
         <role-select [(selectedRole)]="selectedRole"></role-select>
       </nz-col>
       <nz-col nzMd="6" nzSm="24">
-        <input type="text" nz-input placeholder="{{l('SearchWithThreeDot')}}" [(ngModel)]="filterText" name="filterText">
+        <input type="text" nz-input placeholder="{{'SearchWithThreeDot' | translate}}" [(ngModel)]="filterText" name="filterText">
       </nz-col>
       <nz-col nzMd="6" nzSm="24" [class.text-left]="true">
-        <button nz-button nzType="primary" type="submit" [nzLoading]="loading" [nzSize]="'middle'">{{l('Refresh')}}</button>
+        <button nz-button nzType="primary" type="submit" [nzLoading]="loading" [nzSize]="'middle'">{{'Refresh' | translate}}</button>
       </nz-col>
     </nz-row>
   </form>

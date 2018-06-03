@@ -45,9 +45,9 @@ export class CreateOrEditUserModalComponent extends AppComponentBase implements 
     ) {
         super(injector);
         this.f = fb.group({
-            name: [null, [Validators.required,Validators.minLength(3)]],
+            name: [null, [Validators.required, Validators.minLength(3)]],
             userName: [null, [Validators.required, Validators.minLength(5)]],
-            surname: [null, [Validators.required,Validators.minLength(3)]],
+            surname: [null, [Validators.required, Validators.minLength(3)]],
             emailAddress: [null, Validators.required],
             phoneNumber: [null, [Validators.maxLength(24)]],
             sendActivationEmail: [null],
@@ -60,21 +60,19 @@ export class CreateOrEditUserModalComponent extends AppComponentBase implements 
         });
     }
     ngOnInit(): void {
-       
-            this.getUser();
-        
+        this.getUser();
     }
     /**
      * 获取用户的基础信息
      */
     getUser(): void {
-        if (this.userPara&&!this.userPara.id) {
+        if (this.userPara && !this.userPara.id) {
             this.active = true;
             this.setRandomPassword = true;
             this.sendActivationEmail = true;
         }
         // console.log(this.userPara.id)
-        this.userService.getUserForEdit(this.userPara?this.userPara.id:undefined).subscribe(userResult => {
+        this.userService.getUserForEdit(this.userPara ? this.userPara.id : undefined).subscribe(userResult => {
             this.user = userResult.user;
             this.roles = userResult.roles;
             this.canChangeUserName = this.user.userName !== AppConsts.userManagement.defaultAdminUserName;
@@ -86,7 +84,7 @@ export class CreateOrEditUserModalComponent extends AppComponentBase implements 
                 allOrganizationUnits: this.allOrganizationUnits,
                 selectedOrganizationUnits: this.memberedOrganizationUnits
             };
-            if (this.userPara&&this.userPara.id) {
+            if (this.userPara && this.userPara.id) {
                 this.active = true;
                 setTimeout(() => {
                     this.setRandomPassword = false;
