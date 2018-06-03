@@ -43,9 +43,7 @@ export class UsersComponent extends AppComponentBase implements OnInit {
                     i18n: 'Edit',
                     type: 'modal',
                     paramName: 'userPara',
-                    // acl: 'Pages.Administration.Languages.Edit',
-                    component: CreateOrEditUserModalComponent,
-                    // click: (record: any, modal: any) => this.getLanguages()
+                    component: CreateOrEditUserModalComponent
                 },
                 {
                     text: 'More',

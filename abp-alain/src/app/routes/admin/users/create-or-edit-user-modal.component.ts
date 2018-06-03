@@ -23,7 +23,7 @@ export class CreateOrEditUserModalComponent extends AppComponentBase implements 
 
     active = false;
     saving = false;
-    canChangeUserName = true;
+    canChangeUserName = true; // 是否允许修改用户名
     isTwoFactorEnabled: boolean = this.setting.getBoolean('Abp.Zero.UserManagement.TwoFactorLogin.IsEnabled');
     isLockoutEnabled: boolean = this.setting.getBoolean('Abp.Zero.UserManagement.UserLockOut.IsEnabled');
     passwordComplexitySetting: PasswordComplexitySetting = new PasswordComplexitySetting();
@@ -34,7 +34,6 @@ export class CreateOrEditUserModalComponent extends AppComponentBase implements 
     setRandomPassword = true;
     passwordComplexityInfo = '';
     profilePicture: string;
-
     allOrganizationUnits: OrganizationUnitDto[];
     memberedOrganizationUnits: string[];
 
@@ -48,6 +47,9 @@ export class CreateOrEditUserModalComponent extends AppComponentBase implements 
     ngOnInit(): void {
         this.getUser();
     }
+    /**
+     * 获取用户的基础信息
+     */
     getUser(): void {
         if (!this.userPara.id) {
             this.active = true;
@@ -75,38 +77,30 @@ export class CreateOrEditUserModalComponent extends AppComponentBase implements 
                 this.sendActivationEmail = false;
             }
 
-            // this.profileService.getPasswordComplexitySetting().subscribe(passwordComplexityResult => {
-            //     this.passwordComplexitySetting = passwordComplexityResult.setting;
-            //     this.setPasswordComplexityInfo();
-            //     this.modal.show();
-            // });
+            this.profileService.getPasswordComplexitySetting().subscribe(passwordComplexityResult => {
+                this.passwordComplexitySetting = passwordComplexityResult.setting;
+                this.setPasswordComplexityInfo();
+            });
         });
     }
 
     setPasswordComplexityInfo(): void {
-
         this.passwordComplexityInfo = '<ul>';
-
         if (this.passwordComplexitySetting.requireDigit) {
             this.passwordComplexityInfo += '<li>' + this.l('PasswordComplexity_RequireDigit_Hint') + '</li>';
         }
-
         if (this.passwordComplexitySetting.requireLowercase) {
             this.passwordComplexityInfo += '<li>' + this.l('PasswordComplexity_RequireLowercase_Hint') + '</li>';
         }
-
         if (this.passwordComplexitySetting.requireUppercase) {
             this.passwordComplexityInfo += '<li>' + this.l('PasswordComplexity_RequireUppercase_Hint') + '</li>';
         }
-
         if (this.passwordComplexitySetting.requireNonAlphanumeric) {
             this.passwordComplexityInfo += '<li>' + this.l('PasswordComplexity_RequireNonAlphanumeric_Hint') + '</li>';
         }
-
         if (this.passwordComplexitySetting.requiredLength) {
             this.passwordComplexityInfo += '<li>' + this.l('PasswordComplexity_RequiredLength_Hint', this.passwordComplexitySetting.requiredLength) + '</li>';
         }
-
         this.passwordComplexityInfo += '</ul>';
     }
 
@@ -115,7 +109,6 @@ export class CreateOrEditUserModalComponent extends AppComponentBase implements 
             this.profilePicture = '/assets/common/images/default-profile-picture.png';
         } else {
             this.profileService.getProfilePictureById(profilePictureId).subscribe(result => {
-
                 if (result && result.profilePicture) {
                     this.profilePicture = 'data:image/jpeg;base64,' + result.profilePicture;
                 } else {
@@ -149,7 +142,9 @@ export class CreateOrEditUserModalComponent extends AppComponentBase implements 
         this.active = false;
         this.modalRef.destroy();
     }
-
+    /**
+     * 分配的角色数量
+     */
     getAssignedRoleCount(): number {
         return _.filter(this.roles, { isAssigned: true }).length;
     }

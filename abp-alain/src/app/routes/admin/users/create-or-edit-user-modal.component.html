@@ -1,12 +1,20 @@
 <nz-card [nzBordered]="false" nzTitle="{{user.id?(l('EditUser')+':'+user.userName):l('CreateNewUser')}}" class="mb-lg">
   <nz-tabset>
-      
-      <nz-tab nzTitle=" {{l('OrganizationUnits')}}">
-        <organization-unit-tree #organizationUnitTree></organization-unit-tree>
-      </nz-tab>
+    <nz-tab [nzTitle]="titleTemplate">
+      <ng-template #titleTemplate>
+        {{'Roles'|translate}}
+        <b class="badge badge-primary">{{getAssignedRoleCount()}}</b>
+      </ng-template>
+      <div *ngFor="let role of roles">
+        <label nz-checkbox [(ngModel)]="role.isAssigned" name="{{role.roleName}}">{{role.roleDisplayName}}</label>
+      </div>
+    </nz-tab>
+    <nz-tab nzTitle="{{'OrganizationUnits'|translate}}">
+      <organization-unit-tree #organizationUnitTree></organization-unit-tree>
+    </nz-tab>
   </nz-tabset>
 </nz-card>
 <div class="modal-footer">
   <button nz-button type="button" (click)="close()">关闭</button>
-  <button nz-button type="submit" [nzType]="'primary'" (click)="save()"  [nzLoading]="saving">保存</button>
+  <button nz-button type="submit" [nzType]="'primary'" (click)="save()" [nzLoading]="saving">保存</button>
 </div>

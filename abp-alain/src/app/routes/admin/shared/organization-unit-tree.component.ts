@@ -34,7 +34,7 @@ export class OrganizationUnitsTreeComponent extends AppComponentBase {
     nodes: NzTreeNode[] = [];
     private _createdTreeBefore;
     private allOrganizationUnits: OrganizationUnitDto[];
-    private selectedOrganizationUnits: string[];
+    private selectedOrganizationUnits: string[] = [];
     private filter = '';
     private expandDefault = true;
     constructor(
@@ -43,9 +43,18 @@ export class OrganizationUnitsTreeComponent extends AppComponentBase {
         super(injector);
     }
     set editData(data: IOrganizationUnitsTreeComponentData) {
-        this.allOrganizationUnits = data.allOrganizationUnits;
-        this.selectedOrganizationUnits = data.selectedOrganizationUnits;
-        console.log(this.selectedOrganizationUnits);
+
+        let selectedCodes = data.selectedOrganizationUnits;
+        let allOrganizationUnits = data.allOrganizationUnits;
+
+        _.forEach(selectedCodes, u => {
+            const org = _.find(allOrganizationUnits, function (o) { return o.code == u });
+            if (org) {
+                this.selectedOrganizationUnits.push(org.id.toString());
+            }
+        });
+        this.allOrganizationUnits = allOrganizationUnits;
+
         this.nodes = this.convertNzTreeNode(this.allOrganizationUnits, null);
     }
     /**
@@ -60,7 +69,7 @@ export class OrganizationUnitsTreeComponent extends AppComponentBase {
             .map((o: OrganizationUnitDto) => {
                 var node = new NzTreeNode({
                     title: o.displayName,
-                    key: o.code,
+                    key: o.id.toString(),
                     selectable: false
                 });
                 var childrens = this.convertNzTreeNode(organizations, o.id);
