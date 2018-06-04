@@ -20,7 +20,7 @@ export class UsersComponent extends AppComponentBase implements OnInit {
     // @ViewChild('createOrEditUserModal') createOrEditUserModal: CreateOrEditUserModalComponent;
     @ViewChild('st') st: SimpleTableComponent;
     data: any;
-    //Filters
+    // Filters
     advancedFiltersAreShown = false;
     filterText = '';
     selectedPermission = '';
@@ -45,7 +45,7 @@ export class UsersComponent extends AppComponentBase implements OnInit {
                     type: 'modal',
                     paramName: 'userPara',
                     component: CreateOrEditUserModalComponent,
-                    click: (record: any, modal: any) => this.getUsers()
+                    click: (record: any, modal: any) => this.getUsers(undefined)
                 },
                 {
                     text: 'More',
@@ -106,7 +106,7 @@ export class UsersComponent extends AppComponentBase implements OnInit {
      * 检索用户
      * @param sort 排序
      */
-    getUsers(sort: string = undefined) {
+    getUsers(sort: string | undefined) {
         this.loading = true;
         this._userServiceProxy.getUsers(
             this.filterText,
@@ -163,12 +163,12 @@ export class UsersComponent extends AppComponentBase implements OnInit {
             {
                 userPara: null
             }).subscribe(() => {
-                this.getUsers();
+                this.getUsers(undefined);
             });
     }
     /**
      * 删除用户
-     * @param user 
+     * @param user 用户行
      */
     deleteUser(user: UserListDto): void {
         if (user.userName === AppConsts.userManagement.defaultAdminUserName) {
@@ -180,7 +180,7 @@ export class UsersComponent extends AppComponentBase implements OnInit {
                 nzTitle: this.l('UserDeleteWarningMessage', user.userName),
                 nzOnOk: () => {
                     this._userServiceProxy.deleteUser(user.id).subscribe(() => {
-                        this.getUsers();
+                        this.getUsers(undefined);
                         this.msg.success(this.l('SuccessfullyDeleted'));
                     });
                 }

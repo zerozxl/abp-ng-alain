@@ -7,9 +7,10 @@ import { PermissionTreeEditModel } from './permission-tree-edit.model';
 
 
 @Component({
+    // tslint:disable-next-line:component-selector
     selector: 'permission-tree',
     template:
-        `<nz-tree #tree [(ngModel)]="nodes" 
+        `<nz-tree #tree [(ngModel)]="nodes"
         [nzCheckable]="true"
         [nzMultiple]="true"
         [nzCheckStrictly]="true"
@@ -32,7 +33,7 @@ export class PermissionTreeComponent extends AppComponentBase {
     }
 
     getGrantedPermissionNames(): string[] {
-        var nodes = this.tree.nzTreeService.getCheckedNodeList();
+        const nodes = this.tree.nzTreeService.getCheckedNodeList();
         return _.map(nodes, node => {
             return node.key;
         });
@@ -53,13 +54,13 @@ export class PermissionTreeComponent extends AppComponentBase {
     convertNzTreeNode(
         permissions: FlatPermissionDto[],
         parentName: string): NzTreeNode[] {
-        var treenodes = _.filter(permissions, { parentName: parentName }).map(permission => {
-            var node = new NzTreeNode({
+        const treenodes = _.filter(permissions, { parentName: parentName }).map(permission => {
+            const node = new NzTreeNode({
                 title: permission.displayName,
                 key: permission.name,
                 selectable: false
             });
-            var childrens = this.convertNzTreeNode(permissions, permission.name);
+            const childrens = this.convertNzTreeNode(permissions, permission.name);
             if (childrens && childrens.length > 0) {
                 node.addChildren(childrens);
             }

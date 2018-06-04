@@ -1,7 +1,9 @@
+// tslint:disable-next-line:max-line-length
 import { Component, OnInit, AfterViewInit, AfterViewChecked, ElementRef, ViewChild, Injector, Input, Output, EventEmitter } from '@angular/core';
 import { RoleServiceProxy, RoleListDto } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/app-component-base';
 @Component({
+    // tslint:disable-next-line:component-selector
     selector: 'role-select',
     template:
         `<nz-select #RoleSelectbox  [(ngModel)]="selectedRole"

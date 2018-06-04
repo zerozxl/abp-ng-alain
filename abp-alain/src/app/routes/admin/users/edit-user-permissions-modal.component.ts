@@ -1,4 +1,5 @@
 import { Component, ViewChild, Injector, OnInit } from '@angular/core';
+// tslint:disable-next-line:max-line-length
 import { UserServiceProxy, GetUserPermissionsForEditOutput, UpdateUserPermissionsInput, EntityDtoOfInt64, UserListDto } from '@shared/service-proxies/service-proxies';
 import { PermissionTreeComponent } from '../shared/permission-tree.component';
 
@@ -7,10 +8,11 @@ import { AppComponentBase } from '@shared/app-component-base';
 import { NzModalRef } from 'ng-zorro-antd';
 
 @Component({
+    // tslint:disable-next-line:component-selector
     selector: 'editUserPermissionsModal',
     templateUrl: './edit-user-permissions-modal.component.html'
 })
-export class EditUserPermissionsModalComponent extends AppComponentBase implements OnInit{
+export class EditUserPermissionsModalComponent extends AppComponentBase implements OnInit {
 
     @ViewChild('permissionTree') permissionTree: PermissionTreeComponent;
     saving = false;
@@ -25,14 +27,13 @@ export class EditUserPermissionsModalComponent extends AppComponentBase implemen
     ngOnInit(): void {
         this.getPermission();
     }
-    getPermission()
-    {
+    getPermission() {
         this.userService.getUserPermissionsForEdit(this.userPara.id).subscribe(result => {
             this.permissionTree.editData = result;
         });
     }
     save(): void {
-        let input = new UpdateUserPermissionsInput();
+        const input = new UpdateUserPermissionsInput();
         input.id = this.userPara.id;
         input.grantedPermissionNames = this.permissionTree.getGrantedPermissionNames();
         this.saving = true;
@@ -44,7 +45,7 @@ export class EditUserPermissionsModalComponent extends AppComponentBase implemen
             });
     }
     resetPermissions(): void {
-        let input = new EntityDtoOfInt64();
+        const input = new EntityDtoOfInt64();
         input.id = this.userPara.id;
         this.resettingPermissions = true;
         this.userService.resetUserSpecificPermissions(input).subscribe(() => {

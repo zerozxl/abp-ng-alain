@@ -1,14 +1,16 @@
-import { Component, ViewChild, Injector, Output, EventEmitter, ElementRef, OnInit } from '@angular/core';
-import { UserServiceProxy, ProfileServiceProxy, UserEditDto, CreateOrUpdateUserInput, OrganizationUnitDto, UserRoleDto, PasswordComplexitySetting, UserListDto } from '@shared/service-proxies/service-proxies';
-import * as _ from 'lodash';
-import { AppComponentBase } from '@shared/app-component-base';
-import { OrganizationUnitsTreeComponent, IOrganizationUnitsTreeComponentData } from '../shared/organization-unit-tree.component';
+import { Component, ElementRef, EventEmitter, Injector, OnInit, Output, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AppConsts } from '@core/abp/AppConsts';
+import { AppComponentBase } from '@shared/app-component-base';
+// tslint:disable-next-line:max-line-length
+import { CreateOrUpdateUserInput, OrganizationUnitDto, PasswordComplexitySetting, ProfileServiceProxy, UserEditDto, UserListDto, UserRoleDto, UserServiceProxy } from '@shared/service-proxies/service-proxies';
+import * as _ from 'lodash';
 import { NzModalRef } from 'ng-zorro-antd';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { IOrganizationUnitsTreeComponentData, OrganizationUnitsTreeComponent } from '../shared/organization-unit-tree.component';
 
 @Component({
-    selector: 'createOrEditUserModal',
+    // tslint:disable-next-line:component-selector
+    selector: 'component-CreateOrEditUserModal',
     templateUrl: './create-or-edit-user-modal.component.html',
     styles: [`.user-edit-dialog-profile-image {
              margin-bottom: 20px;
@@ -114,6 +116,7 @@ export class CreateOrEditUserModalComponent extends AppComponentBase implements 
             this.passwordComplexityInfo += '<li>' + this.l('PasswordComplexity_RequireNonAlphanumeric_Hint') + '</li>';
         }
         if (this.passwordComplexitySetting.requiredLength) {
+            // tslint:disable-next-line:max-line-length
             this.passwordComplexityInfo += '<li>' + this.l('PasswordComplexity_RequiredLength_Hint', this.passwordComplexitySetting.requiredLength) + '</li>';
         }
         this.passwordComplexityInfo += '</ul>';
@@ -134,7 +137,7 @@ export class CreateOrEditUserModalComponent extends AppComponentBase implements 
     }
 
     save(): void {
-        let input = new CreateOrUpdateUserInput();
+        const input = new CreateOrUpdateUserInput();
         input.user = this.user;
         input.setRandomPassword = this.setRandomPassword;
         input.sendActivationEmail = this.sendActivationEmail;

@@ -10,6 +10,7 @@ export interface IOrganizationUnitsTreeComponentData {
 }
 
 @Component({
+    // tslint:disable-next-line:component-selector
     selector: 'organization-unit-tree',
     template:
         `
@@ -19,7 +20,7 @@ export interface IOrganizationUnitsTreeComponentData {
         <ng-template #suffixIcon>
           <i class="anticon anticon-search"></i>
         </ng-template>
-        <nz-tree #tree [(ngModel)]="nodes" 
+        <nz-tree #tree [(ngModel)]="nodes"
         [nzSearchValue]="filter"
         [nzCheckable]="true"
         [nzMultiple]="true"
@@ -44,11 +45,11 @@ export class OrganizationUnitsTreeComponent extends AppComponentBase {
     }
     set editData(data: IOrganizationUnitsTreeComponentData) {
 
-        let selectedCodes = data.selectedOrganizationUnits;
-        let allOrganizationUnits = data.allOrganizationUnits;
+        const selectedCodes = data.selectedOrganizationUnits;
+        const allOrganizationUnits = data.allOrganizationUnits;
 
         _.forEach(selectedCodes, u => {
-            const org = _.find(allOrganizationUnits, function (o) { return o.code == u });
+            const org = _.find(allOrganizationUnits, function (o) { return o.code === u; });
             if (org) {
                 this.selectedOrganizationUnits.push(org.id.toString());
             }
@@ -65,14 +66,14 @@ export class OrganizationUnitsTreeComponent extends AppComponentBase {
     convertNzTreeNode(
         organizations: OrganizationUnitDto[],
         parentId: number): NzTreeNode[] {
-        var treenodes = _.filter(organizations, { parentId: parentId })
+        const treenodes = _.filter(organizations, { parentId: parentId })
             .map((o: OrganizationUnitDto) => {
-                var node = new NzTreeNode({
+                const node = new NzTreeNode({
                     title: o.displayName,
                     key: o.id.toString(),
                     selectable: false
                 });
-                var childrens = this.convertNzTreeNode(organizations, o.id);
+                const childrens = this.convertNzTreeNode(organizations, o.id);
                 if (childrens && childrens.length > 0) {
                     node.addChildren(childrens);
                 }
@@ -84,7 +85,7 @@ export class OrganizationUnitsTreeComponent extends AppComponentBase {
      * 获取选中的组织值
      */
     getSelectedOrganizations(): number[] {
-        var nodes = this.tree.nzTreeService.getCheckedNodeList();
+        const nodes = this.tree.nzTreeService.getCheckedNodeList();
         return _.map(nodes, node => {
             return node.key;
         });
