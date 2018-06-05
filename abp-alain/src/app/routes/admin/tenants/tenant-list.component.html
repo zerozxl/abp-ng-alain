@@ -61,3 +61,8 @@
         </ng-template>
     </simple-table>
 </nz-card>
+
+<nz-modal [(nzVisible)]="isVisible" nzWidth="600" [(nzVisible)]="isVisible" [(nzFooter)]="nzModalFooter" (nzOnOk)="handleOk()"
+    (nzOnCancel)="handleCancel()">
+    <app-commonlookupmodal #impersonateUserLookupModal (itemSelected)="impersonateUser($event)"></app-commonlookupmodal>
+</nz-modal>

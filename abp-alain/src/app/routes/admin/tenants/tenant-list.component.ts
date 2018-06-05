@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { SimpleTableColumn, SimpleTableComponent } from '@delon/abc';
 import { AppComponentBase } from '@shared/app-component-base';
 import { EntityDtoOfInt64, NameValueDto, TenantListDto, TenantServiceProxy, FindUsersInput, CommonLookupServiceProxy } from '@shared/service-proxies/service-proxies';
-import { NzMessageService } from 'ng-zorro-antd';
+import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { ImpersonationService } from '../users/impersonation.service';
 import { CreateTenantModalComponent } from './create-tenant-modal.component';
 import { EditTenantModalComponent } from './edit-tenant-modal.component';
@@ -13,6 +13,9 @@ import { CommonLookupModalComponent } from '@shared/lookup/common-lookup-modal.c
 @Component({ selector: 'app-tenant-list', templateUrl: './tenant-list.component.html', styles: [] })
 export class TenantListComponent extends AppComponentBase implements OnInit {
     @ViewChild('st') st: SimpleTableComponent;
+    @ViewChild('impersonateUserLookupModal') impersonateUserLookupModal: CommonLookupModalComponent;
+    isVisible: boolean = false;// 是否显示选择用户登录框
+    nzModalFooter: any = null;
     data: any;
     columns: SimpleTableColumn[] = [
         { title: this.l('TenancyCodeName'), index: 'tenancyName', sorter: (a, b) => true },
@@ -36,11 +39,6 @@ export class TenantListComponent extends AppComponentBase implements OnInit {
                         {
                             text: 'LoginAsThisTenant',
                             i18n: 'LoginAsThisTenant',
-                            type: 'modal',
-                            params: (record: any) => ({
-                                lookupConfig: this.lookupConfig
-                              }),
-                            component: CommonLookupModalComponent,
                             click: (record: any) => this.showUserImpersonateLookUpModal(record)
                         },
                         {
@@ -67,9 +65,8 @@ export class TenantListComponent extends AppComponentBase implements OnInit {
         creationDateRange: [null, null];
         selectedEditionId: number;
     } = <any>{};
-    lookupConfig: any;
     // tslint:disable-next-line:max-line-length
-    constructor(injector: Injector,
+    constructor(injector: Injector, private modalService: NzModalService,
         public http: HttpClient,
         public _msgService: NzMessageService,
         private _tenantService: TenantServiceProxy,
@@ -82,7 +79,7 @@ export class TenantListComponent extends AppComponentBase implements OnInit {
 
     ngOnInit() {
         this.getTenants();
-        this.lookupConfig = {
+        this.impersonateUserLookupModal.configure({
             title: this.l('SelectAUser'),
             dataSource: (skipCount: number, maxResultCount: number, filter: string, tenantId?: number) => {
                 const input = new FindUsersInput();
@@ -92,7 +89,7 @@ export class TenantListComponent extends AppComponentBase implements OnInit {
                 input.tenantId = tenantId;
                 return this._commonLookupService.findUsers(input);
             }
-        };
+        });
     }
 
     load(pi?: number) {
@@ -149,12 +146,35 @@ export class TenantListComponent extends AppComponentBase implements OnInit {
                 this.load();
             });
     }
-
-
     showUserImpersonateLookUpModal(record: any): void {
-        // this.impersonateUserLookupModal.tenantId = record.id;
-        // this.impersonateUserLookupModal.show();
+        this.impersonateUserLookupModal.tenantId = record.id;
+        this.impersonateUserLookupModal.getRecordsIfNeeds();
+        this.isVisible = true;
     }
+
+    handleOk(): void {
+        this.isVisible = false;
+    }
+
+    handleCancel(): void {
+        this.isVisible = false;
+    }
+    // /**
+    //   * 
+    //   */
+    // showUserImpersonateLookUpModal(record: any): void {
+    //     this.modalHelper.open(
+    //         CommonLookupModalComponent,
+    //         {
+    //             tenantId: record.id,
+    //             optionsPara: this.lookupConfig,
+    //             itemSelected: (item: NameValueDto) => { this.impersonateUser(item); }
+    //         }).subscribe(() => {
+
+    //         });
+    //     // this.impersonateUserLookupModal.tenantId = record.id;
+    //     // this.impersonateUserLookupModal.show();
+    // }
     /**
      * 删除租户
      * @param record 租户记录
@@ -184,6 +204,7 @@ export class TenantListComponent extends AppComponentBase implements OnInit {
     }
 
     impersonateUser(item: NameValueDto): void {
+        console.log(item);
         // this._impersonationService
         //     .impersonate(
         //         parseInt(item.value),

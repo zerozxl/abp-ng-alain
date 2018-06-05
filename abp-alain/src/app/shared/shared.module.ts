@@ -16,6 +16,7 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { CountdownModule } from 'ngx-countdown';
 import { TruncateModule } from '@yellowspot/ng-truncate';
 import { AdSideBarNavModule } from '@shared/overwrite/side-bar-nav/side-bar-nav.module';
+import { CommonLookupModalComponent } from '@shared/lookup/common-lookup-modal.component';
 const THIRDMODULES = [
   NgZorroAntdModule,
   CountdownModule,
@@ -26,7 +27,12 @@ const THIRDMODULES = [
 // endregion
 
 // region: your componets & directives
-const COMPONENTS = [];
+const COMPONENTS = [
+  CommonLookupModalComponent
+];
+const EntryCOMPONENTS=[
+  CommonLookupModalComponent
+];
 const DIRECTIVES = [];
 // endregion
 
@@ -67,5 +73,9 @@ const DIRECTIVES = [];
     ...COMPONENTS,
     ...DIRECTIVES
   ]
+  ,
+  entryComponents: [
+    // ...EntryCOMPONENTS,
+]
 })
 export class SharedModule { }

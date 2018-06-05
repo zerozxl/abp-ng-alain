@@ -18,9 +18,14 @@ export interface ICommonLookupModalOptions {
     selector: 'app-commonlookupmodal',
     templateUrl: './common-lookup-modal.component.html'
 })
-export class CommonLookupModalComponent extends AppComponentBase implements OnInit {
-
-
+/**
+ * 通用的NameValue的选择器组件
+ */
+export class CommonLookupModalComponent extends AppComponentBase {
+    /**
+     * 外部的行点击事件
+     */
+    @Output() itemSelected: EventEmitter<NameValueDto> = new EventEmitter<NameValueDto>();
     static defaultOptions: ICommonLookupModalOptions = {
         dataSource: null,
         canSelect: () => true,
@@ -33,52 +38,36 @@ export class CommonLookupModalComponent extends AppComponentBase implements OnIn
     columns: SimpleTableColumn[] = [
         { title: 'Name', i18n: 'Name', index: 'name', sorter: (a, b) => true },
         {
-            title: 'Select', i18n: 'Select', buttons: [
+            title: 'Login', i18n: 'Login', buttons: [
                 {
-                    text: 'Select',
-                    type: 'modal',
-                    component: null,
-                    paramName: 'tenantPara',
-                    format: (record: any) => '<i class="anticon anticon-login"></i>',
+                    text: 'Actions', i18n: 'Actions',
+                    format: (record: any) => '<i class="anticon anticon-login">' + this.l('Login') + '</i>',
+                    click: (record: any) => this.selectItem(record)
                 }
             ]
         }];
-    @Output() itemSelected: EventEmitter<NameValueDto> = new EventEmitter<NameValueDto>();
     options: ICommonLookupModalOptions;
-
-    isShown = false;
     isInitialized = false;
     filterText = '';
     tenantId?: number;
 
-    constructor(private modalRef: NzModalRef,
+    constructor(
         injector: Injector
     ) {
         super(injector);
     }
 
-    configure(options: ICommonLookupModalOptions): void {
+    configure(opts: ICommonLookupModalOptions): void {
         this.options = Object.assign(
             true,
             {
                 title: this.l('SelectAnItem')
             },
             CommonLookupModalComponent.defaultOptions,
-            options
+            opts
         );
     }
-
-    close(): void {
-        this.modalRef.destroy();
-    }
-    ngOnInit() {
-        this.getRecordsIfNeeds();
-    }
-
     getRecordsIfNeeds(): void {
-        if (!this.isShown) {
-            return;
-        }
         if (!this.options.loadOnStartup && !this.isInitialized) {
             return;
         }
@@ -106,13 +95,11 @@ export class CommonLookupModalComponent extends AppComponentBase implements OnIn
         if (!boolOrPromise) {
             return;
         }
-
         if (boolOrPromise === true) {
             this.itemSelected.emit(item);
             this.close();
             return;
         }
-
         // assume as observable
         (boolOrPromise as Observable<boolean>)
             .subscribe(result => {
@@ -122,4 +109,8 @@ export class CommonLookupModalComponent extends AppComponentBase implements OnIn
                 }
             });
     }
+    close(): void {
+        // this.modalRef.destroy();
+    }
+
 }
