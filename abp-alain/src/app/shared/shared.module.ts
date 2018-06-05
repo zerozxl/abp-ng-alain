@@ -15,11 +15,13 @@ import { ServiceProxyModule } from '@shared/service-proxies/service-proxy.module
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { CountdownModule } from 'ngx-countdown';
 import { TruncateModule } from '@yellowspot/ng-truncate';
+import { AdSideBarNavModule } from '@shared/overwrite/side-bar-nav/side-bar-nav.module';
 const THIRDMODULES = [
   NgZorroAntdModule,
   CountdownModule,
   ServiceProxyModule,
-  TruncateModule
+  TruncateModule,
+  AdSideBarNavModule
 ];
 // endregion
 

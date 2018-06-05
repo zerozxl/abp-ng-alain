@@ -10,7 +10,7 @@
 </page-header>
 <nz-card>
     <form nz-form (ngSubmit)="load()">
-        <nz-row [nzGutter]="{ md: 12, lg: 24, xl: 48 }">
+        <nz-row [nzGutter]="4">
             <nz-col nzMd="12" nzSm="24">
                 <nz-form-item>
                     <nz-form-label nzFor="ffilterText">{{'TenantNameOrTenancyCode' | translate}}</nz-form-label>
@@ -45,7 +45,6 @@
             </nz-col>
         </nz-row>
         <nz-row>
-
             <nz-col nzMd="24" nzSm="24" [class.text-right]="true">
                 <a (click)="expandForm=!expandForm">
                     {{expandForm ? l("隐藏高级过滤") : '显示高级过滤'}}
@@ -56,5 +55,9 @@
         </nz-row>
     </form>
     <simple-table #st [columns]="columns" [data]="data" [showSizeChanger]="true" isPageIndexReset="true" frontPagination="false"
-        showPagination="true" [loading]="loading" (change)="getTenants()"></simple-table>
+        showPagination="true" [loading]="loading" (change)="getTenants()">
+        <ng-template st-row="active" let-item let-index="index">
+            <nz-switch [(ngModel)]="item.isActive" [nzDisabled]="true"></nz-switch>
+        </ng-template>
+    </simple-table>
 </nz-card>

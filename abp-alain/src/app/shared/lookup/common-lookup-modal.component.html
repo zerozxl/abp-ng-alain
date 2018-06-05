@@ -1,0 +1,23 @@
+﻿<div class="modal-header">
+    <div class="modal-title">
+        <span>{{options.title}}</span>
+    </div>
+</div>
+<nz-card>
+    <form nz-form (ngSubmit)="getRoles()" *ngIf="options.isFilterEnabled">
+        <nz-row [nzGutter]="{ md: 12, lg: 24, xl: 48 }">
+            <nz-col nzMd="12" nzSm="24">
+                <input nz-input name="filterText" placeholder="{{l('SearchWithThreeDot')}}" [(ngModel)]="filterText">
+            </nz-col>
+            <nz-col nzMd="12" nzSm="24" [class.text-left]="true">
+                <button nz-button nzType="primary" type="submit" [nzLoading]="loading" [nzSize]="'middle'">{{'Refresh' | translate}}</button>
+            </nz-col>
+        </nz-row>
+    </form>
+    <simple-table #st [columns]="columns" [data]="data" [showSizeChanger]="true" isPageIndexReset="true" frontPagination="false"
+        showPagination="true" [loading]="loading" (change)="getTenants()">
+        <ng-template st-row="active" let-item let-index="index">
+            <nz-switch [(ngModel)]="item.isActive" [nzDisabled]="true"></nz-switch>
+        </ng-template>
+    </simple-table>
+</nz-card>

@@ -1,6 +1,7 @@
+import { ChangePasswordModalComponent } from './../../profile/change-password-modal.component';
 import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { SettingsService } from '@delon/theme';
+import { SettingsService, ModalHelper } from '@delon/theme';
 import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
 
 @Component({
@@ -12,6 +13,10 @@ import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
       {{settings.user.name}}
     </div>
     <div nz-menu class="width-sm">
+      <div nz-menu-item (click)="changePwd()">
+        <i class="anticon anticon-user mr-sm"></i>
+        {{'ChangePassword'|translate}}
+      </div>
       <div nz-menu-item [nzDisabled]="true"><i class="anticon anticon-user mr-sm"></i>个人中心</div>
       <div nz-menu-item [nzDisabled]="true"><i class="anticon anticon-setting mr-sm"></i>设置</div>
       <li nz-menu-divider></li>
@@ -24,8 +29,9 @@ export class HeaderUserComponent implements OnInit {
   constructor(
     public settings: SettingsService,
     private router: Router,
+    private modalHelper: ModalHelper,
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.tokenService.change().subscribe((res: any) => {
@@ -44,5 +50,11 @@ export class HeaderUserComponent implements OnInit {
   logout() {
     this.tokenService.clear();
     this.router.navigateByUrl(this.tokenService.login_url);
+  }
+
+  changePwd() {
+    this.modalHelper.open(ChangePasswordModalComponent, {}, 400).subscribe(() => {
+
+    });
   }
 }

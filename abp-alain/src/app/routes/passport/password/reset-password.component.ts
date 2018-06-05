@@ -1,82 +1,86 @@
 import { Component, Injector, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { AccountServiceProxy, ResetPasswordOutput } from '@shared/service-proxies/service-proxies';
-// tslint:disable-next-line:max-line-length
-import { AuthenticateModel, AuthenticateResultModel, PasswordComplexitySetting, ProfileServiceProxy } from '@shared/service-proxies/service-proxies';
-import { LoginService } from '../login/login.service';
-import { AppSessionService } from '@shared/common/session/app-session.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AppUrlService } from '@shared/common/nav/app-url.service';
-
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-
+import { AppSessionService } from '@shared/common/session/app-session.service';
+import {
+    AccountServiceProxy, PasswordComplexitySetting, ProfileServiceProxy,
+    ResetPasswordOutput
+} from '@shared/service-proxies/service-proxies';
+import { LoginService } from '../login/login.service';
 import { ResetPasswordModel } from './reset-password.model';
-import { AppConsts } from '@core/abp/AppConsts';
+import { NzModalRef } from 'ng-zorro-antd';
+import { SFUISchema, SFSchema } from '@delon/form';
+import { AppComponentBase } from '@shared/app-component-base';
 @Component({
     selector: 'passport-reset-password',
     templateUrl: './reset-password.component.html',
-    styleUrls: [ './reset-password.component.less' ]
+    styleUrls: ['./reset-password.component.less']
 })
-export class ResetPasswordComponent implements OnInit {
-
+export class ResetPasswordComponent extends AppComponentBase implements OnInit {
     model: ResetPasswordModel = new ResetPasswordModel();
     passwordComplexitySetting: PasswordComplexitySetting = new PasswordComplexitySetting();
     saving = false;
 
-    form: FormGroup;
 
     constructor(
         injector: Injector,
         fb: FormBuilder,
-        private _accountService: AccountServiceProxy,
-        private _router: Router,
-        private _activatedRoute: ActivatedRoute,
-        private _loginService: LoginService,
-        private _appUrlService: AppUrlService,
-        private _appSessionService: AppSessionService,
-        private _profileService: ProfileServiceProxy
+        private accountService: AccountServiceProxy,
+        private router: Router,
+        private activatedRoute: ActivatedRoute,
+        private loginService: LoginService,
+        private appUrlService: AppUrlService,
+        private appSessionService: AppSessionService,
+        private profileService: ProfileServiceProxy,
+        private modalRef: NzModalRef
     ) {
-        // super(injector);
-        this.form = fb.group({
-            password: [null, Validators.required],
-            passwordRepeat: [null, Validators.required]
-        });
+        super(injector);
+        // this.form = fb.group({
+        //     password: [null, Validators.required],
+        //     passwordRepeat: [null, Validators.required]
+        // });
     }
 
-    get password() { return this.form.controls.password; }
-    get passwordRepeat() { return this.form.controls.passwordRepeat; }
-
+    get password() {
+        // return this.form.controls.password;
+        return null;
+    }
+    get passwordRepeat() {
+        // return this.form.controls.passwordRepeat;
+        return null;
+    }
     ngOnInit(): void {
-        this.model.userId = this._activatedRoute.snapshot.queryParams['userId'];
-        this.model.resetCode = this._activatedRoute.snapshot.queryParams['resetCode'];
-
-        this._appSessionService.changeTenantIfNeeded(
+        console.log('abcd');
+        this.model.userId = this.activatedRoute.snapshot.queryParams['userId'];
+        this.model.resetCode = this.activatedRoute.snapshot.queryParams['resetCode'];
+        this.appSessionService.changeTenantIfNeeded(
             this.parseTenantId(
-                this._activatedRoute.snapshot.queryParams['tenantId']
+                this.activatedRoute.snapshot.queryParams['tenantId']
             )
         );
-
-        this._profileService.getPasswordComplexitySetting().subscribe(result => {
+        this.profileService.getPasswordComplexitySetting().subscribe(result => {
             this.passwordComplexitySetting = result.setting;
         });
     }
 
     save(): void {
         this.saving = true;
-        this._accountService.resetPassword(this.model)
-            // .finally(() => { this.saving = false; })
+        this.accountService.resetPassword(this.model)
+            .finally(() => { this.saving = false; })
             .subscribe((result: ResetPasswordOutput) => {
                 if (!result.canLogin) {
-                    this._router.navigate(['passport/login']);
+                    this.router.navigate(['passport/login']);
                     return;
                 }
-
                 // Autheticate
                 this.saving = true;
-                this._loginService.authenticateModel.userNameOrEmailAddress = result.userName;
-                this._loginService.authenticateModel.password = this.model.password;
-                this._loginService.authenticate(() => {
+                this.loginService.authenticateModel.userNameOrEmailAddress = result.userName;
+                this.loginService.authenticateModel.password = this.model.password;
+                this.loginService.authenticate(() => {
                     this.saving = false;
                 });
+                this.modalRef.close(true);
             });
     }
 
@@ -85,7 +89,9 @@ export class ResetPasswordComponent implements OnInit {
         if (tenantId === NaN) {
             tenantId = undefined;
         }
-
         return tenantId;
+    }
+    close() {
+        this.modalRef.destroy();
     }
 }

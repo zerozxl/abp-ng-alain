@@ -1,11 +1,8 @@
-
-
 <div class="modal-header">
     <div class="modal-title">
         <span>{{l("CreateNewTenant")}}</span>
     </div>
 </div>
-
 <form nz-form #tenantCreateForm="ngForm" role="form" novalidate class="form-validation" (submit)="save()">
 
     <div nz-form-item nz-row>
@@ -50,8 +47,8 @@
             <label for="AdminEmailAddress">{{l("AdminEmailAddress")}}</label>
         </div>
         <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
-            <input nz-input type="email" name="AdminEmailAddress" [(ngModel)]="tenant.adminEmailAddress" [nzSize]="'large'" required pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,})+$"
-                maxlength="256">
+            <input nz-input type="email" name="AdminEmailAddress" [(ngModel)]="tenant.adminEmailAddress" [nzSize]="'large'" required
+                pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,})+$" maxlength="256">
         </div>
     </div>
 
@@ -70,7 +67,8 @@
             <label>{{l("AdminPassword")}}</label>
         </div>
         <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
-            <input nz-input name="adminPassword" [(ngModel)]="tenant.adminPassword" [nzSize]="'large'" [required]="!setRandomPassword" maxlength="32">
+            <input nz-input name="adminPassword" [(ngModel)]="tenant.adminPassword" [nzSize]="'large'" [required]="!setRandomPassword"
+                maxlength="32">
         </div>
     </div>
     <div nz-form-item nz-row>
@@ -100,9 +98,7 @@
             <label>{{l("SubscriptionEndDate")}}</label>
         </div>
         <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
-            <nz-date-picker name="subscriptionEndDateUtc" 
-            [(ngModel)]="subscriptionEndDateUtc" 
-            [nzPlaceholder]="'Select date'"></nz-date-picker>
+            <nz-date-picker name="subscriptionEndDateUtc" [(ngModel)]="subscriptionEndDateUtc" [nzPlaceholder]="'Select date'"></nz-date-picker>
         </div>
     </div>
 
@@ -146,10 +142,10 @@
     </div>
 
     <div class="modal-footer">
-        <button  nz-button type="button" [nzType]="'default'" [nzSize]="'large'" (click)="close()">
+        <button nz-button type="button" [nzType]="'default'" [nzSize]="'large'" (click)="close()">
             {{l("Cancel")}}
         </button>
-        <button nz-button [nzType]="'primary'" [nzSize]="'large'" >
+        <button nz-button [nzType]="'primary'" [nzSize]="'large'">
             <span>{{l("Save")}}</span>
         </button>
     </div>

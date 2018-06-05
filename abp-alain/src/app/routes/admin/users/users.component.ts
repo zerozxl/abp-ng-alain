@@ -45,7 +45,7 @@ export class UsersComponent extends AppComponentBase implements OnInit {
                     type: 'modal',
                     paramName: 'userPara',
                     component: CreateOrEditUserModalComponent,
-                    click: (record: any, modal: any) => this.getUsers(undefined)
+                    click: (record: any, modal: any) => this.getUsers()
                 },
                 {
                     text: 'More',
@@ -89,9 +89,11 @@ export class UsersComponent extends AppComponentBase implements OnInit {
     ngOnInit() {
         this.getUsers(undefined);
     }
+    /**
+     * 遵循服务端，排序参数设置
+     */
     sortChange(ret: any) {
-        // tslint:disable-next-line:no-unnecessary-initializer
-        let sort = undefined;
+        let sort;
         if (ret.value) {
             if (ret.value === 'descend') {
                 sort = ret.column.index + ' desc';
@@ -106,7 +108,7 @@ export class UsersComponent extends AppComponentBase implements OnInit {
      * 检索用户
      * @param sort 排序
      */
-    getUsers(sort: string | undefined) {
+    getUsers(sort?: string | undefined) {
         this.loading = true;
         this._userServiceProxy.getUsers(
             this.filterText,

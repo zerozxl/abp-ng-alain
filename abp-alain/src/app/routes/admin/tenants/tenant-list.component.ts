@@ -3,24 +3,23 @@ import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SimpleTableColumn, SimpleTableComponent } from '@delon/abc';
 import { AppComponentBase } from '@shared/app-component-base';
-import { TenantListDto, TenantServiceProxy } from '@shared/service-proxies/service-proxies';
+import { EntityDtoOfInt64, NameValueDto, TenantListDto, TenantServiceProxy, FindUsersInput, CommonLookupServiceProxy } from '@shared/service-proxies/service-proxies';
 import { NzMessageService } from 'ng-zorro-antd';
+import { ImpersonationService } from '../users/impersonation.service';
 import { CreateTenantModalComponent } from './create-tenant-modal.component';
 import { EditTenantModalComponent } from './edit-tenant-modal.component';
+import { CommonLookupModalComponent } from '@shared/lookup/common-lookup-modal.component';
 
 @Component({ selector: 'app-tenant-list', templateUrl: './tenant-list.component.html', styles: [] })
 export class TenantListComponent extends AppComponentBase implements OnInit {
     @ViewChild('st') st: SimpleTableComponent;
-    q: any = {
-        pi: 1,
-        ps: 10,
-        total: 20,
-        sorter: '',
-        status: null,
-        statusList: [],
-    };
     data: any;
     columns: SimpleTableColumn[] = [
+        { title: this.l('TenancyCodeName'), index: 'tenancyName', sorter: (a, b) => true },
+        { title: this.l('Name'), index: 'name', sorter: (a, b) => true },
+        { title: this.l('Edition'), index: 'editionDisplayName', sorter: (a, b) => true },
+        { title: this.l('SubscriptionEndDateUtc'), index: 'subscriptionEndDateUtc', type: 'date', sorter: (a, b) => true },
+        { title: this.l('Active'), index: 'isActive', render: 'active', sorter: (a, b) => true },
         {
             title: '操作', buttons: [
                 {
@@ -30,10 +29,34 @@ export class TenantListComponent extends AppComponentBase implements OnInit {
                     paramName: 'tenantPara',
                     click: () => this.load(),
                 },
-                { text: '订阅警报', click: (item: any) => this._msgService.success(`订阅警报${item.no}`), },
+                {
+                    text: 'More',
+                    i18n: 'More',
+                    children: [
+                        {
+                            text: 'LoginAsThisTenant',
+                            i18n: 'LoginAsThisTenant',
+                            type: 'modal',
+                            params: (record: any) => ({
+                                lookupConfig: this.lookupConfig
+                              }),
+                            component: CommonLookupModalComponent,
+                            click: (record: any) => this.showUserImpersonateLookUpModal(record)
+                        },
+                        {
+                            text: 'Delete',
+                            i18n: 'Delete',
+                            click: (record: any) => this.deleteTenant(record)
+                        },
+                        {
+                            text: 'Unlock',
+                            i18n: 'Unlock',
+                            click: (record: any) => this.unlockUser(record)
+                        }
+                    ]
+                }
             ],
         },
-        { title: this.l('Name'), index: 'name' },
     ];
     expandForm = false;
     filters: {
@@ -44,19 +67,32 @@ export class TenantListComponent extends AppComponentBase implements OnInit {
         creationDateRange: [null, null];
         selectedEditionId: number;
     } = <any>{};
+    lookupConfig: any;
     // tslint:disable-next-line:max-line-length
     constructor(injector: Injector,
-
         public http: HttpClient,
         public _msgService: NzMessageService,
         private _tenantService: TenantServiceProxy,
-        private _activatedRoute: ActivatedRoute, ) {
+        private _activatedRoute: ActivatedRoute,
+        private _commonLookupService: CommonLookupServiceProxy,
+        private _impersonationService: ImpersonationService) {
         super(injector);
         // this.setFiltersFromRoute();
     }
 
     ngOnInit() {
         this.getTenants();
+        this.lookupConfig = {
+            title: this.l('SelectAUser'),
+            dataSource: (skipCount: number, maxResultCount: number, filter: string, tenantId?: number) => {
+                const input = new FindUsersInput();
+                input.filter = filter;
+                input.maxResultCount = maxResultCount;
+                input.skipCount = skipCount;
+                input.tenantId = tenantId;
+                return this._commonLookupService.findUsers(input);
+            }
+        };
     }
 
     load(pi?: number) {
@@ -66,8 +102,21 @@ export class TenantListComponent extends AppComponentBase implements OnInit {
         // this.setFiltersFromRoute();
         this.load();
     }
-
-    getTenants() {
+    /**
+     * 遵循服务端，排序参数设置
+     */
+    sortChange(ret: any) {
+        let sort;
+        if (ret.value) {
+            if (ret.value === 'descend') {
+                sort = ret.column.index + ' desc';
+            } else {
+                sort = ret.column.index + ' asc';
+            }
+        }
+        this.getTenants(sort);
+    }
+    getTenants(sort?: string | undefined) {
         this.loading = true;
         this._tenantService.getTenants(
             this.filters.filterText,
@@ -77,13 +126,17 @@ export class TenantListComponent extends AppComponentBase implements OnInit {
             this.filters.creationDateRangeActive ? this.filters.creationDateRangeActive[1] : undefined,
             this.filters.selectedEditionId,
             this.filters.selectedEditionId !== undefined && (this.filters.selectedEditionId + '') !== '-1',
-            '',
+            sort,
             this.st.ps,
             (this.st.pi - 1) * this.st.ps)
             .finally(() => { this.loading = false; })
             .subscribe(result => {
                 this.data = result.items;
                 this.st.total = result.totalCount;
+                const pi = this.st.pi;
+                setTimeout(() => {
+                    this.st.pi = pi;
+                }, 50);
             });
     }
 
@@ -97,24 +150,44 @@ export class TenantListComponent extends AppComponentBase implements OnInit {
             });
     }
 
-    deleteTenant(tenant: TenantListDto): void {
-        // this.modal.open
-        //     .confirm(
-        //         {
-        //             nzTitle: this.l('TenantDeleteWarningMessage', tenant.tenancyName),
-        //             nzOnOk: () => {
-        //                 this
-        //                     ._tenantService
-        //                     .deleteTenant(tenant.id)
-        //                     .subscribe(() => {
-        //                         this.load();
-        //                         this
-        //                             .notify
-        //                             .success(this.l('SuccessfullyDeleted'));
-        //                     });
 
-        //             }
-        //         }
+    showUserImpersonateLookUpModal(record: any): void {
+        // this.impersonateUserLookupModal.tenantId = record.id;
+        // this.impersonateUserLookupModal.show();
+    }
+    /**
+     * 删除租户
+     * @param record 租户记录
+     */
+    unlockUser(record: any): void {
+        this._tenantService.unlockTenantAdmin(new EntityDtoOfInt64({ id: record.id })).subscribe(() => {
+            this.msg.success(this.l('UnlockedTenandAdmin', record.name));
+        });
+    }
+    /**
+     * 删除租户
+     * @param tenant 租户DTO
+     */
+    deleteTenant(tenant: TenantListDto): void {
+        this.modal.confirm(
+            {
+                nzTitle: this.l('TenantDeleteWarningMessage', tenant.tenancyName),
+                nzOnOk: () => {
+                    this._tenantService.deleteTenant(tenant.id).subscribe(() => {
+                        this.getTenants();
+                        this.msg.success('SuccessfullyDeleted');
+                    });
+
+                }
+            }
+        );
+    }
+
+    impersonateUser(item: NameValueDto): void {
+        // this._impersonationService
+        //     .impersonate(
+        //         parseInt(item.value),
+        //         this.impersonateUserLookupModal.tenantId
         //     );
     }
 }

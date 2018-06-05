@@ -6,6 +6,7 @@ import { NzModalRef } from 'ng-zorro-antd';
 import { PermissionTreeComponent } from '../shared/permission-tree.component';
 
 @Component({
+    // tslint:disable-next-line:component-selector
     selector: 'app-createOrEditRoleModal',
     templateUrl: './create-or-edit-role-modal.component.html'
 })
@@ -14,7 +15,7 @@ export class CreateOrEditRoleModalComponent extends AppComponentBase implements 
     @ViewChild('permissionTree') permissionTree: PermissionTreeComponent;
     active = false;
     saving = false;
-    rolePara : RoleListDto;
+    rolePara: RoleListDto;
     role: RoleEditDto = new RoleEditDto();
     constructor(
         private modalRef: NzModalRef,
@@ -23,14 +24,14 @@ export class CreateOrEditRoleModalComponent extends AppComponentBase implements 
     ) {
         super(injector);
     }
-/**
-     * 初始化
-     */
+    /**
+         * 初始化
+         */
     ngOnInit(): void {
         this.getRole();
     }
     getRole(): void {
-        this.roleService.getRoleForEdit(this.rolePara?this.rolePara.id:undefined).subscribe(result => {
+        this.roleService.getRoleForEdit(this.rolePara ? this.rolePara.id : undefined).subscribe(result => {
             this.role = result.role;
             this.permissionTree.editData = result;
         });
@@ -45,8 +46,8 @@ export class CreateOrEditRoleModalComponent extends AppComponentBase implements 
         this.roleService.createOrUpdateRole(input)
             .finally(() => this.saving = false)
             .subscribe(() => {
-                this.msg.success(this.l('SavedSuccessfully')); 
-                this.modalRef.close(true);               
+                this.msg.success(this.l('SavedSuccessfully'));
+                this.modalRef.close(true);
             });
     }
 

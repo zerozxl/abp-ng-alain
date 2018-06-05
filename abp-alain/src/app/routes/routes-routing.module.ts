@@ -22,7 +22,7 @@ const routes: Routes = [
     path: '',
     component: LayoutDefaultComponent,
     children: [
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: '', redirectTo: 'admin/languages', pathMatch: 'full' },
       // tslint:disable-next-line:max-line-length
       { path: 'dashboard', component: DashboardComponent, canActivate: [ACLGuard], data: { guard: 'user', title: '仪表盘', titleI18n: 'dashboard' } },
       { path: 'admin', loadChildren: './admin/admin.module#AdminModule', canActivate: [ACLGuard], data: { reuse: true } },
@@ -31,14 +31,6 @@ const routes: Routes = [
     ],
     canActivateChild: [ACLGuard]
   },
-  // 全屏布局
-  // {
-  //     path: 'fullscreen',
-  //     component: LayoutFullScreenComponent,
-  //     children: [
-  //     ]
-  // },
-  // passport
   {
     path: 'passport',
     component: LayoutPassportComponent,
@@ -54,7 +46,7 @@ const routes: Routes = [
   { path: '403', component: Exception403Component },
   { path: '404', component: Exception404Component },
   { path: '500', component: Exception500Component },
-  { path: '**', redirectTo: 'admin/maintenance' }
+  { path: '**', redirectTo: 'admin/languages' }
 ];
 
 @NgModule({

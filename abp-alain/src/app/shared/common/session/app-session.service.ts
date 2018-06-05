@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 // tslint:disable-next-line:max-line-length
-import { SessionServiceProxy, UserLoginInfoDto, TenantLoginInfoDto, ApplicationInfoDto, GetCurrentLoginInformationsOutput } from '@shared/service-proxies/service-proxies';
+import { SessionServiceProxy, UserLoginInfoDto, TenantLoginInfoDto, ApplicationInfoDto, GetCurrentLoginInformationsOutput, ProfileServiceProxy } from '@shared/service-proxies/service-proxies';
 import { AbpMultiTenancyService } from '@core/abp/multi-tenancy/abp-multi-tenancy.service';
 
 import { Abp } from '@core/abp/abp';
+import { SettingsService, User } from '@delon/theme';
 
 @Injectable()
 export class AppSessionService {
@@ -13,7 +14,9 @@ export class AppSessionService {
     private _application: ApplicationInfoDto;
 
     constructor(
+        private settingService: SettingsService,
         private _sessionService: SessionServiceProxy,
+        private _profileServiceProxy: ProfileServiceProxy,
         private _abpMultiTenancyService: AbpMultiTenancyService) {
     }
 
@@ -61,6 +64,13 @@ export class AppSessionService {
 
                 this._application = result.application;
                 this._user = result.user;
+                const alainuser: User = {
+                    name: result.user.name,
+                    email: result.user.emailAddress
+                };
+                
+                this.settingService.setUser(alainuser);
+                this.getProfilePicture();
                 this._tenant = result.tenant;
                 resolve(true);
             }, (err) => {
@@ -78,7 +88,13 @@ export class AppSessionService {
         location.reload();
         return true;
     }
-
+    getProfilePicture(): void {
+        this._profileServiceProxy.getProfilePicture().subscribe(result => {
+            if (result && result.profilePicture) {
+                this.settingService.user.avatar = 'data:image/jpeg;base64,' + result.profilePicture;
+            }
+        });
+    }
     private isCurrentTenant(tenantId?: number) {
         if (!tenantId && this.tenant) {
             return false;

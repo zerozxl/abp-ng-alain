@@ -164,12 +164,12 @@ export class LoginService {
             //     'redirectUrl': initialUrl
             // });
             // 跳转到租户主界面
-            // location.href = AppConsts.appBaseUrl + '/#/admin/languages';
-            // location.reload();
+            location.href = AppConsts.appBaseUrl + '/#/admin/languages';
+            location.reload();
             // 和 location.href 相比，router不会触发启动程序，导致 session user 里的用户名为空
             // 清空路由复用信息
-            this.reuseTabService.clear();
-            this.router.navigate(['admin/languages']);
+            // this.reuseTabService.clear();
+            // this.router.navigate(['admin/languages']);
             // location.href =  AppConsts.appBaseUrl + '/#/reception/index';
         }
 
