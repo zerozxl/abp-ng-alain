@@ -35,7 +35,13 @@ export class AppSessionService {
     get tenant(): TenantLoginInfoDto {
         return this._tenant;
     }
+    get impersonatorUserId(): number | undefined {
+        return Abp.session.impersonatorUserId;
+    }
 
+    get impersonatorTenantId(): number | undefined {
+        return Abp.session.impersonatorTenantId;
+    }
     get tenancyName(): string {
         return this._tenant ? this.tenant.tenancyName : '';
     }

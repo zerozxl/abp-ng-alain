@@ -10,6 +10,7 @@ import {
 import { NzMessageService } from 'ng-zorro-antd';
 import { CookieService } from 'ngx-cookie-service';
 import { TokenService } from '@delon/auth';
+import { NgForage } from 'ngforage';
 
 export interface IValidationErrorInfo {
 
@@ -219,6 +220,7 @@ export class AbpHttpInterceptor implements HttpInterceptor {
 
     protected configuration: AbpHttpConfiguration;
     private _tokenService: TokenService = this.injector.get(TokenService);
+    private readonly ngf: NgForage = this.injector.get(NgForage);
     private _utilsService: UtilsService = new UtilsService(new CookieService(document));
     private _logService: LogService = new LogService();
 
@@ -268,13 +270,23 @@ export class AbpHttpInterceptor implements HttpInterceptor {
 
     protected addAspNetCoreCultureHeader(headers: HttpHeaders): HttpHeaders {
         const cookieLangValue = this._utilsService.getCookieValue('Abp.Localization.CultureName');
+        // let cValue;
+        // this.ngf.getItem('CultureName').then(v => {
+        //     cValue = v;
+
+        // });
+        // console.log(this.getval('CultureName'));
         if (cookieLangValue && headers && !headers.has('.AspNetCore.Culture')) {
             headers = headers.set('.AspNetCore.Culture', cookieLangValue);
         }
 
         return headers;
     }
-
+    getval(key: string) {
+        this.ngf.getItem('CultureName').then(v => {
+            return v;
+        });
+    }
     protected addAcceptLanguageHeader(headers: HttpHeaders): HttpHeaders {
         const cookieLangValue = this._utilsService.getCookieValue('Abp.Localization.CultureName');
         if (cookieLangValue && headers && !headers.has('Accept-Language')) {

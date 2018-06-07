@@ -6,6 +6,7 @@ import { AppSessionService } from './session/app-session.service';
 import { AppUrlService } from './nav/app-url.service';
 import { AppUiCustomizationService } from './ui/app-ui-customization.service';
 import { AppAuthService } from './auth/app-auth.service';
+import { ImpersonationService } from '../../routes/admin/users/impersonation.service';
 
 @NgModule({
     imports: [
@@ -18,6 +19,7 @@ export class AppCommonModule {
         return {
             ngModule: AppCommonModule,
             providers: [
+                ImpersonationService,
                 AppSessionService,
                 AppUrlService,
                 AppUiCustomizationService,

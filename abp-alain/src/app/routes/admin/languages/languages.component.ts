@@ -4,6 +4,7 @@ import { SimpleTableColumn, SimpleTableComponent } from '@delon/abc';
 import { AppComponentBase } from '@shared/app-component-base';
 import { LanguageServiceProxy, ApplicationLanguageListDto, SetDefaultLanguageInput } from '@shared/service-proxies/service-proxies';
 import { CreateOrEditLanguageComponent } from './create-or-edit-language.component';
+import { NgForage } from 'ngforage';
 
 @Component({
   selector: 'app-languages',
@@ -59,7 +60,8 @@ export class LanguagesComponent extends AppComponentBase implements OnInit {
   constructor(
     injector: Injector,
     private router: Router,
-    private languageService: LanguageServiceProxy
+    private languageService: LanguageServiceProxy,
+    private readonly ngf: NgForage,
   ) {
     super(injector);
   }

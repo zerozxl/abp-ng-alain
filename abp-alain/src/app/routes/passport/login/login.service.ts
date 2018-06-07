@@ -132,7 +132,7 @@ export class LoginService {
 
         this.tokenService.set({
             token: accessToken,
-            tokenExpireDate
+            tokenExpireDate: tokenExpireDate
         }
         );
 

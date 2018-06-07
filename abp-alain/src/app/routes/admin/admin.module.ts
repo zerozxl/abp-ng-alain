@@ -20,7 +20,6 @@ import { MaintenanceComponent } from './maintenance/maintenance.component';
 import { AuditLogDetailModalComponent } from './audit-logs/audit-log-detail-modal.component';
 import { PermissionTreeComponent } from './shared/permission-tree.component';
 import { CreateOrEditRoleModalComponent } from './roles/create-or-edit-role-modal.component';
-import { ImpersonationService } from './users/impersonation.service';
 import { RoleSelectComponent } from './shared/role-select.component';
 import { EditUserPermissionsModalComponent } from './users/edit-user-permissions-modal.component';
 import { OrganizationUnitsTreeComponent } from './shared/organization-unit-tree.component';
@@ -32,7 +31,7 @@ import { OrganizationUnitsTreeComponent } from './shared/organization-unit-tree.
         AdminRoutingModule,
         NzTreeModule],
     providers: [
-        ImpersonationService
+        
     ],
     declarations: [
         RolesComponent,
