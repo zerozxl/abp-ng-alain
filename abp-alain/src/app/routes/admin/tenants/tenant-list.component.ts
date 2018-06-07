@@ -3,7 +3,10 @@ import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SimpleTableColumn, SimpleTableComponent } from '@delon/abc';
 import { AppComponentBase } from '@shared/app-component-base';
-import { EntityDtoOfInt64, NameValueDto, TenantListDto, TenantServiceProxy, FindUsersInput, CommonLookupServiceProxy } from '@shared/service-proxies/service-proxies';
+import {
+    EntityDtoOfInt64, NameValueDto, TenantListDto, TenantServiceProxy,
+    FindUsersInput, CommonLookupServiceProxy
+} from '@shared/service-proxies/service-proxies';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { ImpersonationService } from '../users/impersonation.service';
 import { CreateTenantModalComponent } from './create-tenant-modal.component';
@@ -14,7 +17,7 @@ import { CommonLookupModalComponent } from '@shared/lookup/common-lookup-modal.c
 export class TenantListComponent extends AppComponentBase implements OnInit {
     @ViewChild('st') st: SimpleTableComponent;
     @ViewChild('impersonateUserLookupModal') impersonateUserLookupModal: CommonLookupModalComponent;
-    isVisible: boolean = false;// 是否显示选择用户登录框
+    isVisible = false; // 是否显示选择用户登录框
     nzModalFooter: any = null;
     data: any;
     columns: SimpleTableColumn[] = [
@@ -205,10 +208,11 @@ export class TenantListComponent extends AppComponentBase implements OnInit {
 
     impersonateUser(item: NameValueDto): void {
         console.log(item);
-        // this._impersonationService
-        //     .impersonate(
-        //         parseInt(item.value),
-        //         this.impersonateUserLookupModal.tenantId
-        //     );
+        this._impersonationService
+            .impersonate(
+                // tslint:disable-next-line:radix
+                parseInt(item.value),
+                this.impersonateUserLookupModal.tenantId
+            );
     }
 }

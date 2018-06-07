@@ -3,6 +3,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { SettingsService, ModalHelper } from '@delon/theme';
 import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
+import { AppSessionService } from '@shared/common/session/app-session.service';
+import { ImpersonationService } from '../../../../routes/admin/users/impersonation.service';
 
 @Component({
   selector: 'header-user',
@@ -13,6 +15,10 @@ import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
       {{settings.user.name}}
     </div>
     <div nz-menu class="width-sm">
+      <div nz-menu-item (click)="backToMyAccount()" *ngIf="isImpersonatedLogin">
+        <i class="anticon anticon-user mr-sm"></i>
+        {{'BackToMyAccount'|translate}}
+      </div>
       <div nz-menu-item (click)="changePwd()">
         <i class="anticon anticon-user mr-sm"></i>
         {{'ChangePassword'|translate}}
@@ -26,11 +32,14 @@ import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
   `,
 })
 export class HeaderUserComponent implements OnInit {
+  isImpersonatedLogin = false;
   constructor(
     public settings: SettingsService,
     private router: Router,
     private modalHelper: ModalHelper,
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
+    private _impersonationService: ImpersonationService,
+    private _appSessionService: AppSessionService
   ) { }
 
   ngOnInit(): void {
@@ -45,13 +54,16 @@ export class HeaderUserComponent implements OnInit {
       email: 'cipchk@qq.com',
     };
     this.tokenService.set(token);
+    this.isImpersonatedLogin = this._appSessionService.impersonatorUserId > 0;
   }
 
   logout() {
     this.tokenService.clear();
     this.router.navigateByUrl(this.tokenService.login_url);
   }
-
+  backToMyAccount() {
+    this._impersonationService.backToImpersonator();
+  }
   changePwd() {
     this.modalHelper.open(ChangePasswordModalComponent, {}, 400).subscribe(() => {
 

@@ -52,6 +52,11 @@ export class UsersComponent extends AppComponentBase implements OnInit {
                     i18n: 'More',
                     children: [
                         {
+                            text: 'LoginAsThisUser',
+                            i18n: 'LoginAsThisUser',
+                            click: (record: any, modal: any) => this._impersonationService.impersonate(record.id, this.appSession.tenantId)
+                        },
+                        {
                             text: 'Permissions',
                             i18n: 'Permissions',
                             paramName: 'userPara', type: 'modal',

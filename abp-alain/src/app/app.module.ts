@@ -31,6 +31,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AbpHttpInterceptor } from '@core/abp/abpHttpInterceptor';
 import { TokenService } from '@delon/auth';
+import { NgForageModule, NgForageConfig } from 'ngforage';
 registerLocaleData(localeZhHans);
 
 export function StartupServiceFactory(startupService: StartupService): Function {
@@ -73,14 +74,25 @@ const PROVIDERS = [
     RoutesModule,
     // i18n
     TranslateModule.forRoot({
-        loader: {
-            provide: TranslateLoader,
-            useFactory: HttpLoaderFactory,
-            deps: [HttpClient]
-        }
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
     }),
     // JSON-Schema form
-    JsonSchemaModule
+    JsonSchemaModule,
+    // Optional in Angular 6 and up
+    NgForageModule.forRoot(),
+
+    // Optional configuration as an alternative to what's below in Angular 6+
+    // NgForageModule.forRoot({
+    //   name: 'ABP',
+    //   driver: [ // defaults to indexedDB -> webSQL -> localStorage -> sessionStorage
+    //     NgForageConfig.DRIVER_INDEXEDDB,
+    //     NgForageConfig.DRIVER_LOCALSTORAGE
+    //   ]
+    // })
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'zh-Hans' },
@@ -100,4 +112,15 @@ const PROVIDERS = [
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+  public constructor(ngfConfig: NgForageConfig) {
+    ngfConfig.configure({
+      name: 'ABP',
+      driver: [ // defaults to indexedDB -> webSQL -> localStorage -> sessionStorage
+        NgForageConfig.DRIVER_INDEXEDDB,
+        NgForageConfig.DRIVER_LOCALSTORAGE
+      ]
+    });
+  }
+ }
