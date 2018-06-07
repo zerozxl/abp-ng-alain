@@ -22,10 +22,6 @@ export interface ICommonLookupModalOptions {
  * 通用的NameValue的选择器组件
  */
 export class CommonLookupModalComponent extends AppComponentBase {
-    /**
-     * 外部的行点击事件
-     */
-    @Output() itemSelected: EventEmitter<NameValueDto> = new EventEmitter<NameValueDto>();
     static defaultOptions: ICommonLookupModalOptions = {
         dataSource: null,
         canSelect: () => true,
@@ -33,6 +29,10 @@ export class CommonLookupModalComponent extends AppComponentBase {
         isFilterEnabled: true,
         pageSize: AppConsts.grid.defaultPageSize
     };
+    /**
+     * 外部的行点击事件
+     */
+    @Output() itemSelected: EventEmitter<NameValueDto> = new EventEmitter<NameValueDto>();
     @ViewChild('st') st: SimpleTableComponent;
     data: any;
     columns: SimpleTableColumn[] = [
