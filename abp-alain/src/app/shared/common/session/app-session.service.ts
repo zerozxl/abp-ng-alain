@@ -74,7 +74,7 @@ export class AppSessionService {
                     name: result.user.name,
                     email: result.user.emailAddress
                 };
-                
+
                 this.settingService.setUser(alainuser);
                 this.getProfilePicture();
                 this._tenant = result.tenant;

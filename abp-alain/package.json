@@ -49,7 +49,7 @@
     "moment": "^2.22.1",
     "moment-timezone": "^0.5.17",
     "ng-alain": "^1.0.6",
-    "ng-zorro-antd": "^0.7.0",
+    "ng-zorro-antd": "^0.7.1",
     "ngforage": "^3.0.0",
     "ngx-cookie-service": "^1.0.10",
     "prettier": "^1.12.1",
