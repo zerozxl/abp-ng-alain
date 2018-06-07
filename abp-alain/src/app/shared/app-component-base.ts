@@ -10,6 +10,7 @@ import { AppConsts } from '@core/abp/AppConsts';
 import { AppSessionService } from '@shared/common/session/app-session.service';
 import { AppUiCustomizationService } from '@shared/common/ui/app-ui-customization.service';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
+import { I18NService } from '@core/i18n/i18n.service';
 
 export abstract class AppComponentBase {
 
@@ -24,7 +25,7 @@ export abstract class AppComponentBase {
     modal: NzModalService;
     multiTenancy: AbpMultiTenancyService;
     appSession: AppSessionService;
-
+    i18nService: I18NService;
     loading = false;
 
     constructor(injector: Injector) {
@@ -37,6 +38,7 @@ export abstract class AppComponentBase {
         this.modal = injector.get(NzModalService);
         this.multiTenancy = injector.get(AbpMultiTenancyService);
         this.appSession = injector.get(AppSessionService);
+        this.i18nService = injector.get(I18NService);
     }
 
     l(key: string, ...args: any[]): string {
@@ -44,18 +46,14 @@ export abstract class AppComponentBase {
     }
 
     ls(sourcename: string, key: string, ...args: any[]): string {
-        let localizedText = this.localization.localize(key, sourcename);
-
+        let localizedText =  this.i18nService.fanyi(key);
         if (!localizedText) {
             localizedText = key;
         }
-
         if (!args || !args.length) {
             return localizedText;
         }
-
         args[0].unshift(localizedText);
-
         return Abp.utils.formatString.apply(this, args[0]);
     }
 
