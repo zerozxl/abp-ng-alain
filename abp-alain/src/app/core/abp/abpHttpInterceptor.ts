@@ -275,7 +275,7 @@ export class AbpHttpInterceptor implements HttpInterceptor {
         //     cValue = v;
 
         // });
-        console.log(this.getval('CultureName'));
+        // console.log(this.getval('CultureName'));
         if (cookieLangValue && headers && !headers.has('.AspNetCore.Culture')) {
             headers = headers.set('.AspNetCore.Culture', cookieLangValue);
         }
