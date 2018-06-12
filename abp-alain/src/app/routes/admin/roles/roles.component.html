@@ -19,7 +19,7 @@
             </nz-col>
         </nz-row>
     </form>
-    <simple-table #st [data]="data" [columns]="columns" [extraParams]="params" frontPagination="false" showPagination="true"
+    <simple-table #st [data]="data" [columns]="columns"  frontPagination="false" showPagination="true"
         [loading]="loading">
         <ng-template st-row="displayName" type="title" let-c>
             {{ c.title }}

@@ -21,7 +21,7 @@ export class ResetPasswordComponent extends AppComponentBase implements OnInit {
     model: ResetPasswordModel = new ResetPasswordModel();
     passwordComplexitySetting: PasswordComplexitySetting = new PasswordComplexitySetting();
     saving = false;
-
+    form: any;
 
     constructor(
         injector: Injector,

@@ -28,7 +28,7 @@
       </nz-col>
     </nz-row>
   </form>
-  <simple-table #st [data]="data" [columns]="columns" [ps]="100" [extraParams]="params" frontPagination="false" showPagination="true"
+  <simple-table #st [data]="data" [columns]="columns" [ps]="100"  frontPagination="false" showPagination="true"
     isPageIndexReset="true" [loading]="loading" (sortChange)="sortChange($event)">
     <ng-template st-row="roles" let-item let-index="index">
       {{getRolesAsString(item.roles)}}

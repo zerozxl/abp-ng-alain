@@ -9,7 +9,7 @@
 </page-header>
 <nz-card>
     <nz-tabset [nzTabBarExtraContent]="extraTemplate" [nzSelectedIndex]="selectedIndex" (nzSelectChange)="changeSelectIndex($event)">
-        <nz-tab nzTitle="{{'Caches' | translate}}" (click)="selectedIndexChange()">
+        <nz-tab nzTitle="{{'Caches' | translate}}">
             <nz-list [nzDataSource]="caches" nzBordered nzSize="small" [nzRenderItem]="item">
                 <ng-template #item let-item>
                     <nz-list-item [nzContent]="item.name" [nzActions]="[editAction]">
@@ -22,7 +22,7 @@
                 </ng-template>
             </nz-list>
         </nz-tab>
-        <nz-tab nzTitle="{{'WebSiteLogs' | translate}}" (click)="selectedIndexChange()">
+        <nz-tab nzTitle="{{'WebSiteLogs' | translate}}">
             <div class="web-log-view full-height" id="web-log-view">
                 <span class="log-line" *ngFor="let log of logs">
                     <nz-tag *ngIf="getLogType(log)" [nzColor]="getLogClass(log)">{{getLogType(log)}}</nz-tag>

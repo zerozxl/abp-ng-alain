@@ -11,10 +11,9 @@ import { PermissionTreeEditModel } from './permission-tree-edit.model';
     selector: 'permission-tree',
     template:
         `<nz-tree #tree [(ngModel)]="nodes"
-        [nzCheckable]="true"
-        [nzMultiple]="true"
-        [nzCheckStrictly]="true"
-            [nzDefaultExpandedKeys]="expandKeys"
+            [nzCheckable]="true"
+            [nzMultiple]="true"
+            [nzCheckStrictly]="true"
               [nzDefaultCheckedKeys]="checkedKeys"
               [nzDefaultExpandAll]="expandDefault"
            >

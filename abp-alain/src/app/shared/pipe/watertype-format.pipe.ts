@@ -6,31 +6,31 @@ export class WaterTypeFormatPipe implements PipeTransform {
         // console.log(moment.localeData());
         // console.log(format);
 
-        if ( value === undefined || value === 0 ) {
+        if (value === undefined || value === 0) {
             return '-';
         }
 
-        if ( value === 1 ) {
+        if (value === 1) {
             return 'I';
         }
 
-        if ( value === 2 ) {
+        if (value === 2) {
             return 'II';
         }
 
-        if ( value === 3 ) {
+        if (value === 3) {
             return 'III';
         }
 
-        if ( value === 4 ) {
+        if (value === 4) {
             return 'IV';
         }
 
-        if ( value === 5 ) {
+        if (value === 5) {
             return 'V';
         }
 
-        if ( value === 6 ) {
+        if (value === 6) {
             return '劣';
         }
 

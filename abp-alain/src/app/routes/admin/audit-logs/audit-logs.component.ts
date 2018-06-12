@@ -15,6 +15,7 @@ export class AuditLogsComponent extends AppComponentBase implements OnInit {
     @ViewChild('st') st: SimpleTableComponent;
     data: any;
     defaultLanguageName: any;
+    expandForm = false;
     columns: SimpleTableColumn[] = [
         { title: 'Success', i18n: 'Success', render: 'exception' },
         {

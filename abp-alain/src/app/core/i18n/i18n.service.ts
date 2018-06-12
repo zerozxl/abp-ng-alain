@@ -31,7 +31,11 @@ export class I18NService implements AlainI18NService {
     translate.addLangs(lans);
     this.setZorro(this._default).setDateFns(this._default);
   }
-
+  setLang(defaultLang: string, langs: string[]) {
+    this._default = defaultLang;
+    // this.translate.resetLang()
+    // this.translate.addLangs(lans);
+  }
   setZorro(lang: string): this {
     this.nzI18nService.setLocale(lang === 'en' ? en_US : zh_CN);
     return this;

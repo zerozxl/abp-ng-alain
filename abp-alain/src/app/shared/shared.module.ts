@@ -17,6 +17,9 @@ import { CountdownModule } from 'ngx-countdown';
 import { TruncateModule } from '@yellowspot/ng-truncate';
 import { AdSideBarNavModule } from '@shared/overwrite/side-bar-nav/side-bar-nav.module';
 import { CommonLookupModalComponent } from '@shared/lookup/common-lookup-modal.component';
+import { WaterTypeFormatPipe } from '@shared/pipe/watertype-format.pipe';
+import { MomentFormatPipe } from '@shared/pipe/moment-format.pipe';
+import { TreeConvertPipe } from '@shared/pipe/tree-convert.pipe';
 const THIRDMODULES = [
   NgZorroAntdModule,
   CountdownModule,
@@ -30,7 +33,7 @@ const THIRDMODULES = [
 const COMPONENTS = [
   CommonLookupModalComponent
 ];
-const EntryCOMPONENTS=[
+const EntryCOMPONENTS = [
   CommonLookupModalComponent
 ];
 const DIRECTIVES = [];
@@ -52,6 +55,9 @@ const DIRECTIVES = [];
     ...THIRDMODULES
   ],
   declarations: [
+    WaterTypeFormatPipe,
+    MomentFormatPipe,
+    TreeConvertPipe,
     // your components
     ...COMPONENTS,
     ...DIRECTIVES
@@ -74,6 +80,7 @@ const DIRECTIVES = [];
     ...DIRECTIVES
   ]
   ,
+
   entryComponents: [
     // ...EntryCOMPONENTS,
 ]

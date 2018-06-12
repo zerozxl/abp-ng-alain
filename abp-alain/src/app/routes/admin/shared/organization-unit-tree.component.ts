@@ -33,11 +33,11 @@ export interface IOrganizationUnitsTreeComponentData {
 export class OrganizationUnitsTreeComponent extends AppComponentBase {
     @ViewChild('tree') tree: NzTreeComponent;
     nodes: NzTreeNode[] = [];
-    private _createdTreeBefore;
-    private allOrganizationUnits: OrganizationUnitDto[];
-    private selectedOrganizationUnits: string[] = [];
-    private filter = '';
-    private expandDefault = true;
+    _createdTreeBefore;
+    allOrganizationUnits: OrganizationUnitDto[];
+    selectedOrganizationUnits: string[] = [];
+    filter = '';
+    expandDefault = true;
     constructor(
         injector: Injector
     ) {

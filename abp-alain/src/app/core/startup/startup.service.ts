@@ -14,7 +14,6 @@ import * as moment from 'moment';
 import { AppSessionService } from '@shared/common/session/app-session.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ReuseTabService, ReuseTabMatchMode } from '@delon/abc';
-import { NgForage } from 'ngforage';
 
 /**
  * 用于应用启动时
@@ -31,7 +30,6 @@ export class StartupService {
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
     private httpClient: HttpClient,
     private reuseTabService: ReuseTabService,
-    private readonly ngf: NgForage,
     private injector: Injector
   ) {
     this.reuseTabService.mode = ReuseTabMatchMode.URL;
@@ -90,11 +88,11 @@ export class StartupService {
       AppConsts.appBaseUrlFormat = res.url.appBaseUrl;
       const tokenData = this.tokenService.get();
       const allSetting = abpData.result;
-      this.ngf.setItem('CultureName', allSetting.localization.currentCulture.name);
-      Abp.multiTenancy.setGlobal(allSetting.multiTenancy);
-      Abp.session.setGlobal(allSetting.session);
       this.translate.setTranslation(allSetting.localization.currentCulture.name, allSetting.localization.values.AbpZeroTemplate);
       this.translate.setDefaultLang(allSetting.localization.currentCulture.name); // 需要更改
+      Abp.multiTenancy.setGlobal(allSetting.multiTenancy);
+      Abp.session.setGlobal(allSetting.session);
+
       Abp.localization.setGlobal(allSetting.localization);
       Abp.features.setGlobal(allSetting.features);
       Abp.auth.setGlobal(allSetting.auth);

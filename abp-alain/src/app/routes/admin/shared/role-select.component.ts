@@ -7,7 +7,7 @@ import { AppComponentBase } from '@shared/app-component-base';
     selector: 'role-select',
     template:
         `<nz-select #RoleSelectbox  [(ngModel)]="selectedRole"
-        (ngModelChange)="selectedPermissionChange.emit($event)" nzShowSearch nzAllowClear>
+        (ngModelChange)="selectedRoleChange.emit($event)" nzShowSearch nzAllowClear>
         <nz-option *ngFor="let role of roles" [nzValue]="role.id" [nzLabel]="role.displayName"></nz-option>
         </nz-select>`
 })

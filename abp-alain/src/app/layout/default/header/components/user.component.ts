@@ -1,10 +1,11 @@
 import { ChangePasswordModalComponent } from './../../profile/change-password-modal.component';
 import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { SettingsService, ModalHelper } from '@delon/theme';
+import { SettingsService, ModalHelper, ALAIN_I18N_TOKEN } from '@delon/theme';
 import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
 import { AppSessionService } from '@shared/common/session/app-session.service';
 import { ImpersonationService } from '../../../../routes/admin/users/impersonation.service';
+import { I18NService } from '@core/i18n/i18n.service';
 
 @Component({
   selector: 'header-user',
@@ -39,12 +40,13 @@ export class HeaderUserComponent implements OnInit {
     private modalHelper: ModalHelper,
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
     private _impersonationService: ImpersonationService,
-    private _appSessionService: AppSessionService
+    private _appSessionService: AppSessionService, @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
   ) { }
 
   ngOnInit(): void {
     this.tokenService.change().subscribe((res: any) => {
       this.settings.setUser(res);
+
     });
     // mock
     const token = this.tokenService.get() || {
@@ -55,6 +57,7 @@ export class HeaderUserComponent implements OnInit {
     };
     this.tokenService.set(token);
     this.isImpersonatedLogin = this._appSessionService.impersonatorUserId > 0;
+    console.log(this.i18n.getLangs());
   }
 
   logout() {

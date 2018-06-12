@@ -28,10 +28,9 @@ import { OrganizationUnitsTreeComponent } from './shared/organization-unit-tree.
     imports: [
         CommonModule,
         SharedModule,
-        AdminRoutingModule,
-        NzTreeModule],
+        AdminRoutingModule],
     providers: [
-        
+
     ],
     declarations: [
         RolesComponent,

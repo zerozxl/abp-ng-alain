@@ -7,8 +7,8 @@ export class MomentFormatPipe implements PipeTransform {
     transform(value: moment.MomentInput, format: string) {
         // console.log(moment.localeData());
         // console.log(format);
-       
-        if ( value === undefined ) {
+
+        if (value === undefined) {
             return '';
         }
         // console.log('moment.locale:' + moment.locale());
