@@ -1,8 +1,8 @@
-import { AfterViewChecked, AfterViewInit, Component, ElementRef, Injector, ViewChild } from '@angular/core';
+import { Component, Injector, ViewChild } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
 import { FlatPermissionDto } from '@shared/service-proxies/service-proxies';
 import * as _ from 'lodash';
-import { NzFormatEmitEvent, NzTreeNode, NzTreeNodeOptions, NzTreeComponent } from 'ng-zorro-antd';
+import { NzTreeComponent, NzTreeNode } from 'ng-zorro-antd';
 import { PermissionTreeEditModel } from './permission-tree-edit.model';
 
 
@@ -44,6 +44,7 @@ export class PermissionTreeComponent extends AppComponentBase {
         this.editPermission = val;
         this.checkedKeys = this.editPermission.grantedPermissionNames;
         this.nodes = this.convertNzTreeNode(this.editPermission.permissions, null);
+        console.log(this.nodes);
     }
     /**
      * 转换NzTreeNode

@@ -88,6 +88,7 @@ const PROVIDERS = [
     // { provide: HTTP_INTERCEPTORS, useClass: SimpleInterceptor, multi: true },
     // { provide: HTTP_INTERCEPTORS, useClass: DefaultInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: AbpHttpInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: DefaultInterceptor, multi: true },
     { provide: ALAIN_I18N_TOKEN, useClass: I18NService, multi: false },
     StartupService,
     {
