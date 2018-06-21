@@ -1,0 +1,13 @@
+﻿<page-header></page-header>
+<nz-row nzGutter="8">
+    <nz-col nzSpan="6">
+        <nz-card nzTitle="选择产品">
+            <input placeholder="检索产品" nz-input [(ngModel)]="inputValue" (input)="onInput($event.target?.value)" [nzAutocomplete]="auto">
+            <nz-autocomplete nzBackfill #auto>
+                <nz-auto-option *ngFor="let option of options" [nzValue]="option">
+                    {{option}}
+                </nz-auto-option>
+            </nz-autocomplete>
+        </nz-card>
+    </nz-col>
+</nz-row>
